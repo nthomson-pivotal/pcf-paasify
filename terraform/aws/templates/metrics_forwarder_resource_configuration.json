@@ -1,0 +1,16 @@
+{
+  "metrics-forwarder": {
+    "instances": 1,
+    "instance_type": {
+      "id": "t2.medium"
+    }
+  },
+  "mysql": {
+    "persistent_disk": {
+      "size_mb": "51200"
+    },
+    "instance_type": {
+      "id": "t2.medium"
+    }
+  }
+}

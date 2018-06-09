@@ -1,0 +1,8 @@
+{
+  ".properties.opsman.enable.url": {
+    "value": "https://${om_domain}"
+  },
+  ".healthwatch-forwarder.health_check_az": {
+    "value": "${bosh_az}"
+  }
+}

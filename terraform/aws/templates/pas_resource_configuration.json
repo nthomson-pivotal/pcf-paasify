@@ -1,0 +1,12 @@
+{
+  "control": {
+    "elb_names": [
+      "${ssh_elb_name}"
+    ]
+  },
+  "router": {
+    "elb_names": [
+      "${web_elb_name}"
+    ]
+  }
+}

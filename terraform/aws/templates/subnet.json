@@ -1,0 +1,10 @@
+{
+  "iaas_identifier": "${id}",
+  "cidr": "${cidr}",
+  "reserved_ip_ranges": "${reserved}",
+  "dns": "${dns}",
+  "gateway": "${gateway}",
+  "availability_zones": [
+    ${azs}
+  ]
+}

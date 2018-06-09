@@ -1,0 +1,4 @@
+{
+  "singleton_availability_zone": "${az}",
+  "network": "management"
+}

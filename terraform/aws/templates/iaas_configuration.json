@@ -1,0 +1,9 @@
+{
+  "access_key_id": "${access_key_id}",
+  "secret_access_key": "${secret_access_key}",
+  "vpc_id": "${vpc_id}",
+  "security_group": "${security_group}",
+  "key_pair_name": "${key_pair_name}",
+  "ssh_private_key": "${ssh_private_key}",
+  "region": "${region}"
+}

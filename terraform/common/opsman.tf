@@ -1,0 +1,78 @@
+locals {
+  opsman_password = "${random_string.opsman_password.result}"
+}
+
+resource "random_string" "opsman_password" {
+  length = 8
+  special = false
+}
+
+data "template_file" "az_configuration" {
+  template = "${chomp(file("${path.module}/templates/az.json"))}"
+
+  vars {
+    az1 = "${var.az1}"
+    az2 = "${var.az2}"
+    az3 = "${var.az3}"
+  }
+}
+
+data "template_file" "network_assignment_configuration" {
+  template = "${chomp(file("${path.module}/templates/network_assignment.json"))}"
+
+  vars {
+    az = "${var.az1}"
+  }
+}
+
+resource "null_resource" "setup_opsman" {
+  provisioner "file" {
+    content      = "${var.ssl_cert}"
+    destination = "/tmp/tempest.crt"
+  }
+
+  provisioner "file" {
+    content      = "${var.ssl_private_key}"
+    destination = "/tmp/tempest.key"
+  }
+
+  provisioner "file" {
+    source      = "${path.module}/scripts/install_tile.sh"
+    destination = "/tmp/install_tile.sh"
+  }
+
+  provisioner "file" {
+    source      = "${path.module}/scripts/install_stemcell.sh"
+    destination = "/tmp/install_stemcell.sh"
+  }
+
+  provisioner "file" {
+    source      = "${path.module}/scripts/provision_opsman.sh"
+    destination = "/tmp/provision_opsman.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [ "chmod +x /tmp/provision_opsman.sh && /tmp/provision_opsman.sh ${var.pivnet_token}" ]
+  }
+
+  provisioner "local-exec" {
+    command = "${path.module}/scripts/setup_opsman.sh"
+
+    environment {
+      PIVNET_TOKEN = "${var.pivnet_token}"
+      OM_DOMAIN = "${var.opsman_host}"
+      OM_USERNAME = "${var.opsman_user}"
+      OM_PASSWORD = "${local.opsman_password}"
+      OM_IAAS_CONFIG = "${var.opsman_iaas_configuration}"
+      OM_AZ_CONFIG = "${data.template_file.az_configuration.rendered}"
+      OM_NETWORK_CONFIG = "${var.opsman_network_configuration}"
+      OM_NET_ASSIGN_CONFIG = "${data.template_file.network_assignment_configuration.rendered}"
+    }
+  }
+
+  connection {
+    host = "${var.opsman_host}"
+    user     = "ubuntu"
+    private_key = "${var.opsman_ssh_key}"
+  }
+}
