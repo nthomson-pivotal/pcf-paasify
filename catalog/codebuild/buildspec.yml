@@ -23,7 +23,6 @@ phases:
       #- . /tmp/aws_cred_export.txt && terraform init
   build:
     commands:
-      - cd terraform/aws
       - pwd
       #- . /tmp/aws_cred_export.txt &&  terraform apply terraform/aws
       - echo "Post apply build"
