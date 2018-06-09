@@ -5,7 +5,7 @@ phases:
     commands:
       - sudo pip install boto3
       - wget https://releases.hashicorp.com/terraform/0.10.4/terraform_0.10.4_linux_amd64.zip
-      - sudo unzip terraform_0.10.4_linux_amd64.zip /bin && rm terraform_0.10.4_linux_amd64.zip
+      - sudo unzip terraform_0.10.4_linux_amd64.zip -d /bin && rm terraform_0.10.4_linux_amd64.zip
       - apt-get update
       - apt-cache search source
       - apt-get install -y curl jq
