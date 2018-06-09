@@ -2,10 +2,9 @@
    "AWSTemplateFormatVersion":"2010-09-09",
    "Description":"Deploys PCF",
    "Parameters":{
-      "DataPartName":{
+      "EnvName":{
          "Description":"Environment name",
-         "Type":"String",
-         "Default":"envname"
+         "Type":"String"
       }
    },
    "Resources":{
@@ -89,11 +88,9 @@
                "Fn::Join":[
                   "_",
                   [
+                     "paasify",
                      {
                         "Ref":"EnvName"
-                     },
-                     {
-                        "Ref":"AWS::StackName"
                      },
                      {
                         "Ref":"AWS::Region"
@@ -112,7 +109,7 @@
             "Environment":{
                "Type":"LINUX_CONTAINER",
                "ComputeType":"BUILD_GENERAL1_SMALL",
-               "image":"aws/codebuild/docker:17.09.0",
+               "Image":"aws/codebuild/docker:17.09.0",
                "EnvironmentVariables":[
                   {
                      "Name":"region",
