@@ -20,11 +20,10 @@ phases:
       - echo "  }" >> provider-output-backend.tf
       - echo "}" >> provider-output-backend.tf
       - cat provider-output-backend.tf
-      #- . /tmp/aws_cred_export.txt && terraform init
+      - . /tmp/aws_cred_export.txt && terraform init -input=false
   build:
     commands:
-      - pwd
-      #- . /tmp/aws_cred_export.txt &&  terraform apply terraform/aws
+      #- . /tmp/aws_cred_export.txt &&  terraform apply -input=false terraform/aws
       - echo "Post apply build"
   post_build:
     commands:
