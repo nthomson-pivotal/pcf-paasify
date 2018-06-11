@@ -25,6 +25,7 @@ phases:
       - mkdir $HOME/terraform-state
       - aws s3 sync s3://$env.$region.$account.paasify-state/ $HOME/terraform-state
       - . /tmp/aws_cred_export.txt && terraform init -input=false
+      - aws sts assume-role --role-arn arn:aws:iam::492385775448:role/test2.us-west-2.paasify-codebuild --role-session-name codebuild-access --duration-seconds 14400
   build:
     commands:
       #- . /tmp/aws_cred_export.txt && lego --accept-tos --email="none@paasify.org" -d pcf.$env.$dns_suffix -d *.apps.$env.$dns_suffix -d *.sys.$env.$dns_suffix -d *.uaa.sys.$env.$dns_suffix --dns="route53" run
