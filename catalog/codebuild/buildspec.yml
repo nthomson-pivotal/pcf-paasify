@@ -6,6 +6,8 @@ phases:
       - sudo pip install boto3
       - wget https://releases.hashicorp.com/terraform/0.10.4/terraform_0.10.4_linux_amd64.zip
       - sudo unzip terraform_0.10.4_linux_amd64.zip -d /bin && rm terraform_0.10.4_linux_amd64.zip
+      - wget https://github.com/xenolf/lego/releases/download/v1.0.1/lego_v1.0.1_linux_amd64.tar.gz
+      - sudo tar xvf lego_v1.0.1_linux_amd64.tar.gz -C /bin && rm lego_v1.0.1_linux_amd64.tar.gz && chmod +x /bin/lego
       - apt-get update
       - apt-cache search source
       - apt-get install -y curl jq
@@ -25,7 +27,6 @@ phases:
     commands:
       - . /tmp/aws_cred_export.txt && lego --accept-tos --email="none@paasify.org" -d pcf.$env.$dns_suffix -d *.apps.$env.$dns_suffix -d *.sys.$env.$dns_suffix -d *.uaa.sys.$env.$dns_suffix --dns="route53" run
       - . /tmp/aws_cred_export.txt && TF_VAR_env_name=$env TF_VAR_dns_suffix=$dns_suffix TF_VAR_pivnet_token=$pivnet_token TF_VAR_ssl_cert_path=.lego/certificates/pcf.$env.aws.paasify.org.crt TF_VAR_ssl_private_key_path=.lego/certificates/pcf.$env.aws.paasify.org.key terraform plan -input=false terraform/aws
-      - echo "Post apply build"
   post_build:
     commands:
       - echo "Nothing to do in the post_build for now"
