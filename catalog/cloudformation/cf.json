@@ -156,14 +156,77 @@
                "Location":"https://github.com/nthomson-pivotal/pcf-paasify",
                "Type":"GITHUB",
                "BuildSpec": "catalog/codebuild/buildspec.yml"
+            }
+         }
+      },
+      "DestroyProject":{
+         "Type":"AWS::CodeBuild::Project",
+         "Properties":{
+            "Name":{
+               "Fn::Join":[
+                  "_",
+                  [
+                     "paasify",
+                     {
+                        "Ref":"EnvName"
+                     },
+                     {
+                        "Ref":"AWS::Region"
+                     },
+                     "destroy"
+                  ]
+               ]
             },
-            "TimeoutInMinutes":10,
-            "Tags":[
-               {
-                  "Key":"Project",
-                  "Value":"Run Terraform From CodeBuild"
-               }
-            ]
+            "Description":"Destroy PCF",
+            "ServiceRole":{
+               "Ref":"Adminrole"
+            },
+            "Artifacts":{
+               "Type":"no_artifacts"
+            },
+            "TimeoutInMinutes": 240,
+            "Environment":{
+               "Type":"LINUX_CONTAINER",
+               "ComputeType":"BUILD_GENERAL1_SMALL",
+               "Image":"aws/codebuild/docker:17.09.0",
+               "EnvironmentVariables":[
+                  {
+                     "Name":"region",
+                     "Value":{
+                        "Ref":"AWS::Region"
+                     }
+                  },
+                  {
+                     "Name":"account",
+                     "Value":{
+                        "Ref":"AWS::AccountId"
+                     }
+                  },
+                  {
+                     "Name":"env",
+                     "Value":{
+                        "Ref":"EnvName"
+                     }
+                  },
+                  {
+                     "Name":"dns_suffix",
+                     "Value":{
+                        "Ref":"DnsSuffix"
+                     }
+                  },
+                  {
+                     "Name":"pivnet_token",
+                     "Value":{
+                        "Ref":"PivnetToken"
+                     }
+                  }
+               ]
+            },
+            "Source":{
+               "Location":"https://github.com/nthomson-pivotal/pcf-paasify",
+               "Type":"GITHUB",
+               "BuildSpec": "catalog/codebuild/destroy-buildspec.yml"
+            }
          }
       }
    }
