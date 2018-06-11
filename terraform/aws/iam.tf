@@ -1,5 +1,9 @@
 resource "aws_iam_access_key" "key" {
   user = "${aws_iam_user.user.name}"
+
+  provisioner "local-exec" {
+    command = "sleep 20"
+  }
 }
 
 resource "aws_iam_user" "user" {

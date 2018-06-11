@@ -39,10 +39,6 @@ variable "opsman_ami" {
   }
 }
 
-variable "root_dns_zone" {
-  type = "string"
-}
-
 variable "dns_suffix" {
   type = "string"
 }
@@ -50,11 +46,6 @@ variable "dns_suffix" {
 variable "ssl_cert_path" {
   type        = "string"
   description = "The path to an SSL certificate to be used by the LB and OpsMan"
-}
-
-variable "ssl_ca_cert_path" {
-  type        = "string"
-  description = "The path to an intermediate SSL certificate to be used by the LB and OpsMan"
 }
 
 variable "ssl_private_key_path" {

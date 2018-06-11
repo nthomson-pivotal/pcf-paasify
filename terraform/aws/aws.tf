@@ -1,21 +1,21 @@
 provider "aws" {
-  access_key = "${aws_iam_access_key.key.id}"
-  secret_key = "${aws_iam_access_key.key.secret}"
+  access_key = "${var.access_key}"
+  secret_key = "${var.secret_key}"
   region     = "${var.region}"
 }
 
 data "null_data_source" "certs" {
   inputs = {
     private_key = "${trimspace(file("${var.ssl_private_key_path}"))}"
-    cert = "${trimspace(file("${var.ssl_cert_path}"))}\n${trimspace(file("${var.ssl_ca_cert_path}"))}"
+    cert = "${trimspace(file("${var.ssl_cert_path}"))}"
   }
 }
 
 module "aws" {
   source = "github.com/pivotal-cf/terraforming-aws?ref=2c8bfc2"
 
-  access_key          = "${var.access_key}"
-  secret_key          = "${var.secret_key}"
+  access_key          = "${aws_iam_access_key.key.id}"
+  secret_key          = "${aws_iam_access_key.key.secret}"
   env_name            = "${var.env_name}"
   region              = "${var.region}"
   dns_suffix          = "${var.dns_suffix}"
@@ -29,8 +29,12 @@ locals {
   base_domain = "${var.env_name}.${var.dns_suffix}"
 }
 
+data "aws_route53_zone" "selected" {
+  name = "${var.dns_suffix}."
+}
+
 resource "aws_route53_record" "ns" {
-  zone_id = "${var.root_dns_zone}"
+  zone_id = "${data.aws_route53_zone.selected.zone_id}"
   name    = "${local.base_domain}"
   type    = "NS"
   ttl     = "30"
