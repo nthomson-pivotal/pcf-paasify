@@ -7,10 +7,6 @@ variable "region" {
   default = "us-west-2"
 }
 
-variable "access_key" {}
-
-variable "secret_key" {}
-
 variable "az1" {
   type = "map"
   default = {
