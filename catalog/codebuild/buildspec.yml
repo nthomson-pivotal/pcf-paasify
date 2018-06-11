@@ -31,4 +31,4 @@ phases:
       - . /tmp/aws_cred_export.txt && TF_VAR_env_name=$env TF_VAR_dns_suffix=$dns_suffix TF_VAR_pivnet_token=$pivnet_token TF_VAR_ssl_cert_path=.lego/certificates/pcf.$env.$dns_suffix.crt TF_VAR_ssl_private_key_path=.lego/certificates/pcf.$env.$dns_suffix.key terraform apply -input=false -auto-approve -state=$HOME/terraform-state/terraform.tfstate
   post_build:
     commands:
-      - aws s3 sync s3://$env.$region.$account.paasify-state/ $HOME/terraform-state
+      - aws s3 sync $HOME/terraform-state s3://$env.$region.$account.paasify-state/
