@@ -5,6 +5,14 @@
       "EnvName":{
          "Description":"Environment name",
          "Type":"String"
+      },
+      "DnsSuffix":{
+         "Description":"DNS suffix",
+         "Type":"String"
+      },
+      "PivnetToken":{
+         "Description":"Pivnet Token to download tiles",
+         "Type":"String"
       }
    },
    "Resources":{
@@ -133,6 +141,12 @@
                      "Name":"dns_suffix",
                      "Value":{
                         "Ref":"DnsSuffix"
+                     }
+                  },
+                  {
+                     "Name":"pivnet_token",
+                     "Value":{
+                        "Ref":"PivnetToken"
                      }
                   }
                ]
