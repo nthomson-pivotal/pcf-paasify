@@ -7,7 +7,7 @@
          "Type":"String"
       },
       "DnsSuffix":{
-         "Description":"DNS suffix",
+         "Description":"DNS suffix (ie. aws.paasify.org)",
          "Type":"String"
       },
       "PivnetToken":{
