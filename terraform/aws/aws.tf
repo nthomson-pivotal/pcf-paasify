@@ -1,6 +1,4 @@
 provider "aws" {
-  access_key = "${var.access_key}"
-  secret_key = "${var.secret_key}"
   region     = "${var.region}"
 }
 
@@ -53,8 +51,8 @@ data "template_file" "iaas_configuration" {
   template = "${chomp(file("${path.module}/templates/iaas_configuration.json"))}"
 
   vars {
-    access_key_id = "${var.access_key}"
-    secret_access_key = "${var.secret_key}"
+    access_key_id = "${aws_iam_access_key.key.id}"
+    secret_access_key = "${aws_iam_access_key.key.secret}"
     vpc_id = "${module.aws.vpc_id}"
     security_group = "${module.aws.vms_security_group_id}"
     key_pair_name = "${module.aws.ops_manager_ssh_public_key_name}"
