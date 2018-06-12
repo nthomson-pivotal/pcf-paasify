@@ -17,6 +17,8 @@ phases:
       - terraform init -input=false
   build:
     commands:
+      - mkdir -p .lego/certificates
+      - touch .lego/certificates/pcf.$env.$dns_suffix.crt .lego/certificates/pcf.$env.$dns_suffix.key
       - TF_VAR_env_name=$env TF_VAR_dns_suffix=$dns_suffix TF_VAR_pivnet_token=$pivnet_token TF_VAR_ssl_cert_path=.lego/certificates/pcf.$env.$dns_suffix.crt TF_VAR_ssl_private_key_path=.lego/certificates/pcf.$env.$dns_suffix.key terraform destroy -input=false -auto-approve -state=$HOME/terraform-state/terraform.tfstate
   post_build:
     commands:
