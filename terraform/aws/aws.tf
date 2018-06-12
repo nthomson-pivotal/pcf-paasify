@@ -73,7 +73,7 @@ data "template_file" "pas_resource_configuration" {
 module "common" {
   source = "../common"
 
-  depends_on [ "aws_iam_user_policy.policy" ]
+  depends_on = [ "aws_iam_user_policy.policy" ]
 
   env_name            = "${var.env_name}"
   region              = "${var.region}"
