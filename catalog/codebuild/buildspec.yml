@@ -19,6 +19,10 @@ phases:
     commands:
       - lego --accept-tos --email="none@paasify.org" -d pcf.$env.$dns_suffix -d *.apps.$env.$dns_suffix -d *.sys.$env.$dns_suffix -d *.uaa.sys.$env.$dns_suffix --dns="route53" run
       - TF_VAR_env_name=$env TF_VAR_dns_suffix=$dns_suffix TF_VAR_pivnet_token=$pivnet_token TF_VAR_ssl_cert_path=.lego/certificates/pcf.$env.$dns_suffix.crt TF_VAR_ssl_private_key_path=.lego/certificates/pcf.$env.$dns_suffix.key terraform apply -input=false -auto-approve -state=$HOME/terraform-state/terraform.tfstate
+      - export OM_TARGET=https://$(terraform output -state=$HOME/terraform-state/terraform.tfstate opsman_host)
+      - export OM_USER=$(terraform output -state=$HOME/terraform-state/terraform.tfstate opsman_user)
+      - export OM_PASSWORD=$(terraform output -state=$HOME/terraform-state/terraform.tfstate opsman_password)
+      - om apply-changes
   post_build:
     commands:
       - aws s3 sync $HOME/terraform-state s3://$env.$region.$account.paasify-state/
