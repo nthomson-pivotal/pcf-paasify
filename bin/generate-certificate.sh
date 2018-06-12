@@ -1,6 +1,6 @@
 #!/bin/bash
 
-$path=$HOME/state/lego
+path=$HOME/state/lego
 
 if [ ! -d "$path/certificates" ]; then
   echo "Obtaining certificate..."
