@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 path=$HOME/state/lego
 
 if [ ! -d "$path/certificates" ]; then
