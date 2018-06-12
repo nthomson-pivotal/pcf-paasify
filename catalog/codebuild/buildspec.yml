@@ -25,7 +25,7 @@ phases:
       - mkdir $HOME/terraform-state
       - aws s3 sync s3://$env.$region.$account.paasify-state/ $HOME/terraform-state
       - . /tmp/aws_cred_export.txt && terraform init -input=false
-      - aws sts assume-role --role-arn arn:aws:iam::492385775448:role/test2.us-west-2.paasify-codebuild --role-session-name codebuild-access --duration-seconds 14400
+      - aws sts assume-role --role-arn arn:aws:iam::492385775448:role/test2.us-west-2.paasify-codebuild --role-session-name codebuild-access --duration-seconds 3600
   build:
     commands:
       #- . /tmp/aws_cred_export.txt && lego --accept-tos --email="none@paasify.org" -d pcf.$env.$dns_suffix -d *.apps.$env.$dns_suffix -d *.sys.$env.$dns_suffix -d *.uaa.sys.$env.$dns_suffix --dns="route53" run
@@ -33,5 +33,6 @@ phases:
       - sleep 30
   post_build:
     commands:
+      - aws sts assume-role --role-arn arn:aws:iam::492385775448:role/test2.us-west-2.paasify-codebuild --role-session-name codebuild-access --duration-seconds 3600
       - curl 169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI | jq 'to_entries | [ .[] | select(.key | (contains("Expiration") or contains("RoleArn"))  | not) ] |  map(if .key == "AccessKeyId" then . + {"key":"AWS_ACCESS_KEY_ID"} else . end) | map(if .key == "SecretAccessKey" then . + {"key":"AWS_SECRET_ACCESS_KEY"} else . end) | map(if .key == "Token" then . + {"key":"AWS_SESSION_TOKEN"} else . end) | map("export \(.key)=\(.value)") | .[]' -r > /tmp/aws_cred_export.txt # work around
       - aws s3 sync $HOME/terraform-state s3://$env.$region.$account.paasify-state/
