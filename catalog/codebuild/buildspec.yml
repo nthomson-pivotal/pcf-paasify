@@ -11,7 +11,6 @@ phases:
       - sudo wget -O /bin/om https://github.com/pivotal-cf/om/releases/download/0.37.0/om-linux && chmod +x /bin/om
       - apt-get update
       - apt-get install -qq -y curl jq
-      - echo "Prepare terraform file"
       - cd terraform/aws
       - mkdir $HOME/terraform-state
       - aws s3 sync s3://$env.$region.$account.paasify-state/ $HOME/terraform-state
