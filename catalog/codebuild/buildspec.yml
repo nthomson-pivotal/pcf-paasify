@@ -11,28 +11,15 @@ phases:
       - sudo wget -O /bin/om https://github.com/pivotal-cf/om/releases/download/0.37.0/om-linux && chmod +x /bin/om
       - apt-get update
       - apt-get install -qq -y curl jq
-      #- curl 169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI | jq 'to_entries | [ .[] | select(.key | (contains("Expiration") or contains("RoleArn"))  | not) ] |  map(if .key == "AccessKeyId" then . + {"key":"AWS_ACCESS_KEY_ID"} else . end) | map(if .key == "SecretAccessKey" then . + {"key":"AWS_SECRET_ACCESS_KEY"} else . end) | map(if .key == "Token" then . + {"key":"AWS_SESSION_TOKEN"} else . end) | map("export \(.key)=\(.value)") | .[]' -r > /tmp/aws_cred_export.txt # work around https://github.com/hashicorp/terraform/issues/8746
-      #- aws sts assume-role --role-arn arn:aws:iam::492385775448:role/test2.us-west-2.paasify-codebuild --role-session-name codebuild-access --duration-seconds 3600 | jq '.Credentials | to_entries | [ .[] | select(.key | (contains("Expiration") or contains("RoleArn"))  | not) ] |  map(if .key == "AccessKeyId" then . + {"key":"AWS_ACCESS_KEY_ID"} else . end) | map(if .key == "SecretAccessKey" then . + {"key":"AWS_SECRET_ACCESS_KEY"} else . end) | map(if .key == "SessionToken" then . + {"key":"AWS_SESSION_TOKEN"} else . end) | map("export \(.key)=\(.value)") | .[]' -r > /tmp/aws_cred_export.txt
       - echo "Prepare terraform file"
       - cd terraform/aws
-      #- echo "terraform { " >> provider-output-backend.tf
-      #- echo "   backend \"s3\" { " >> provider-output-backend.tf
-      #- echo "   bucket = \"$env.$region.$account.paasify-state\"" >> provider-output-backend.tf
-      #- echo "   key    = \"terraform.tfstate\"" >> provider-output-backend.tf
-      #- echo "   region = \"$region\"" >> provider-output-backend.tf
-      #- echo "  }" >> provider-output-backend.tf
-      #- echo "}" >> provider-output-backend.tf
-      #- cat provider-output-backend.tf
       - mkdir $HOME/terraform-state
       - aws s3 sync s3://$env.$region.$account.paasify-state/ $HOME/terraform-state
       - terraform init -input=false
   build:
     commands:
-      #- . /tmp/aws_cred_export.txt && lego --accept-tos --email="none@paasify.org" -d pcf.$env.$dns_suffix -d *.apps.$env.$dns_suffix -d *.sys.$env.$dns_suffix -d *.uaa.sys.$env.$dns_suffix --dns="route53" run
-      #- . /tmp/aws_cred_export.txt && TF_VAR_env_name=$env TF_VAR_dns_suffix=$dns_suffix TF_VAR_pivnet_token=$pivnet_token TF_VAR_ssl_cert_path=.lego/certificates/pcf.$env.$dns_suffix.crt TF_VAR_ssl_private_key_path=.lego/certificates/pcf.$env.$dns_suffix.key terraform apply -input=false -auto-approve -state=$HOME/terraform-state/terraform.tfstate
-      - sleep 3660
+      - lego --accept-tos --email="none@paasify.org" -d pcf.$env.$dns_suffix -d *.apps.$env.$dns_suffix -d *.sys.$env.$dns_suffix -d *.uaa.sys.$env.$dns_suffix --dns="route53" run
+      - TF_VAR_env_name=$env TF_VAR_dns_suffix=$dns_suffix TF_VAR_pivnet_token=$pivnet_token TF_VAR_ssl_cert_path=.lego/certificates/pcf.$env.$dns_suffix.crt TF_VAR_ssl_private_key_path=.lego/certificates/pcf.$env.$dns_suffix.key terraform apply -input=false -auto-approve -state=$HOME/terraform-state/terraform.tfstate
   post_build:
     commands:
-      #- aws sts assume-role --role-arn arn:aws:iam::492385775448:role/test2.us-west-2.paasify-codebuild --role-session-name codebuild-access --duration-seconds 3600 | jq '.Credentials | to_entries | [ .[] | select(.key | (contains("Expiration") or contains("RoleArn"))  | not) ] |  map(if .key == "AccessKeyId" then . + {"key":"AWS_ACCESS_KEY_ID"} else . end) | map(if .key == "SecretAccessKey" then . + {"key":"AWS_SECRET_ACCESS_KEY"} else . end) | map(if .key == "SessionToken" then . + {"key":"AWS_SESSION_TOKEN"} else . end) | map("export \(.key)=\(.value)") | .[]' -r > /tmp/aws_cred_export.txt
-      #- curl 169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI | jq 'to_entries | [ .[] | select(.key | (contains("Expiration") or contains("RoleArn"))  | not) ] |  map(if .key == "AccessKeyId" then . + {"key":"AWS_ACCESS_KEY_ID"} else . end) | map(if .key == "SecretAccessKey" then . + {"key":"AWS_SECRET_ACCESS_KEY"} else . end) | map(if .key == "Token" then . + {"key":"AWS_SESSION_TOKEN"} else . end) | map("export \(.key)=\(.value)") | .[]' -r > /tmp/aws_cred_export.txt # work around
       - aws s3 sync $HOME/terraform-state s3://$env.$region.$account.paasify-state/
