@@ -3,22 +3,10 @@ version: 0.2
 phases:
   install:
     commands:
-      - sudo pip install boto3
-      - wget https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_linux_amd64.zip
-      - sudo unzip terraform_0.11.7_linux_amd64.zip -d /bin && rm terraform_0.11.7_linux_amd64.zip
-      - wget https://github.com/xenolf/lego/releases/download/v1.0.1/lego_v1.0.1_linux_amd64.tar.gz
-      - sudo tar xvf lego_v1.0.1_linux_amd64.tar.gz -C /bin && rm lego_v1.0.1_linux_amd64.tar.gz && chmod +x /bin/lego
-      - sudo wget -O /bin/om https://github.com/pivotal-cf/om/releases/download/0.37.0/om-linux && chmod +x /bin/om
-      - apt-get update
-      - apt-get install -qq -y curl jq
-      - mkdir $HOME/state
-      - aws s3 sync s3://$env.$region.$account.paasify-state/ $HOME/state
-      - terraform init -input=false $CODEBUILD_SRC_DIR/terraform/aws
+      - . $CODEBUILD_SRC_DIR/bin/install.sh
   build:
     commands:
-      - mkdir -p .lego/certificates
-      - touch .lego/certificates/pcf.$env.$dns_suffix.crt .lego/certificates/pcf.$env.$dns_suffix.key
-      - TF_VAR_env_name=$env TF_VAR_dns_suffix=$dns_suffix TF_VAR_pivnet_token=$pivnet_token TF_VAR_ssl_cert_path=$HOME/lego/certificates/pcf.$env.$dns_suffix.crt TF_VAR_ssl_private_key_path=$HOME/lego/certificates/pcf.$env.$dns_suffix.key terraform destroy -input=false -auto-approve -state=$HOME/terraform-state/terraform.tfstate $CODEBUILD_SRC_DIR/terraform/aws
+      - . $CODEBUILD_SRC_DIR/bin/build.sh
       - aws s3 rm s3://$env.$region.$account.paasify-state --recursive
   post_build:
     commands:

@@ -12,4 +12,6 @@ export OM_TARGET=https://$(terraform output -state=$tfstate opsman_host)
 export OM_USER=$(terraform output -state=$tfstate opsman_user)
 export OM_PASSWORD=$(terraform output -state=$tfstate opsman_password)
 
-om apply-changes
+echo "Target is $OM_TARGET -- $OM_USER / $OM_PASSWORD"
+
+om -t $OM_TARGET -u $OM_USERNAME -p $OM_PASSWORD apply-changes
