@@ -14,7 +14,7 @@ apt-get install -qq -y curl jq
 
 # Setup state directory
 mkdir $HOME/state
-aws s3 sync s3://$env.$region.$account.paasify-state/ $HOME/state
+aws s3 cp s3://$env.$region.$account.paasify-state $HOME/state --recursive
 
 # Init Terraform
 terraform init -input=false $CODEBUILD_SRC_DIR/terraform/aws
