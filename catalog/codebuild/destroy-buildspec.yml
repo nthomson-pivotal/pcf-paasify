@@ -6,7 +6,7 @@ phases:
       - . $CODEBUILD_SRC_DIR/bin/install.sh
   build:
     commands:
-      - . $CODEBUILD_SRC_DIR/bin/build.sh
+      - . $CODEBUILD_SRC_DIR/bin/destroy.sh
       - aws s3 rm s3://$env.$region.$account.paasify-state --recursive
   post_build:
     commands:
