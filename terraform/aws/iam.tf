@@ -4,6 +4,8 @@ resource "aws_iam_access_key" "key" {
   provisioner "local-exec" {
     command = "sleep 20"
   }
+
+  depends_on = [ "aws_iam_user_policy.policy" ]
 }
 
 resource "aws_iam_user" "user" {
