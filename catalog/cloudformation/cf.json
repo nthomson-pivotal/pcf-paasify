@@ -184,7 +184,7 @@
             "Artifacts":{
                "Type":"no_artifacts"
             },
-            "TimeoutInMinutes": 360,
+            "TimeoutInMinutes": 30,
             "Environment":{
                "Type":"LINUX_CONTAINER",
                "ComputeType":"BUILD_GENERAL1_SMALL",
