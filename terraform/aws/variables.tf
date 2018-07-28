@@ -3,12 +3,13 @@ variable "env_name" {
 }
 
 variable "region" {
-  type = "string"
+  type    = "string"
   default = "us-west-2"
 }
 
 variable "az1" {
   type = "map"
+
   default = {
     "us-west-2" = "us-west-2a"
   }
@@ -16,6 +17,7 @@ variable "az1" {
 
 variable "az2" {
   type = "map"
+
   default = {
     "us-west-2" = "us-west-2b"
   }
@@ -23,6 +25,7 @@ variable "az2" {
 
 variable "az3" {
   type = "map"
+
   default = {
     "us-west-2" = "us-west-2c"
   }
@@ -30,6 +33,7 @@ variable "az3" {
 
 variable "opsman_ami" {
   type = "map"
+
   default = {
     "us-west-2" = "ami-2479e85c"
   }
@@ -39,26 +43,23 @@ variable "dns_suffix" {
   type = "string"
 }
 
-variable "ssl_cert_path" {
-  type        = "string"
-  description = "The path to an SSL certificate to be used by the LB and OpsMan"
-}
-
-variable "ssl_private_key_path" {
-  type        = "string"
-  description = "The path to an SSL private key to be used by the LB and OpsMan"
-}
-
 variable "opsman_user" {
-  type        = "string"
-  default     = "admin"
+  type    = "string"
+  default = "admin"
 }
 
 variable "pivnet_token" {
-  type        = "string"
+  type = "string"
 }
 
 variable "compute_instance_count" {
-  type        = "string"
+  type    = "string"
   default = "1"
+}
+
+variable "tiles" {
+  type = "list"
+
+  #default = ["mysql", "rabbit", "scs", "metrics", "healthwatch"]
+  default = []
 }

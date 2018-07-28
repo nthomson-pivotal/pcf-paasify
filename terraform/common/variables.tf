@@ -29,15 +29,15 @@ variable "ssl_private_key" {
 }
 
 variable "opsman_host" {
-  type        = "string"
+  type = "string"
 }
 
 variable "opsman_ssh_key" {
-  type        = "string"
+  type = "string"
 }
 
 variable "opsman_user" {
-  type        = "string"
+  type = "string"
 }
 
 variable "opsman_iaas_configuration" {
@@ -49,7 +49,7 @@ variable "opsman_network_configuration" {
 }
 
 variable "pivnet_token" {
-  type        = "string"
+  type = "string"
 }
 
 variable "pas_resource_configuration" {
@@ -62,6 +62,11 @@ variable "apps_domain" {
 
 variable "sys_domain" {
   type = "string"
+}
+
+variable "tiles" {
+  type    = "list"
+  default = ["mysql", "rabbit", "scs", "metrics", "healthwatch"]
 }
 
 variable "mysql_backup_configuration" {

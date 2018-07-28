@@ -21,27 +21,29 @@ data "template_file" "mysql_az_configuration" {
 }
 
 resource "null_resource" "setup_mysql" {
-  depends_on = [ "null_resource.setup_pas" ]
+  depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = [ "install_tile ${var.opsman_user} ${local.opsman_password} pivotal-mysql 2.2.4 pivotal-mysql-2.2.4-build.17.pivotal" ]
+    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} pivotal-mysql 2.2.4 pivotal-mysql-2.2.4-build.17.pivotal"]
   }
 
   provisioner "local-exec" {
     command = "${path.module}/scripts/setup_mysql.sh"
 
     environment {
-      OM_DOMAIN = "${var.opsman_host}"
-      OM_USERNAME = "${var.opsman_user}"
-      OM_PASSWORD = "${local.opsman_password}"
+      OM_DOMAIN      = "${var.opsman_host}"
+      OM_USERNAME    = "${var.opsman_user}"
+      OM_PASSWORD    = "${local.opsman_password}"
       PRODUCT_CONFIG = "${data.template_file.mysql_product_configuration.rendered}"
-      AZ_CONFIG = "${data.template_file.mysql_az_configuration.rendered}"
+      AZ_CONFIG      = "${data.template_file.mysql_az_configuration.rendered}"
     }
   }
 
+  count = "${contains(var.tiles, "mysql") || contains(var.tiles, "scs") ? 1 : 0}"
+
   connection {
-    host = "${var.opsman_host}"
-    user     = "ubuntu"
+    host        = "${var.opsman_host}"
+    user        = "ubuntu"
     private_key = "${var.opsman_ssh_key}"
   }
 }

@@ -6,7 +6,6 @@ phases:
       - . $CODEBUILD_SRC_DIR/bin/install.sh
   build:
     commands:
-      - . $CODEBUILD_SRC_DIR/bin/generate-certificate.sh
       - . $CODEBUILD_SRC_DIR/bin/build.sh
   post_build:
     commands:
