@@ -1,0 +1,12 @@
+{
+  "control": {
+    "elb_names": [
+      "tcp:${ssh_lb_name}"
+    ]
+  },
+  "router": {
+    "elb_names": [
+      "tcp:${web_lb_name}"
+    ]
+  }
+}

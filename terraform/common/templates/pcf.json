@@ -15,7 +15,7 @@
     "value": "disable"
   },
   ".properties.logger_endpoint_port": {
-    "value": "4443"
+    "value": "${logger_endpoint_port}"
   },
   ".mysql_monitor.recipient_email": {
     "value": "nothing@localhost"

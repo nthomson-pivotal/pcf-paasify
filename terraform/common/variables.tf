@@ -88,3 +88,7 @@ variable "metrics_resource_configuration" {
 variable "metrics_forwarder_resource_configuration" {
   type = "string"
 }
+
+variable "logger_endpoint_port" {
+  default = "443"
+}

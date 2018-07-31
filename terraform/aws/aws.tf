@@ -82,6 +82,7 @@ module "common" {
   pivnet_token = "${var.pivnet_token}"
 
   pas_resource_configuration = "${data.template_file.pas_resource_configuration.rendered}"
+  logger_endpoint_port       = "4443"
 
   apps_domain = "${module.aws.apps_domain}"
   sys_domain  = "${module.aws.sys_domain}"

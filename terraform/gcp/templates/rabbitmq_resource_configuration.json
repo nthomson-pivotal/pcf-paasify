@@ -1,0 +1,8 @@
+{
+  "rabbitmq-server": {
+    "instances": 3,
+    "instance_type": {
+      "id": "t2.medium"
+    }
+  }
+}

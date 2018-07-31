@@ -1,9 +1,13 @@
 # PCF Paasify
 
-This project provides a wrapper utility around the PCF Terraform scripts that completely automates the installation of PCF in several cloud providers:
+Paasify is a set of super-opinionated Terraform scripts and supporting utilities for creating PCF installations in the various supported IaaS providers. This is mainly intended for demo, testing or PoC setups where the installer has complete control.
 
-- AWS
-- Azure (WIP)
+Some of the opinions of this project are:
+
+- A very specific DNS naming convention and control structure (see below for more details)
+- SSL certificates generated through LetsEncrypt
+
+The core of the functionality is provided by the Pivotal-authored Terraform configuration files.
 
 The main features provided by the install are:
 

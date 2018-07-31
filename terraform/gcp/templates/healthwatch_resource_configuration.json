@@ -1,0 +1,26 @@
+{
+  "proxy": {
+    "instances": 1,
+    "instance_type": {
+      "id": "t2.medium"
+    }
+  },
+  "mysql": {
+    "instances": 1,
+    "persistent_disk": {
+      "size_mb": "51200"
+    },
+    "instance_type": {
+      "id": "m4.large"
+    }
+  },
+  "healthwatch-forwarder": {
+    "instances": 1,
+    "persistent_disk": {
+      "size_mb": "51200"
+    },
+    "instance_type": {
+      "id": "m4.large"
+    }
+  }
+}

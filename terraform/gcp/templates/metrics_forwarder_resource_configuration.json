@@ -1,0 +1,8 @@
+{
+  "metrics-forwarder": {
+    "instances": 1,
+    "instance_type": {
+      "id": "t2.medium"
+    }
+  }
+}
