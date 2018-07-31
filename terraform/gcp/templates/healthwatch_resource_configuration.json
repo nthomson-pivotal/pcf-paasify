@@ -2,7 +2,7 @@
   "proxy": {
     "instances": 1,
     "instance_type": {
-      "id": "t2.medium"
+      "id": "medium"
     }
   },
   "mysql": {
@@ -11,7 +11,7 @@
       "size_mb": "51200"
     },
     "instance_type": {
-      "id": "m4.large"
+      "id": "large"
     }
   },
   "healthwatch-forwarder": {
@@ -20,7 +20,7 @@
       "size_mb": "51200"
     },
     "instance_type": {
-      "id": "m4.large"
+      "id": "large"
     }
   }
 }

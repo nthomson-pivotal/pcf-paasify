@@ -1,7 +1,7 @@
 {
   "elasticsearch_master": {
     "instance_type": {
-      "id": "m4.large"
+      "id": "large"
     }
   },
   "elasticsearch_data": {
@@ -10,7 +10,7 @@
       "size_mb": "51200"
     },
     "instance_type": {
-      "id": "m4.large"
+      "id": "large"
     }
   },
   "redis": {
@@ -23,7 +23,7 @@
       "size_mb": "51200"
     },
     "instance_type": {
-      "id": "m4.large"
+      "id": "large"
     }
   }
 }
