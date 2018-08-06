@@ -6,7 +6,7 @@
   },
   "router": {
     "elb_names": [
-      "tcp:${web_lb_name}"
+      "http:${web_lb_name}"
     ]
   }
 }
