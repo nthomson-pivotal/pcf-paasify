@@ -3,7 +3,7 @@ module "nat" {
 
   version = "1.1.11"
 
-  name         = "paasify-${var.env_name}"
+  name         = "paasify-${var.env_name}-"
   region       = "${var.region}"
   network      = "${module.gcp.network_name}"
   subnetwork   = "${module.gcp.pas_subnet_name}"
