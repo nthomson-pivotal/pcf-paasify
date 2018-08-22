@@ -24,7 +24,7 @@ resource "null_resource" "setup_mysql" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} pivotal-mysql 2.2.4 pivotal-mysql-2.2.4-build.17.pivotal"]
+    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} pivotal-mysql 2.2.4 pivotal-mysql-2.2.4-build.17.pivotal ${var.iaas}"]
   }
 
   provisioner "local-exec" {

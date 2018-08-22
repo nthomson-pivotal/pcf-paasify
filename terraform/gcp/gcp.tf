@@ -6,7 +6,7 @@ provider "google" {
 }
 
 module "gcp" {
-  source = "github.com/pivotal-cf/terraforming-gcp?ref=e5ad3e7"
+  source = "github.com/nthomson-pivotal/terraforming-gcp"
 
   project = "${var.project}"
 
@@ -52,8 +52,9 @@ data "template_file" "pas_resource_configuration" {
   template = "${chomp(file("${path.module}/templates/pas_resource_configuration.json"))}"
 
   vars {
-    ssh_lb_name = "${module.gcp.ssh_lb_name}"
-    web_lb_name = "${module.gcp.web_lb_name}"
+    ssh_lb_name    = "${module.gcp.ssh_lb_name}"
+    ws_router_pool = "${module.gcp.ws_router_pool}"
+    web_lb_name    = "${module.gcp.http_lb_backend_name}"
   }
 }
 
@@ -61,6 +62,7 @@ module "common" {
   source = "../common"
 
   env_name                     = "${var.env_name}"
+  iaas                         = "google"
   region                       = "${var.region}"
   az1                          = "${lookup(var.az1, var.region)}"
   az2                          = "${lookup(var.az2, var.region)}"
@@ -68,6 +70,7 @@ module "common" {
   ssl_cert                     = "${local.cert_full_chain}"
   ssl_private_key              = "${local.cert_key}"
   opsman_user                  = "${var.opsman_user}"
+  opsman_ip                    = "${module.gcp.ops_manager_ip}"
   opsman_host                  = "${module.gcp.ops_manager_dns}"
   opsman_ssh_key               = "${module.gcp.ops_manager_ssh_private_key}"
   opsman_iaas_configuration    = "${data.template_file.iaas_configuration.rendered}"
@@ -80,6 +83,9 @@ module "common" {
   apps_domain = "${module.gcp.apps_domain}"
   sys_domain  = "${module.gcp.sys_domain}"
 
+  opsman_id  = "${module.gcp.ops_manager_instance_id}"
+  ns_blocker = "${google_dns_record_set.ns.name}"
+
   tiles = "${var.tiles}"
 
   mysql_backup_configuration = "${data.template_file.mysql_backup_configuration.rendered}"
@@ -90,4 +96,6 @@ module "common" {
 
   metrics_resource_configuration           = "${data.template_file.metrics_resource_configuration.rendered}"
   metrics_forwarder_resource_configuration = "${data.template_file.metrics_forwarder_resource_configuration.rendered}"
+
+  wavefront_token = "${var.wavefront_token}"
 }

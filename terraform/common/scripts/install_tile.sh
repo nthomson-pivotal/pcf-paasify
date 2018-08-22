@@ -7,7 +7,8 @@ om_password=$2
 product_slug=$3
 version=$4
 filename=$5
-om_product=$6
+iaas=$6
+om_product=$7
 
 export OM_USERNAME=$om_username
 export OM_PASSWORD=$om_password
@@ -40,4 +41,15 @@ if [ -z "${check}" ]; then
   echo "Installed tile $product_slug v$version"
 else
   echo "Tile $product_slug v$version is already installed"
+fi
+
+echo 'Looking up stemcell dependency...'
+stemcell=$(pivnet release-dependencies -p $product_slug -r $version | grep -m 1 Stemcells | cut -d '|' -f 3 | awk '{$1=$1};1')
+
+if [ -z "$stemcell" ]; then
+  echo "Couldn't find stemcell dependency"
+  exit 1
+else
+  echo "Installing stemcell $stemcell for $iaas..."
+  install_stemcell $om_username $om_password $stemcell $iaas
 fi

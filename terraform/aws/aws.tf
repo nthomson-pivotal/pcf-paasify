@@ -67,6 +67,7 @@ module "common" {
   source = "../common"
 
   env_name                     = "${var.env_name}"
+  iaas                         = "aws"
   region                       = "${var.region}"
   az1                          = "${lookup(var.az1, var.region)}"
   az2                          = "${lookup(var.az2, var.region)}"
@@ -97,4 +98,6 @@ module "common" {
 
   metrics_resource_configuration           = "${data.template_file.metrics_resource_configuration.rendered}"
   metrics_forwarder_resource_configuration = "${data.template_file.metrics_forwarder_resource_configuration.rendered}"
+
+  wavefront_token = "${var.wavefront_token}"
 }

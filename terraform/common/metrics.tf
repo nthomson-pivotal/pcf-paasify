@@ -12,13 +12,9 @@ resource "null_resource" "setup_metrics" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} p-metrics-forwarder 1.11.2 p-metrics-forwarder-1.11.2.pivotal",
-      "install_tile ${var.opsman_user} ${local.opsman_password} apm 1.4.5 apm-1.4.5.pivotal",
+    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} p-metrics-forwarder 1.11.2 p-metrics-forwarder-1.11.2.pivotal ${var.iaas}",
+      "install_tile ${var.opsman_user} ${local.opsman_password} apm 1.4.5 apm-1.4.5.pivotal ${var.iaas}",
     ]
-  }
-
-  provisioner "remote-exec" {
-    inline = ["install_stemcell ${var.opsman_user} ${local.opsman_password} 3445.48"]
   }
 
   provisioner "local-exec" {

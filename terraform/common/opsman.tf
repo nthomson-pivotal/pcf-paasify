@@ -3,7 +3,7 @@ locals {
 }
 
 resource "random_string" "opsman_password" {
-  length = 8
+  length  = 8
   special = false
 }
 
@@ -27,12 +27,12 @@ data "template_file" "network_assignment_configuration" {
 
 resource "null_resource" "setup_opsman" {
   provisioner "file" {
-    content      = "${var.ssl_cert}"
+    content     = "${var.ssl_cert}"
     destination = "/tmp/tempest.crt"
   }
 
   provisioner "file" {
-    content      = "${var.ssl_private_key}"
+    content     = "${var.ssl_private_key}"
     destination = "/tmp/tempest.key"
   }
 
@@ -52,27 +52,27 @@ resource "null_resource" "setup_opsman" {
   }
 
   provisioner "remote-exec" {
-    inline = [ "chmod +x /tmp/provision_opsman.sh && /tmp/provision_opsman.sh ${var.pivnet_token}" ]
+    inline = ["chmod +x /tmp/provision_opsman.sh && /tmp/provision_opsman.sh ${var.pivnet_token}"]
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/setup_opsman.sh"
+    command = "${path.module}/scripts/setup_opsman.sh ${var.ns_blocker}"
 
     environment {
-      PIVNET_TOKEN = "${var.pivnet_token}"
-      OM_DOMAIN = "${var.opsman_host}"
-      OM_USERNAME = "${var.opsman_user}"
-      OM_PASSWORD = "${local.opsman_password}"
-      OM_IAAS_CONFIG = "${var.opsman_iaas_configuration}"
-      OM_AZ_CONFIG = "${data.template_file.az_configuration.rendered}"
-      OM_NETWORK_CONFIG = "${var.opsman_network_configuration}"
+      PIVNET_TOKEN         = "${var.pivnet_token}"
+      OM_DOMAIN            = "${var.opsman_host}"
+      OM_USERNAME          = "${var.opsman_user}"
+      OM_PASSWORD          = "${local.opsman_password}"
+      OM_IAAS_CONFIG       = "${var.opsman_iaas_configuration}"
+      OM_AZ_CONFIG         = "${data.template_file.az_configuration.rendered}"
+      OM_NETWORK_CONFIG    = "${var.opsman_network_configuration}"
       OM_NET_ASSIGN_CONFIG = "${data.template_file.network_assignment_configuration.rendered}"
     }
   }
 
   connection {
-    host = "${var.opsman_host}"
-    user     = "ubuntu"
+    host        = "${var.opsman_host}"
+    user        = "ubuntu"
     private_key = "${var.opsman_ssh_key}"
   }
 }

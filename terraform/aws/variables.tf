@@ -62,3 +62,8 @@ variable "tiles" {
 
   default = ["mysql", "rabbit", "scs", "metrics", "healthwatch"]
 }
+
+variable "wavefront_token" {
+  type    = "string"
+  default = ""
+}

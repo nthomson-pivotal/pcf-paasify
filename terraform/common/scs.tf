@@ -16,7 +16,7 @@ resource "null_resource" "setup_scs" {
   depends_on = ["null_resource.setup_pas", "null_resource.setup_mysql", "null_resource.setup_rabbitmq"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} p-spring-cloud-services 1.5.2 p-spring-cloud-services-1.5.2.pivotal"]
+    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} p-spring-cloud-services 1.5.2 p-spring-cloud-services-1.5.2.pivotal ${var.iaas}"]
   }
 
   provisioner "local-exec" {

@@ -2,6 +2,10 @@ variable "env_name" {
   type = "string"
 }
 
+variable "iaas" {
+  type = "string"
+}
+
 variable "region" {
   type = "string"
 }
@@ -26,6 +30,14 @@ variable "ssl_cert" {
 variable "ssl_private_key" {
   type        = "string"
   description = "the contents of an SSL private key to be used by the LB"
+}
+
+variable "opsman_id" {
+  type = "string"
+}
+
+variable "opsman_ip" {
+  type = "string"
 }
 
 variable "opsman_host" {
@@ -64,6 +76,10 @@ variable "sys_domain" {
   type = "string"
 }
 
+variable "ns_blocker" {
+  description = "Used to ensure the NS bridging records are not deleted prematurely"
+}
+
 variable "tiles" {
   type    = "list"
   default = ["mysql", "rabbit", "scs", "metrics", "healthwatch"]
@@ -91,4 +107,9 @@ variable "metrics_forwarder_resource_configuration" {
 
 variable "logger_endpoint_port" {
   default = "443"
+}
+
+variable "wavefront_token" {
+  type    = "string"
+  default = ""
 }

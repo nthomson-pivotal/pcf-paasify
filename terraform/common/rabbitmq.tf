@@ -22,11 +22,7 @@ resource "null_resource" "setup_rabbitmq" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} p-rabbitmq 1.11.12 p-rabbitmq-1.11.12-build.1.pivotal"]
-  }
-
-  provisioner "remote-exec" {
-    inline = ["install_stemcell ${var.opsman_user} ${local.opsman_password} 3445.30"]
+    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} p-rabbitmq 1.11.12 p-rabbitmq-1.11.12-build.1.pivotal ${var.iaas}"]
   }
 
   provisioner "local-exec" {
