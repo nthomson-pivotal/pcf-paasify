@@ -1,7 +1,7 @@
 module "nat" {
   source = "GoogleCloudPlatform/nat-gateway/google"
 
-  version = "1.1.11"
+  version = "1.2.0"
 
   name         = "paasify-${var.env_name}-"
   region       = "${var.region}"
