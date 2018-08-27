@@ -16,6 +16,10 @@ module "aws" {
   ssl_private_key    = "${local.cert_key}"
 }
 
+resource "null_resource" "dependency_blocker" {
+  depends_on = ["module.aws", "aws_route53_record.ns"]
+}
+
 locals {
   base_domain = "${var.env_name}.${var.dns_suffix}"
 }
@@ -100,4 +104,6 @@ module "common" {
   metrics_forwarder_resource_configuration = "${data.template_file.metrics_forwarder_resource_configuration.rendered}"
 
   wavefront_token = "${var.wavefront_token}"
+
+  dependency_blocker = "${null_resource.dependency_blocker.id}"
 }

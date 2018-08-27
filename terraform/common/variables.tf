@@ -76,10 +76,6 @@ variable "sys_domain" {
   type = "string"
 }
 
-variable "ns_blocker" {
-  description = "Used to ensure the NS bridging records are not deleted prematurely"
-}
-
 variable "tiles" {
   type    = "list"
   default = ["mysql", "rabbit", "scs", "metrics", "healthwatch"]
@@ -112,4 +108,9 @@ variable "logger_endpoint_port" {
 variable "wavefront_token" {
   type    = "string"
   default = ""
+}
+
+variable "dependency_blocker" {
+  type = "string"
+  description = "This is used to ensure various resources block appropriately"
 }

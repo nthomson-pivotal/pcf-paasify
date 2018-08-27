@@ -56,7 +56,7 @@ resource "null_resource" "setup_opsman" {
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/setup_opsman.sh ${var.ns_blocker}"
+    command = "${path.module}/scripts/setup_opsman.sh ${var.dependency_blocker}"
 
     environment {
       PIVNET_TOKEN         = "${var.pivnet_token}"
@@ -75,4 +75,25 @@ resource "null_resource" "setup_opsman" {
     user        = "ubuntu"
     private_key = "${var.opsman_ssh_key}"
   }
+}
+
+
+resource "null_resource" "cleanup_opsman" {
+  provisioner "local-exec" {
+    command = "${path.module}/scripts/destroy_opsman.sh ${var.dependency_blocker}"
+
+    when = "destroy"
+
+    environment {
+      OM_ID       = "${var.opsman_id}"
+      OM_IP       = "${var.opsman_ip}"
+      OM_DOMAIN   = "${var.opsman_host}"
+      OM_USERNAME = "${var.opsman_user}"
+      OM_PASSWORD = "${local.opsman_password}"
+      APPS_DOMAIN = "${var.apps_domain}"
+      SYS_DOMAIN  = "${var.apps_domain}"
+    }
+  }
+
+  depends_on = ["null_resource.setup_opsman"]
 }

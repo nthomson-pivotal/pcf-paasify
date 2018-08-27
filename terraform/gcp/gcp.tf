@@ -20,6 +20,10 @@ module "gcp" {
   ssl_private_key     = "${local.cert_key}"
 }
 
+resource "null_resource" "dependency_blocker" {
+  depends_on = ["module.gcp", "module.nat", "google_dns_record_set.ns"]
+}
+
 locals {
   base_domain = "${var.env_name}.${var.dns_suffix}"
 }
@@ -84,7 +88,6 @@ module "common" {
   sys_domain  = "${module.gcp.sys_domain}"
 
   opsman_id  = "${module.gcp.ops_manager_instance_id}"
-  ns_blocker = "${google_dns_record_set.ns.name}"
 
   tiles = "${var.tiles}"
 
@@ -98,4 +101,20 @@ module "common" {
   metrics_forwarder_resource_configuration = "${data.template_file.metrics_forwarder_resource_configuration.rendered}"
 
   wavefront_token = "${var.wavefront_token}"
+
+  dependency_blocker = "${null_resource.dependency_blocker.id}"
+}
+
+resource "null_resource" "apply_common" {
+  depends_on = ["module.common"]
+
+  provisioner "local-exec" {
+    command = "om -t https://${module.gcp.ops_manager_dns} -u ${var.opsman_user} -p ${module.common.opsman_password} apply-changes"
+  }
+
+  connection {
+    host        = "${module.gcp.ops_manager_dns}"
+    user        = "ubuntu"
+    private_key = "${module.gcp.ops_manager_ssh_private_key}"
+  }
 }
