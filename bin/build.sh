@@ -4,7 +4,7 @@ set -e
 
 tf_state=$HOME/state/terraform.tfstate
 
-export TF_VAR_tiles="'[$tiles]'"
+export TF_VAR_tiles="[$tiles]"
 
 echo $TF_VAR_tiles
 
