@@ -7,9 +7,9 @@ OM_CLI_VERSION=0.37.0
 
 # Dependencies
 sudo pip install boto3
-wget -O terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+wget -q -O terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 sudo unzip terraform.zip -d /bin && rm terraform.zip
-sudo wget -O /bin/om https://github.com/pivotal-cf/om/releases/download/$OM_CLI_VERSION/om-linux && chmod +x /bin/om
+sudo wget -q -O /bin/om https://github.com/pivotal-cf/om/releases/download/$OM_CLI_VERSION/om-linux && chmod +x /bin/om
 apt-get update
 apt-get install -qq -y curl jq
 
