@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "aws" {
-  source = "github.com/pivotal-cf/terraforming-aws?ref=2c8bfc2"
+  source = "github.com/pivotal-cf/terraforming-aws?ref=08e56ea"
 
   access_key         = "${aws_iam_access_key.key.id}"
   secret_key         = "${aws_iam_access_key.key.secret}"
@@ -79,6 +79,7 @@ module "common" {
   ssl_cert                     = "${local.cert_full_chain}"
   ssl_private_key              = "${local.cert_key}"
   opsman_user                  = "${var.opsman_user}"
+  opsman_ip                    = "${module.aws.ops_manager_ip}"
   opsman_host                  = "${module.aws.ops_manager_dns}"
   opsman_ssh_key               = "${module.aws.ops_manager_ssh_private_key}"
   opsman_iaas_configuration    = "${data.template_file.iaas_configuration.rendered}"
@@ -91,6 +92,8 @@ module "common" {
 
   apps_domain = "${module.aws.apps_domain}"
   sys_domain  = "${module.aws.sys_domain}"
+
+  opsman_id  = "12345"
 
   tiles = "${var.tiles}"
 
@@ -106,4 +109,18 @@ module "common" {
   wavefront_token = "${var.wavefront_token}"
 
   dependency_blocker = "${null_resource.dependency_blocker.id}"
+}
+
+resource "null_resource" "apply_common" {
+  depends_on = ["module.common"]
+
+  provisioner "local-exec" {
+    command = "om -t https://${module.aws.ops_manager_dns} -u ${var.opsman_user} -p ${module.common.opsman_password} apply-changes"
+  }
+
+  connection {
+    host        = "${module.aws.ops_manager_dns}"
+    user        = "ubuntu"
+    private_key = "${module.aws.ops_manager_ssh_private_key}"
+  }
 }
