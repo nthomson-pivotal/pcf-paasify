@@ -13,6 +13,17 @@
       "PivnetToken":{
          "Description":"Pivnet Token to download tiles",
          "Type":"String"
+      },
+      "Tiles": {
+        "Description": "Comma-delimited list of tiles that should be pre-installed",
+        "Type": "CommaDelimitedList",
+        "Default": "mysql, rabbitmq, scs, metrics, healthwatch"
+      }
+      ,
+      "SourceRepo": {
+        "Description": "Paasify source repository",
+        "Type":"String",
+        "Default": "https://github.com/nthomson-pivotal/pcf-paasify"
       }
    },
    "Resources":{
@@ -149,11 +160,17 @@
                      "Value":{
                         "Ref":"PivnetToken"
                      }
-                  }
+                  },
+                  {
+                    "Name":"tiles",
+                    "Value":{
+                        "Fn::Sub": [ "\"${JoinedTiles}\"", { "JoinedTiles": {"Fn::Join" : [ ",", { "Ref":"Tiles" } ] }} ]
+                    }
+                 }
                ]
             },
             "Source":{
-               "Location":"https://github.com/nthomson-pivotal/pcf-paasify",
+               "Location": { "Ref" : "SourceRepo" },
                "Type":"GITHUB",
                "BuildSpec": "catalog/codebuild/buildspec.yml"
             }
@@ -223,7 +240,7 @@
                ]
             },
             "Source":{
-               "Location":"https://github.com/nthomson-pivotal/pcf-paasify",
+               "Location": { "Ref" : "SourceRepo" },
                "Type":"GITHUB",
                "BuildSpec": "catalog/codebuild/destroy-buildspec.yml"
             }
