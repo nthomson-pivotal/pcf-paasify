@@ -11,8 +11,13 @@ data "template_file" "prometheus_az_configuration" {
 resource "null_resource" "setup_prometheus" {
   depends_on = ["null_resource.setup_pas"]
 
+  provisioner "file" {
+    source      = "${path.module}/scripts/install_prometheus_dev.sh"
+    destination = "/home/ubuntu/install_prometheus_dev.sh"
+  }
+
   provisioner "remote-exec" {
-    script = "${path.module}/scripts/install_prometheus_dev.sh"
+    inline = ["/home/ubuntu/install_prometheus_dev.sh ${var.opsman_user} ${local.opsman_password}"]
   }
 
   provisioner "local-exec" {
