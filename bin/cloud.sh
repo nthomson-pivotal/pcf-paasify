@@ -12,7 +12,7 @@ if [ ! -d "$CLOUD_TF_DIR" ]; then
   exit 1
 fi
 
-if [ "$cloud" == "gcp" ]; then
+if [ "$cloud" = "gcp" ]; then
     echo "Bootstrapping Google Cloud..."
 
     export GCLOUD_ACCOUNT_NAME=$(aws ssm get-parameter --name /paasify/gcp/account_name  | jq '.Parameter.Value' -r)
