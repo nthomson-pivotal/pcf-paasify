@@ -2,8 +2,6 @@
 
 set -e
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-
 . $CODEBUILD_SRC_DIR/bin/cloud.sh
 
 tf_state=$HOME/state/terraform.tfstate

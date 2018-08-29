@@ -5,8 +5,6 @@ set -e
 TERRAFORM_VERSION=0.11.7
 OM_CLI_VERSION=0.37.0
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-
 . $CODEBUILD_SRC_DIR/bin/cloud.sh
 
 # Dependencies

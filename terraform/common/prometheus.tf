@@ -17,7 +17,7 @@ resource "null_resource" "setup_prometheus" {
   }
 
   provisioner "remote-exec" {
-    inline = ["/home/ubuntu/install_prometheus_dev.sh ${var.opsman_user} ${local.opsman_password}"]
+    inline = ["chmod +x /home/ubuntu/install_prometheus_dev.sh && /home/ubuntu/install_prometheus_dev.sh ${var.opsman_user} ${local.opsman_password}"]
   }
 
   provisioner "local-exec" {
