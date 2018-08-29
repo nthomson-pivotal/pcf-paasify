@@ -11,7 +11,7 @@ wget -q -O terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VE
 sudo unzip terraform.zip -d /bin && rm terraform.zip
 sudo wget -q -O /bin/om https://github.com/pivotal-cf/om/releases/download/$OM_CLI_VERSION/om-linux && chmod +x /bin/om
 apt-get update
-apt-get install -qq -y curl jq google-cloud-sdk
+apt-get install -qq -y curl jq
 
 # Setup state directory
 mkdir $HOME/state
