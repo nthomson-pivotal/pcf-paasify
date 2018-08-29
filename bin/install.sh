@@ -7,7 +7,7 @@ OM_CLI_VERSION=0.37.0
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-. $DIR/cloud.sh
+. $CODEBUILD_SRC_DIR/bin/cloud.sh
 
 # Dependencies
 sudo pip install boto3
