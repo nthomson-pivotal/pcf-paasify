@@ -164,7 +164,7 @@
                   {
                     "Name":"tiles",
                     "Value":{
-                        "Fn::Sub": [ "\"${JoinedTiles}\"", { "JoinedTiles": {"Fn::Join" : [ ",", { "Ref":"Tiles" } ] }} ]
+                        "Fn::Sub": [ "\"${JoinedTiles}\"", { "JoinedTiles": {"Fn::Join" : [ "\",\"", { "Ref":"Tiles" } ] }} ]
                     }
                  }
                ]
