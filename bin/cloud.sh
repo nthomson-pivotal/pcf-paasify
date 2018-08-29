@@ -35,8 +35,5 @@ if [ "$cloud" = "gcp" ]; then
     gcloud auth activate-service-account $GCLOUD_ACCOUNT_NAME \
             --key-file=/tmp/auth.json --project=$GCLOUD_PROJECT_NAME
 
-
-    gcloud compute instances list
-
-    exit 1
+    export TF_VAR_project=$GCLOUD_PROJECT_NAME
 fi
