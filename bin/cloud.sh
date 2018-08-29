@@ -11,7 +11,3 @@ if [ ! -d "$CLOUD_TF_DIR" ]; then
   echo "Cloud $cloud does not appear to be supported (Terraform directory not found"
   exit 1
 fi
-
-if [ "$cloud" == "gcp" ]; then
-    # TODO
-fi
