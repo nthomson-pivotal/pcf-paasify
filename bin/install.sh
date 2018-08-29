@@ -5,8 +5,6 @@ set -e
 TERRAFORM_VERSION=0.11.7
 OM_CLI_VERSION=0.37.0
 
-. $CODEBUILD_SRC_DIR/bin/cloud.sh
-
 # Dependencies
 sudo pip install boto3
 wget -q -O terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
@@ -18,6 +16,8 @@ apt-get install -qq -y curl jq
 # Setup state directory
 mkdir $HOME/state
 aws s3 cp s3://$env.$region.$account.paasify-state $HOME/state --recursive
+
+. $CODEBUILD_SRC_DIR/bin/cloud.sh
 
 # Init Terraform
 terraform init -input=false $CLOUD_TF_DIR
