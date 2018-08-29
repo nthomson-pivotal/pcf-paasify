@@ -31,11 +31,3 @@ locals {
   cert_full_chain = "${acme_certificate.certificate.certificate_pem}${acme_certificate.certificate.issuer_pem}"
   cert_key        = "${acme_certificate.certificate.private_key_pem}"
 }
-
-output "tls_cert" {
-  value = "${acme_certificate.certificate.certificate_pem}"
-}
-
-output "tls_key" {
-  value = "${acme_certificate.certificate.private_key_pem}"
-}
