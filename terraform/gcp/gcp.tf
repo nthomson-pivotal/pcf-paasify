@@ -87,7 +87,7 @@ module "common" {
   apps_domain = "${module.gcp.apps_domain}"
   sys_domain  = "${module.gcp.sys_domain}"
 
-  opsman_id  = "${module.gcp.ops_manager_instance_id}"
+  opsman_id = "${module.gcp.ops_manager_instance_id}"
 
   tiles = "${var.tiles}"
 
@@ -99,6 +99,8 @@ module "common" {
 
   metrics_resource_configuration           = "${data.template_file.metrics_resource_configuration.rendered}"
   metrics_forwarder_resource_configuration = "${data.template_file.metrics_forwarder_resource_configuration.rendered}"
+
+  prometheus_resource_configuration = "${data.template_file.prometheus_resource_configuration.rendered}"
 
   wavefront_token = "${var.wavefront_token}"
 

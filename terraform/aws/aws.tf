@@ -95,7 +95,7 @@ module "common" {
   apps_domain = "${module.aws.apps_domain}"
   sys_domain  = "${module.aws.sys_domain}"
 
-  opsman_id  = "12345"
+  opsman_id = "12345"
 
   tiles = "${var.tiles}"
 
@@ -107,6 +107,8 @@ module "common" {
 
   metrics_resource_configuration           = "${data.template_file.metrics_resource_configuration.rendered}"
   metrics_forwarder_resource_configuration = "${data.template_file.metrics_forwarder_resource_configuration.rendered}"
+
+  prometheus_resource_configuration = "${data.template_file.prometheus_resource_configuration.rendered}"
 
   wavefront_token = "${var.wavefront_token}"
 
