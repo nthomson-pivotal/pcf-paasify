@@ -24,6 +24,12 @@
         "Description": "Paasify source repository",
         "Type":"String",
         "Default": "https://github.com/nthomson-pivotal/pcf-paasify"
+      },
+      "Cloud" : {
+        "Type" : "String",
+        "Default" : "aws",
+        "AllowedValues" : ["aws", "gcp"],
+        "Description" : "The cloud provider on which the environment will be provisioned"
       }
    },
    "Resources":{
@@ -166,6 +172,12 @@
                     "Value":{
                         "Fn::Sub": [ "\"${JoinedTiles}\"", { "JoinedTiles": {"Fn::Join" : [ "\",\"", { "Ref":"Tiles" } ] }} ]
                     }
+                 },
+                 {
+                    "Name":"cloud",
+                    "Value":{
+                       "Ref":"Cloud"
+                    }
                  }
                ]
             },
@@ -235,6 +247,12 @@
                      "Name":"pivnet_token",
                      "Value":{
                         "Ref":"PivnetToken"
+                     }
+                  },
+                  {
+                     "Name":"cloud",
+                     "Value":{
+                        "Ref":"Cloud"
                      }
                   }
                ]
