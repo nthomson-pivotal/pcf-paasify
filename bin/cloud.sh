@@ -13,5 +13,5 @@ if [ ! -d "$CLOUD_TF_DIR" ]; then
 fi
 
 if [ "$cloud" == "gcp" ]; then
-
+    # TODO
 fi
