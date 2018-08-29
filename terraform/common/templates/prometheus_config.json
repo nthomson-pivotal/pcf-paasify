@@ -1,0 +1,5 @@
+{
+    ".properties.grafana_allow_anonymous_viewer_access": {
+      "value": false
+    }
+}
