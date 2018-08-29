@@ -25,7 +25,7 @@ if [ "$cloud" = "gcp" ]; then
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 
     # Update the package list and install the Cloud SDK
-    apt-get update && sudo apt-get install google-cloud-sdk
+    apt-get update && sudo apt-get install -qq -y google-cloud-sdk
 
     export GCLOUD_ACCOUNT_NAME=$(aws ssm get-parameter --name /paasify/gcp/account_name  | jq '.Parameter.Value' -r)
     export GCLOUD_PROJECT_NAME=$(aws ssm get-parameter --name /paasify/gcp/project_name  | jq '.Parameter.Value' -r)
