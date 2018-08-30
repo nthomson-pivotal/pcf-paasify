@@ -27,13 +27,13 @@ if [ "$cloud" = "gcp" ]; then
     # Update the package list and install the Cloud SDK
     apt-get update && sudo apt-get install -qq -y google-cloud-sdk
 
-    export GCLOUD_ACCOUNT_NAME=$(aws ssm get-parameter --name /paasify/gcp/account_name  | jq '.Parameter.Value' -r)
-    export GCLOUD_PROJECT_NAME=$(aws ssm get-parameter --name /paasify/gcp/project_name  | jq '.Parameter.Value' -r)
+    export GCLOUD_ACCOUNT=$(aws ssm get-parameter --name /paasify/gcp/account_name  | jq '.Parameter.Value' -r)
+    export GCLOUD_PROJECT=$(aws ssm get-parameter --name /paasify/gcp/project_name  | jq '.Parameter.Value' -r)
 
-    aws ssm get-parameter --name /paasify/gcp/auth.json --with-decryption  | jq '.Parameter.Value' -r > /tmp/auth.json
+    export GCLOUD_KEYFILE_JSON=$(aws ssm get-parameter --name /paasify/gcp/auth.json --with-decryption  | jq '.Parameter.Value' -r)
 
-    gcloud auth activate-service-account $GCLOUD_ACCOUNT_NAME \
-            --key-file=/tmp/auth.json --project=$GCLOUD_PROJECT_NAME
+    #gcloud auth activate-service-account $GCLOUD_ACCOUNT_NAME \
+    #        --key-file=/tmp/auth.json --project=$GCLOUD_PROJECT
 
     export TF_VAR_project=$GCLOUD_PROJECT_NAME
 fi
