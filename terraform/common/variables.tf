@@ -64,6 +64,10 @@ variable "pivnet_token" {
   type = "string"
 }
 
+variable "pas_product_configuration" {
+  type = "string"
+}
+
 variable "pas_resource_configuration" {
   type = "string"
 }

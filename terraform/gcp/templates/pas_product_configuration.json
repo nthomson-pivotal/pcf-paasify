@@ -1,0 +1,28 @@
+{
+    ".properties.system_blobstore": {
+        "value": "external_gcs"
+    },
+    ".properties.system_blobstore.external_gcs.buildpacks_bucket": {
+        "value": "${buildpacks_bucket}"
+    },
+    ".properties.system_blobstore.external_gcs.droplets_bucket": {
+        "value": "${droplets_bucket}"
+    },
+    ".properties.system_blobstore.external_gcs.packages_bucket": {
+        "value": "${packages_bucket}"
+    },
+    ".properties.system_blobstore.external_gcs.resources_bucket": {
+        "value": "${resources_bucket}"
+    },
+    ".properties.system_blobstore.external_gcs_service_account.project_id": {
+        "value": "${project}"
+    },
+    ".properties.system_blobstore.external_gcs_service_account.service_account_email": {
+        "value": "${service_account_email}"
+    },
+    ".properties.system_blobstore.external_gcs_service_account.service_account_json_key": {
+        "value": {
+            "secret": "${service_account_key}"
+        }
+    }
+}

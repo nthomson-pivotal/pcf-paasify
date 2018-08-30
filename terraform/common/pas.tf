@@ -37,6 +37,7 @@ resource "null_resource" "setup_pas" {
       OM_USERNAME    = "${var.opsman_user}"
       OM_PASSWORD    = "${local.opsman_password}"
       PAS_CONFIG     = "${data.template_file.pas_configuration.rendered}"
+      PAS_CUSTOM_CONFIG     = "${var.pas_product_configuration}"
       PAS_AZ_CONFIG  = "${data.template_file.pas_az_configuration.rendered}"
       PAS_RES_CONFIG = "${var.pas_resource_configuration}"
     }

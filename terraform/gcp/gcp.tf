@@ -52,16 +52,6 @@ data "template_file" "iaas_configuration" {
   }
 }
 
-data "template_file" "pas_resource_configuration" {
-  template = "${chomp(file("${path.module}/templates/pas_resource_configuration.json"))}"
-
-  vars {
-    ssh_lb_name    = "${module.gcp.ssh_lb_name}"
-    ws_router_pool = "${module.gcp.ws_router_pool}"
-    web_lb_name    = "${module.gcp.http_lb_backend_name}"
-  }
-}
-
 module "common" {
   source = "../common"
 
@@ -82,6 +72,7 @@ module "common" {
 
   pivnet_token = "${var.pivnet_token}"
 
+  pas_product_configuration = "${data.template_file.pas_product_configuration.rendered}"
   pas_resource_configuration = "${data.template_file.pas_resource_configuration.rendered}"
 
   apps_domain = "${module.gcp.apps_domain}"
