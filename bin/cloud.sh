@@ -15,10 +15,10 @@ fi
 if [ "$cloud" = "gcp" ]; then
     echo "Bootstrapping Google Cloud..."
 
-    #export GCLOUD_ACCOUNT=$(aws ssm get-parameter --name /paasify/gcp/account_name  | jq '.Parameter.Value' -r)
-    export GCLOUD_PROJECT=$(aws ssm get-parameter --name /paasify/gcp/project_name  | jq '.Parameter.Value' -r)
+    #export GCLOUD_ACCOUNT=$(aws ssm get-parameter --name /paasify/gcp/account_name | jq '.Parameter.Value' -r)
+    export GCLOUD_PROJECT=$(aws ssm get-parameter --name /paasify/gcp/project_name | jq '.Parameter.Value' -r)
 
-    export GCLOUD_KEYFILE_JSON=$(aws ssm get-parameter --name /paasify/gcp/auth.json --with-decryption  | jq '.Parameter.Value' -r)
+    export GCLOUD_KEYFILE_JSON=$(aws ssm get-parameter --name /paasify/gcp/auth.json --with-decryption | tr '\n' ' ')
 
     export TF_VAR_project=$GCLOUD_PROJECT_NAME
 fi
