@@ -178,6 +178,10 @@
                     "Value":{
                        "Ref":"Cloud"
                     }
+                 },
+                 {
+                    "Name":"command",
+                    "Value": "apply"
                  }
                ]
             },
