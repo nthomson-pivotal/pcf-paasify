@@ -1,6 +1,6 @@
 {
     ".properties.system_blobstore": {
-        "value": "external_gcs"
+        "value": "external_gcs_service_account"
     },
     ".properties.system_blobstore.external_gcs.buildpacks_bucket": {
         "value": "${buildpacks_bucket}"
