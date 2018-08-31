@@ -22,7 +22,7 @@
     },
     ".properties.system_blobstore.external_gcs_service_account.service_account_json_key": {
         "value": {
-            "secret": "${service_account_key}"
+            "secret": ${service_account_key}
         }
     }
 }
