@@ -7,7 +7,7 @@ phases:
   build:
     commands:
       - . $CODEBUILD_SRC_DIR/bin/destroy.sh
-      - aws s3 rm s3://$env.$region.$account.paasify-state --recursive
+      - aws s3 rm s3://$state_bucket --recursive
   post_build:
     commands:
       - echo 'None'

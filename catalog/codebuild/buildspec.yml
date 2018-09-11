@@ -9,4 +9,4 @@ phases:
       - . $CODEBUILD_SRC_DIR/bin/build.sh
   post_build:
     commands:
-      - aws s3 cp $HOME/state s3://$env.$region.$account.paasify-state --recursive
+      - aws s3 cp $HOME/state s3://$state_bucket --recursive

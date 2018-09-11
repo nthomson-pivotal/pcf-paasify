@@ -15,7 +15,7 @@ apt-get install -qq -y curl jq
 
 # Setup state directory
 mkdir $HOME/state
-aws s3 cp s3://$env.$region.$account.paasify-state $HOME/state --recursive
+aws s3 cp s3://$state_bucket $HOME/state --recursive
 
 . $CODEBUILD_SRC_DIR/bin/cloud.sh
 

@@ -138,15 +138,9 @@
                "Image":"aws/codebuild/docker:17.09.0",
                "EnvironmentVariables":[
                   {
-                     "Name":"region",
+                     "Name":"state_bucket",
                      "Value":{
-                        "Ref":"AWS::Region"
-                     }
-                  },
-                  {
-                     "Name":"account",
-                     "Value":{
-                        "Ref":"AWS::AccountId"
+                        "Ref":"S3StateAndSoftware"
                      }
                   },
                   {
@@ -224,16 +218,10 @@
                "Image":"aws/codebuild/docker:17.09.0",
                "EnvironmentVariables":[
                   {
-                     "Name":"region",
-                     "Value":{
-                        "Ref":"AWS::Region"
-                     }
-                  },
-                  {
-                     "Name":"account",
-                     "Value":{
-                        "Ref":"AWS::AccountId"
-                     }
+                      "Name":"state_bucket",
+                      "Value":{
+                        "Ref":"S3StateAndSoftware"
+                      }
                   },
                   {
                      "Name":"env",
