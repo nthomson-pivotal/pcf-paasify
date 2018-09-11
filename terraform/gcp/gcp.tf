@@ -18,6 +18,9 @@ module "gcp" {
   zones               = ["${lookup(var.az1, var.region)}", "${lookup(var.az2, var.region)}", "${lookup(var.az3, var.region)}"]
   ssl_cert            = "${local.cert_full_chain}"
   ssl_private_key     = "${local.cert_key}"
+
+  # This is too small by default
+  management_cidr = "10.0.0.0/24"
 }
 
 resource "null_resource" "dependency_blocker" {
@@ -69,9 +72,6 @@ module "common" {
   opsman_ssh_key               = "${module.gcp.ops_manager_ssh_private_key}"
   opsman_iaas_configuration    = "${data.template_file.iaas_configuration.rendered}"
   opsman_network_configuration = "${data.template_file.network_configuration.rendered}"
-
-  # This is too small by default
-  management_cidr = "10.0.0.0/24"
 
   pivnet_token = "${var.pivnet_token}"
 
