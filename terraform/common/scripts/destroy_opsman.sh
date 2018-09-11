@@ -9,4 +9,4 @@ om -k -t https://$OM_DOMAIN -u $OM_USERNAME -p $OM_PASSWORD --format json staged
 
 sleep 10
 
-om -k -t https://$OM_DOMAIN -u $OM_USERNAME -p $OM_PASSWORD apply-changes
+#om -k -t https://$OM_DOMAIN -u $OM_USERNAME -p $OM_PASSWORD apply-changes
