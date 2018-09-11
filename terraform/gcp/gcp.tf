@@ -70,6 +70,9 @@ module "common" {
   opsman_iaas_configuration    = "${data.template_file.iaas_configuration.rendered}"
   opsman_network_configuration = "${data.template_file.network_configuration.rendered}"
 
+  # This is too small by default
+  management_cidr = "10.0.0.0/24"
+
   pivnet_token = "${var.pivnet_token}"
 
   pas_product_configuration = "${data.template_file.pas_product_configuration.rendered}"
