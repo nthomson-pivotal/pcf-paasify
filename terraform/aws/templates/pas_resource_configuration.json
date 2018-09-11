@@ -8,5 +8,8 @@
     "elb_names": [
       "${web_elb_name}"
     ]
+  },
+  "blobstore": {
+    "instances": 0
   }
 }

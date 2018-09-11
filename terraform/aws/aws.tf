@@ -60,15 +60,6 @@ data "template_file" "iaas_configuration" {
   }
 }
 
-data "template_file" "pas_resource_configuration" {
-  template = "${chomp(file("${path.module}/templates/pas_resource_configuration.json"))}"
-
-  vars {
-    ssh_elb_name = "${module.aws.ssh_elb_name}"
-    web_elb_name = "${module.aws.web_elb_name}"
-  }
-}
-
 module "common" {
   source = "../common"
 
@@ -89,7 +80,9 @@ module "common" {
 
   pivnet_token = "${var.pivnet_token}"
 
+  pas_product_configuration = "${data.template_file.pas_product_configuration.rendered}"
   pas_resource_configuration = "${data.template_file.pas_resource_configuration.rendered}"
+
   logger_endpoint_port       = "4443"
 
   apps_domain = "${module.aws.apps_domain}"
