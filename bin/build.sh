@@ -13,6 +13,8 @@ export TF_VAR_tiles="[$tiles]"
 
 if [ "$command" = "plan" ]; then
     terraform plan -state=$tf_state $CLOUD_TF_DIR
+elif [ "$command" = "output" ]; then
+    terraform output -state=$tf_state
 else
     terraform apply -auto-approve -input=false -state=$tf_state $CLOUD_TF_DIR
 fi
