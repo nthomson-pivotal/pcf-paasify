@@ -3,8 +3,8 @@ data "template_file" "pas_product_configuration" {
 
   vars {
     project    = "${module.gcp.pas_blobstore_service_account_project}"
-    service_account_email = "${module.gcp.pas_blobstore_service_account_email}"
-    service_account_key    = "${jsonencode(module.gcp.pas_blobstore_gcp_service_account_key)}"
+    service_account_email = "${base64decode(google_service_account.account.email)}"
+    service_account_key    = "${jsonencode(base64decode(google_service_account_key.key.private_key))}"
     droplets_bucket = "${module.gcp.droplets_bucket}"
     packages_bucket = "${module.gcp.packages_bucket}"
     buildpacks_bucket = "${module.gcp.buildpacks_bucket}"
