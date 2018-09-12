@@ -9,5 +9,8 @@
       "tcp:${ws_router_pool}",
       "http:${web_lb_name}"
     ]
+  },
+  "blobstore": {
+    "instances": 0
   }
 }
