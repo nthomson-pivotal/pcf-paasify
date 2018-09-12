@@ -1,3 +1,4 @@
+# TODO: Enabled S3 encryption for filestore
 data "template_file" "pas_product_configuration" {
   template = "${chomp(file("${path.module}/templates/pas_product_configuration.json"))}"
 

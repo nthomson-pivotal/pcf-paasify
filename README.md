@@ -14,10 +14,30 @@ The main features provided by the install are:
 - Small Footprint PAS
 - Several tiles pre-installed with reduced VM footprint
 - DNS that is configured without intervention
-- Valid SSL certificates for both OpsManager and PAS
+- Valid SSL certificates for both OpsManager and PAS via Lets Encrypt
 - Working configuration for `cf logs` and `cf ssh`
-- AWS Service Catalog configurations that provide CodeBuild job templates
+- Leverages cloud-provided blobstores by default
+- AWS CloudFormation configurations that provide CodeBuild job templates
 - All default passwords are randomly generated
+
+Pending work includes:
+
+- Support additional tiles (Redis, PCC, SSO)
+- Pre-install cloud-specific service brokers
+- Install cloud-specific logging nozzles where available
+- Provide easy hooks to AWS SES for outbound email support (notifications etc)
+- Ability to specify syslog output for log aggregation (Papertrail etc)
+- Support optionally hard-coded OpsManager password instead of always randomly generating
+
+### Why Not Concourse/PCF-Pipelines?
+
+This project is *NOT* intended to illustrate best practices with regards to installing PCF as advocated by Pivotal, but rather to support a very specific set of use-cases:
+
+- I often require PCF installations on my own cloud infrastructure on short notice (demo, experiments)
+- I neither want to build/maintain/pay for a Concourse setup nor start/stop one whenever I need it to reduce costs
+- PCF Pipelines are architected for larger-scale systems, whereas I have optimized for a one-click setup
+
+Leveraging AWS CodeBuild provides a serverless solution that allows aggressive cost control with a fire-and-forget interface.
 
 ## Usage
 
@@ -25,24 +45,30 @@ There are several ways to run Paasify.
 
 ### Running with Terraform
 
-Paasify can be run directly as a Terraform module. For example, the following example leverages GCP:
+Paasify can be run directly as a Terraform module. The pre-requisites for this are:
+
+- Terraform must be installed locally
+- You must have authentication setup locally for the appropriate cloud that Terraform leverage (see Terraform provider docs)
+
+The following example Terraform configuration imports Paasify as a module targetting GCP:
 
 ```
 module "paasify" {
-  source = "github.com/nthomson-pivotal/pcf-paasify/terraform/gcp"
+  source = "github.com/nthomson-pivotal/pcf-paasify/terraform/aws"
 
-  env_name     = "my-paasify-env"
-  project      = "gcp-project-name"
-  dns_suffix   = "gcp.paasify.org"
+  env_name     = "test-env"
+  dns_suffix   = "aws.paasify.org"
   pivnet_token = "<pivnet token>"
 }
 ```
 
 Currently the implementation only allows authentication already configured appropriately on the host machine. Explicitly passing in credentials for the various Terraform cloud providers is not supported.
 
-### Running as AWS Service Catalog
+### Running using AWS CodeBuild
 
-TODO
+This repository contains a CloudFormation template for creating AWS CodeBuild projects to build and destroy a setup. In order to create a CloudFormation stack using this template execute a command like the following:
+
+aws cloudformation create-stack --stack-name test-env --template-body file://catalog/cloudformation/cf.json --parameters ParameterKey=EnvName,ParameterValue=test-env ParameterKey=DnsSuffix,ParameterValue=aws.paasify.org ParameterKey=PivnetToken,ParameterValue=<pivnet token> ParameterKey=Cloud,ParameterValue=aws
 
 ## Reference
 
@@ -50,7 +76,7 @@ The following sections provide more detailed information regarding the system wh
 
 ### Tiles Installed
 
-These tiles are installed by default:
+These tiles are supported (`*` = not installed by default):
 
 - MySQL v2
 - RabbitMQ
@@ -58,6 +84,7 @@ These tiles are installed by default:
 - PCF Metrics
 - Metrics Forwarder
 - Healthwatch
+- Prometheus
 
 The latest stemcell supported by each tile will automatically be uploaded to OpsManager.
 
