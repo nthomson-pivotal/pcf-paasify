@@ -27,5 +27,8 @@
     },
     ".properties.system_blobstore.external.region": {
         "value": "${region}"
+    },
+    ".properties.system_blobstore.external.endpoint": {
+        "value": "https://s3.${region}.amazonaws.com"
     }
 }
