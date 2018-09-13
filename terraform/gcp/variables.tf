@@ -71,3 +71,8 @@ variable "wavefront_token" {
   type    = "string"
   default = ""
 }
+
+variable "auto_apply" {
+  type    = "string"
+  default = "1"
+}

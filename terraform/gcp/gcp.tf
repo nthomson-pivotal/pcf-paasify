@@ -108,6 +108,8 @@ resource "null_resource" "apply_common" {
     command = "om -t https://${module.gcp.ops_manager_dns} -u ${var.opsman_user} -p ${module.common.opsman_password} apply-changes"
   }
 
+  count = "${var.auto_apply == "1" ? 1 : 0}"
+
   connection {
     host        = "${module.gcp.ops_manager_dns}"
     user        = "ubuntu"
