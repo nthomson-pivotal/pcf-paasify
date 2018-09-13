@@ -176,6 +176,10 @@
                  {
                     "Name":"command",
                     "Value": "apply"
+                 },
+                 {
+                    "Name":"auto_apply",
+                    "Value": "1"
                  }
                ]
             },
