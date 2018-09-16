@@ -9,3 +9,7 @@ output "opsman_user" {
 output "opsman_password" {
   value = "${module.common.opsman_password}"
 }
+
+output "vpc_id" {
+  value = "${module.aws.vpc_id}"
+}
