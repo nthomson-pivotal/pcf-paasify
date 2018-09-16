@@ -16,6 +16,7 @@ module "aws" {
   availability_zones = ["${lookup(var.az1, var.region)}", "${lookup(var.az2, var.region)}", "${lookup(var.az3, var.region)}"]
   ssl_cert           = "${local.cert_full_chain}"
   ssl_private_key    = "${local.cert_key}"
+  vpc_cidr           = "${var.vpc_cidr}"
 }
 
 resource "null_resource" "dependency_blocker" {
@@ -63,13 +64,13 @@ data "template_file" "iaas_configuration" {
 module "common" {
   source = "../common"
 
-  env_name                     = "${var.env_name}"
-  iaas                         = "aws"
-  region                       = "${var.region}"
-  az1                          = "${lookup(var.az1, var.region)}"
-  az2                          = "${lookup(var.az2, var.region)}"
-  az3                          = "${lookup(var.az3, var.region)}"
-  vpc_cidr                     = "${var.vpc_cidr}"
+  env_name = "${var.env_name}"
+  iaas     = "aws"
+  region   = "${var.region}"
+  az1      = "${lookup(var.az1, var.region)}"
+  az2      = "${lookup(var.az2, var.region)}"
+  az3      = "${lookup(var.az3, var.region)}"
+
   ssl_cert                     = "${local.cert_full_chain}"
   ssl_private_key              = "${local.cert_key}"
   opsman_user                  = "${var.opsman_user}"
@@ -81,10 +82,10 @@ module "common" {
 
   pivnet_token = "${var.pivnet_token}"
 
-  pas_product_configuration = "${data.template_file.pas_product_configuration.rendered}"
+  pas_product_configuration  = "${data.template_file.pas_product_configuration.rendered}"
   pas_resource_configuration = "${data.template_file.pas_resource_configuration.rendered}"
 
-  logger_endpoint_port       = "4443"
+  logger_endpoint_port = "4443"
 
   apps_domain = "${module.aws.apps_domain}"
   sys_domain  = "${module.aws.sys_domain}"
