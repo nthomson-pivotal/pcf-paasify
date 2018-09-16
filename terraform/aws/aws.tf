@@ -69,6 +69,7 @@ module "common" {
   az1                          = "${lookup(var.az1, var.region)}"
   az2                          = "${lookup(var.az2, var.region)}"
   az3                          = "${lookup(var.az3, var.region)}"
+  vpc_cidr                     = "${var.vpc_cidr}"
   ssl_cert                     = "${local.cert_full_chain}"
   ssl_private_key              = "${local.cert_key}"
   opsman_user                  = "${var.opsman_user}"

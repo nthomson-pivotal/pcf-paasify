@@ -12,6 +12,7 @@ variable "az1" {
 
   default = {
     "us-west-2" = "us-west-2a"
+    "us-east-1" = "us-east-1a"
   }
 }
 
@@ -20,6 +21,7 @@ variable "az2" {
 
   default = {
     "us-west-2" = "us-west-2b"
+    "us-east-1" = "us-east-1b"
   }
 }
 
@@ -28,6 +30,7 @@ variable "az3" {
 
   default = {
     "us-west-2" = "us-west-2c"
+    "us-east-1" = "us-east-1c"
   }
 }
 
@@ -71,4 +74,9 @@ variable "wavefront_token" {
 variable "auto_apply" {
   type    = "string"
   default = "1"
+}
+
+variable "vpc_cidr" {
+  type    = "string"
+  default = "10.0.0.0/16"
 }
