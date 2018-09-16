@@ -39,6 +39,7 @@ variable "opsman_ami" {
 
   default = {
     "us-west-2" = "ami-2479e85c"
+    "us-east-1" = "ami-f233f58f"
   }
 }
 
