@@ -13,3 +13,11 @@ output "opsman_password" {
 output "vpc_id" {
   value = "${module.aws.vpc_id}"
 }
+
+output "apps_domain" {
+  value = "${module.aws.apps_domain}"
+}
+
+output "sys_domain" {
+  value = "${module.aws.sys_domain}"
+}
