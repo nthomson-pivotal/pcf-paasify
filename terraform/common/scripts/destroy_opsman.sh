@@ -15,8 +15,8 @@ om -k -t https://$OM_DOMAIN -u $OM_USERNAME -p $OM_PASSWORD --format json staged
 sleep 10
 
 # Only apply changes if we unstaged at least one product
-if [ "$counter" -gt "0" ]; then
+#if [ "$counter" -gt "0" ]; then
   om -k -t https://$OM_DOMAIN -u $OM_USERNAME -p $OM_PASSWORD apply-changes
-else
-  echo "Skipping apply changes..."
-fi
+#else
+#  echo "Skipping apply changes..."
+#fi
