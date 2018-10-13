@@ -5,7 +5,7 @@ data "template_file" "management_subnets" {
 
   vars {
     id = "${module.aws.management_subnet_ids[count.index]}"
-    dns = "${cidrhost("10.0.0.0/16", 2)}"
+    dns = "${cidrhost(var.vpc_cidr, 2)}"
     cidr = "${module.aws.management_subnet_cidrs[count.index]}"
     gateway = "${cidrhost(module.aws.management_subnet_cidrs[count.index], 1)}"
     reserved = "${cidrhost(module.aws.management_subnet_cidrs[count.index], 0) }-${cidrhost(module.aws.management_subnet_cidrs[count.index], 9) }"
@@ -21,7 +21,7 @@ data "template_file" "pas_subnets" {
 
   vars {
     id = "${module.aws.pas_subnet_ids[count.index]}"
-    dns = "${cidrhost("10.0.0.0/16", 2)}"
+    dns = "${cidrhost(var.vpc_cidr, 2)}"
     cidr = "${module.aws.pas_subnet_cidrs[count.index]}"
     gateway = "${cidrhost(module.aws.pas_subnet_cidrs[count.index], 1)}"
     reserved = "${cidrhost(module.aws.pas_subnet_cidrs[count.index], 0) }-${cidrhost(module.aws.pas_subnet_cidrs[count.index], 9) }"
@@ -37,7 +37,7 @@ data "template_file" "services_subnets" {
 
   vars {
     id = "${module.aws.services_subnet_ids[count.index]}"
-    dns = "${cidrhost("10.0.0.0/16", 2)}"
+    dns = "${cidrhost(var.vpc_cidr, 2)}"
     cidr = "${module.aws.services_subnet_cidrs[count.index]}"
     gateway = "${cidrhost(module.aws.services_subnet_cidrs[count.index], 1)}"
     reserved = "${cidrhost(module.aws.services_subnet_cidrs[count.index], 0) }-${cidrhost(module.aws.services_subnet_cidrs[count.index], 9) }"
