@@ -9,13 +9,17 @@ tf_state=$HOME/state/terraform.tfstate
 export TF_VAR_env_name=$env 
 export TF_VAR_dns_suffix=$dns_suffix 
 export TF_VAR_pivnet_token=$pivnet_token
-export TF_VAR_tiles="[$tiles]"
+
+if [ ! -z "$tiles" ]; then
+  export TF_VAR_tiles="[$tiles]"
+fi
+
 export TF_VAR_auto_apply=$auto_apply
 
 if [ "$command" = "plan" ]; then
-    terraform plan -state=$tf_state $CLOUD_TF_DIR
+  terraform plan -state=$tf_state $CLOUD_TF_DIR
 elif [ "$command" = "output" ]; then
-    terraform output -state=$tf_state
+  terraform output -state=$tf_state
 else
-    terraform apply -auto-approve -input=false -state=$tf_state $CLOUD_TF_DIR
+  terraform apply -auto-approve -input=false -state=$tf_state $CLOUD_TF_DIR
 fi
