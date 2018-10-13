@@ -12,6 +12,8 @@ export TF_VAR_pivnet_token=$pivnet_token
 
 if [ ! -z "$tiles" ]; then
   export TF_VAR_tiles="[$tiles]"
+else
+  export TF_VAR_tiles="[]"
 fi
 
 export TF_VAR_auto_apply=$auto_apply
