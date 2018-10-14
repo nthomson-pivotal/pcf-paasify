@@ -34,7 +34,6 @@ resource "null_resource" "setup_redis" {
       OM_PASSWORD         = "${local.opsman_password}"
       PRODUCT_CONFIG      = "${data.template_file.redis_product_configuration.rendered}"
       AZ_CONFIG           = "${data.template_file.redis_az_configuration.rendered}"
-      redis_RES_CONFIG = "${var.redis_resource_configuration}"
     }
   }
 
