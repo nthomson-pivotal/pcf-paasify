@@ -37,7 +37,7 @@ resource "null_resource" "setup_redis" {
     }
   }
 
-  count = "${contains(var.tiles, "redis")}"
+  count = "${contains(var.tiles, "redis") ? 1 : 0}"
 
   connection {
     host        = "${var.opsman_host}"
