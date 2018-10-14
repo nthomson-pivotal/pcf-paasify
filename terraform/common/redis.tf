@@ -22,7 +22,7 @@ resource "null_resource" "setup_redis" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} p-redis 1.13.4 p-redis-1.13.4.pivotal ${var.iaas}"]
+    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} p-redis 1.12.6 p-redis-1.12.6.pivotal ${var.iaas}"]
   }
 
   provisioner "local-exec" {

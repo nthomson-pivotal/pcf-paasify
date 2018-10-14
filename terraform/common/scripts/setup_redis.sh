@@ -2,4 +2,4 @@
 
 set -e
 
-om -k -t https://$OM_DOMAIN stage-product -p p-redis -v 1.13.4
+om -k -t https://$OM_DOMAIN stage-product -p p-redis -v 1.12.6
