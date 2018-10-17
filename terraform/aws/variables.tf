@@ -34,13 +34,14 @@ variable "az3" {
   }
 }
 
-variable "opsman_ami" {
-  type = "map"
+variable "opsman_version" {
+  type    = "string"
+  default = "2.1"
+}
 
-  default = {
-    "us-west-2" = "ami-2479e85c"
-    "us-east-1" = "ami-f233f58f"
-  }
+variable "opsman_build" {
+  type    = "string"
+  default = "377"
 }
 
 variable "dns_suffix" {
