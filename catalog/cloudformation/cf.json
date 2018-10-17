@@ -23,7 +23,7 @@
       "SourceRepo": {
         "Description": "Paasify source repository",
         "Type":"String",
-        "Default": "https://github.com/nthomson-pivotal/pcf-paasify"
+        "Default": "https://github.com/nthomson-pivotal/pcf-paasify#2.1"
       },
       "Cloud" : {
         "Type" : "String",
