@@ -1,11 +1,11 @@
 # PCF Paasify
 
-Paasify is a set of super-opinionated Terraform scripts and supporting utilities for creating PCF installations in the various supported IaaS providers. This is mainly intended for demo, testing or PoC setups where the installer has complete control.
+Paasify is a set of super-opinionated Terraform scripts and supporting utilities for creating Pivotal CloudFoundry foundations in the various supported IaaS providers. Where this utility excels in the ability to quickly setup PCF foundations for experiments or testing, and is powerful in scenarios that involve multiple foundations (multi-region or multi-cloud) as it is capable of creating these in a single command due to its composability. Other scenarios where it becomes useful are demos or proof-of-concept exercises where the focus is not on the installation procedure itself, nor is the target a "production-grade" setup.
 
 Some of the opinions of this project are:
 
 - A very specific DNS naming convention and control structure (see below for more details)
-- SSL certificates generated through LetsEncrypt
+- SSL certificates generated through LetsEncrypt via DNS verification
 
 The core of the functionality is provided by the Pivotal-authored Terraform configuration files. These projects are imported as Terraform modules and pinned to specific versions to help ensure long-term compatibility.
 
@@ -69,6 +69,18 @@ Currently the implementation only allows authentication already configured appro
 This repository contains a CloudFormation template for creating AWS CodeBuild projects to build and destroy a setup. In order to create a CloudFormation stack using this template execute a command like the following:
 
 aws cloudformation create-stack --stack-name test-env --template-body file://catalog/cloudformation/cf.json --parameters ParameterKey=EnvName,ParameterValue=test-env ParameterKey=DnsSuffix,ParameterValue=aws.paasify.org ParameterKey=PivnetToken,ParameterValue=<pivnet token> ParameterKey=Cloud,ParameterValue=aws
+
+### Cleaning Up
+
+If you're having issues cleaning up, take a look at the [leftovers](https://github.com/genevieve/leftovers) utility.
+
+**WARNING: Use this utility with care**
+
+For example, if you created an environment with a name of `test-env` then you could run the following command:
+
+```leftovers --filter test-env```
+
+Its recommended to use the `--dry-run` option first to ensure you don't delete anything unintended.
 
 ## Reference
 
