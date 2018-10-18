@@ -13,7 +13,6 @@ OM_VERSION=0.34.0
 
 pivnet_api_token=$1
 
-# Install and configure dnsmasq so our fake domains work
 sudo apt-get -qq update
 sudo apt-get -qq install -y jq
 

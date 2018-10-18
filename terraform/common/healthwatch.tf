@@ -21,11 +21,11 @@ resource "null_resource" "setup_healthwatch" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} p-healthwatch 1.1.8 p-healthwatch-1.1.8-build.1.pivotal ${var.iaas}"]
+    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} p-healthwatch ${lookup(var.tile_versions, "healthwatch")} pivotal ${var.iaas}"]
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/setup_healthwatch.sh"
+    command = "${path.module}/scripts/setup_healthwatch.sh "
 
     environment {
       OM_DOMAIN                  = "${var.opsman_host}"
