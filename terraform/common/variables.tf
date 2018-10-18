@@ -94,13 +94,13 @@ variable "tile_versions" {
   type = "map"
 
   default = {
-    "mysql" = "2.2.4"
+    "mysql" = "2.3.1 "
     "redis" = "1.13.4"
-    "rabbit" = "1.11.12"
-    "scs" = "1.5.2"
-    "metrics" = "1.4.5"
-    "metric-forwarder" = "1.11.12"
-    "healthwatch" = "1.1.8"
+    "rabbit" = "1.13.8"
+    "scs" = "2.0.2"
+    "metrics" = "1.5.0"
+    "metric-forwarder" = "1.11.3"
+    "healthwatch" = "1.3.2"
     "wavefront" = "0.9.3"
   }
 }
