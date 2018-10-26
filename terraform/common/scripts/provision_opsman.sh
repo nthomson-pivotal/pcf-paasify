@@ -14,7 +14,7 @@ OM_VERSION=0.34.0
 pivnet_api_token=$1
 
 sudo apt-get -qq update
-sudo apt-get -qq install -y jq
+sudo apt-get -qq install -y jq nano
 
 # Install pivnet CLI
 echo 'Downloading pivnet CLI...'
