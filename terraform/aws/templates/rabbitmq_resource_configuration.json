@@ -2,7 +2,7 @@
   "rabbitmq-server": {
     "instances": 3,
     "instance_type": {
-      "id": "t2.medium"
+      "id": "m4.large"
     }
   }
 }
