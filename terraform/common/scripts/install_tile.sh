@@ -58,12 +58,17 @@ echo "Staging product version $om_version for $om_product in OM available produc
 om -k -t https://localhost stage-product -p $om_product -v $om_version
 
 echo 'Looking up stemcell dependency...'
-stemcell=$(pivnet release-dependencies -p $product_slug -r $version | grep -m 1 Stemcells | cut -d '|' -f 3 | awk '{$1=$1};1')
 
-if [ -z "$stemcell" ]; then
+stemcell_json=$(pivnet release-dependencies -p $product_slug -r $version --format json  | jq -r "[.[] | select(.release.product.slug | contains(\"stemcell\"))][0]")
+
+if [ -z "$stemcell_json" ]; then
   echo "Couldn't find stemcell dependency"
   exit 1
 else
-  echo "Installing stemcell $stemcell for $iaas..."
-  install_stemcell $om_username $om_password $stemcell $iaas
+
+  stemcell_slug=$(echo $stemcell_json | jq -r ".release.product.slug")
+  stemcell_version=$(echo $stemcell_json | jq -r ".release.version")
+
+  echo "Installing $stemcell_slug v$stemcell_version for $iaas..."
+  install_stemcell $om_username $om_password $stemcell_slug $stemcell_version $iaas
 fi
