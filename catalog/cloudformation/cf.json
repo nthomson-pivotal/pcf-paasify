@@ -17,7 +17,7 @@
       "Tiles": {
         "Description": "Comma-delimited list of tiles that should be pre-installed",
         "Type": "CommaDelimitedList",
-        "Default": "mysql, rabbitmq, scs, metrics, healthwatch, prometheus"
+        "Default": "mysql, rabbit, scs, metrics, healthwatch, prometheus"
       }
       ,
       "SourceRepo": {
