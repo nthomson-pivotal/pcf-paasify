@@ -15,7 +15,7 @@
     }
   },
   "healthwatch-forwarder": {
-    "instances": 1,
+    "instances": 2,
     "persistent_disk": {
       "size_mb": "51200"
     },
