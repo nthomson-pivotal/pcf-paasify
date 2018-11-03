@@ -4,5 +4,8 @@
   },
   ".healthwatch-forwarder.health_check_az": {
     "value": "${bosh_az}"
+  },
+  ".properties.boshtasks": {
+    "value": "disable"
   }
 }
