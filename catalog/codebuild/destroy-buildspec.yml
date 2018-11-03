@@ -3,6 +3,7 @@ version: 0.2
 phases:
   install:
     commands:
+      - . $CODEBUILD_SRC_DIR/bin/switch.sh
       - . $CODEBUILD_SRC_DIR/bin/install.sh
   build:
     commands:
