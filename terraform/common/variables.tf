@@ -99,7 +99,7 @@ variable "tile_versions" {
     "rabbit" = "1.13.8"
     "scs" = "2.0.2"
     "metrics" = "1.5.0"
-    "metric-forwarder" = "1.11.3"
+    "metrics-forwarder" = "1.11.3"
     "healthwatch" = "1.3.2"
     "wavefront" = "0.9.3"
   }
