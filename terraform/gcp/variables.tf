@@ -35,8 +35,14 @@ variable "az3" {
   }
 }
 
-variable "opsman_image_url" {
-  default = "https://storage.googleapis.com/ops-manager-us/pcf-gcp-2.0-build.335.tar.gz"
+variable "opsman_version" {
+  type    = "string"
+  default = "2.1"
+}
+
+variable "opsman_build" {
+  type    = "string"
+  default = "377"
 }
 
 variable "dns_suffix" {
