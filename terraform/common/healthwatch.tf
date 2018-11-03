@@ -25,15 +25,17 @@ resource "null_resource" "setup_healthwatch" {
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/setup_healthwatch.sh "
+    command = "${path.module}/scripts/setup_tile.sh "
 
     environment {
-      OM_DOMAIN                  = "${var.opsman_host}"
-      OM_USERNAME                = "${var.opsman_user}"
-      OM_PASSWORD                = "${local.opsman_password}"
-      HEALTHWATCH_AZ_CONFIG      = "${data.template_file.healthwatch_az_configuration.rendered}"
-      HEALTHWATCH_PRODUCT_CONFIG = "${data.template_file.healthwatch_product_configuration.rendered}"
-      HEALTHWATCH_RES_CONFIG     = "${var.healthwatch_resource_configuration}"
+      OM_DOMAIN      = "${var.opsman_host}"
+      OM_USERNAME    = "${var.opsman_user}"
+      OM_PASSWORD    = "${local.opsman_password}"
+
+      PRODUCT_NAME   = "p-healthwatch"
+      PRODUCT_CONFIG = "${data.template_file.healthwatch_product_configuration.rendered}"
+      AZ_CONFIG      = "${data.template_file.healthwatch_az_configuration.rendered}"
+      RESOURCE_CONFIG = "${var.healthwatch_resource_configuration}"
     }
   }
 

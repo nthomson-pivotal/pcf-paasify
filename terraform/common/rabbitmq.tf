@@ -26,15 +26,16 @@ resource "null_resource" "setup_rabbitmq" {
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/setup_rabbitmq.sh"
+    command = "${path.module}/scripts/setup_tile.sh"
 
     environment {
       OM_DOMAIN           = "${var.opsman_host}"
       OM_USERNAME         = "${var.opsman_user}"
       OM_PASSWORD         = "${local.opsman_password}"
+      PRODUCT_NAME        = "p-rabbitmq"
       PRODUCT_CONFIG      = "${data.template_file.rabbitmq_product_configuration.rendered}"
-      AZ_CONFIG           = "${data.template_file.rabbitmq_az_configuration.rendered}"
-      RABBITMQ_RES_CONFIG = "${var.rabbitmq_resource_configuration}"
+      AZ_CONFIG      = "${data.template_file.rabbitmq_az_configuration.rendered}"
+      RESOURCE_CONFIG     = "${var.rabbitmq_resource_configuration}"
     }
   }
 

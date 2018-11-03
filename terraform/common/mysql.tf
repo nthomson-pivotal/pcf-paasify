@@ -28,12 +28,13 @@ resource "null_resource" "setup_mysql" {
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/setup_mysql.sh"
+    command = "${path.module}/scripts/setup_tile.sh"
 
     environment {
       OM_DOMAIN      = "${var.opsman_host}"
       OM_USERNAME    = "${var.opsman_user}"
       OM_PASSWORD    = "${local.opsman_password}"
+      PRODUCT_NAME   = "pivotal-mysql"
       PRODUCT_CONFIG = "${data.template_file.mysql_product_configuration.rendered}"
       AZ_CONFIG      = "${data.template_file.mysql_az_configuration.rendered}"
     }

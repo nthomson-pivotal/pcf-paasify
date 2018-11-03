@@ -20,13 +20,14 @@ resource "null_resource" "setup_scs" {
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/setup_scs.sh"
+    command = "${path.module}/scripts/setup_tile.sh"
 
     environment {
       OM_DOMAIN          = "${var.opsman_host}"
       OM_USERNAME        = "${var.opsman_user}"
       OM_PASSWORD        = "${local.opsman_password}"
-      SCS_PRODUCT_CONFIG = "${data.template_file.scs_product_configuration.rendered}"
+      PRODUCT_NAME       = "p-spring-cloud-services"
+      PRODUCT_CONFIG     = "${data.template_file.scs_product_configuration.rendered}"
       AZ_CONFIG          = "${data.template_file.scs_az_configuration.rendered}"
     }
   }
