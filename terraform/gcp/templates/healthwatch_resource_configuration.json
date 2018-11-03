@@ -5,7 +5,7 @@
       "size_mb": "51200"
     },
     "instance_type": {
-      "id": "large"
+      "id": "xlarge"
     }
   },
   "healthwatch-forwarder": {
