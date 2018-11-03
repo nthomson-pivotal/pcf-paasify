@@ -1,10 +1,4 @@
 {
-  "proxy": {
-    "instances": 1,
-    "instance_type": {
-      "id": "medium"
-    }
-  },
   "mysql": {
     "instances": 1,
     "persistent_disk": {
