@@ -32,25 +32,6 @@ resource "null_resource" "dependency_blocker" {
   depends_on = ["module.aws", "aws_route53_record.ns"]
 }
 
-locals {
-  base_domain = "${var.env_name}.${var.dns_suffix}"
-}
-
-data "aws_route53_zone" "selected" {
-  name = "${var.dns_suffix}."
-}
-
-resource "aws_route53_record" "ns" {
-  zone_id = "${data.aws_route53_zone.selected.zone_id}"
-  name    = "${local.base_domain}"
-  type    = "NS"
-  ttl     = "30"
-
-  records = [
-    "${module.aws.env_dns_zone_name_servers}",
-  ]
-}
-
 # Use intermediate local to hold JSON encoded SSH key
 locals {
   ssh_private_key_encoded = "${jsonencode(module.aws.ops_manager_ssh_private_key)}"

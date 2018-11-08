@@ -27,21 +27,6 @@ resource "null_resource" "dependency_blocker" {
   depends_on = ["module.gcp", "module.nat", "google_dns_record_set.ns"]
 }
 
-locals {
-  base_domain = "${var.env_name}.${var.dns_suffix}"
-}
-
-resource "google_dns_record_set" "ns" {
-  managed_zone = "${var.dns_zone_name}"
-  name         = "${local.base_domain}."
-  type         = "NS"
-  ttl          = "30"
-
-  rrdatas = [
-    "${module.gcp.env_dns_zone_name_servers[0]}",
-  ]
-}
-
 # Use intermediate local to hold JSON encoded SSH key
 locals {
   ssh_private_key_encoded = "${jsonencode(module.gcp.ops_manager_ssh_private_key)}"
