@@ -1,0 +1,23 @@
+{
+  "icmp_checks_enabled": false,
+  "networks": [
+    {
+      "name": "management",
+      "subnets": [
+        ${management_subnets}
+      ]
+    },
+    {
+      "name": "pas",
+      "subnets": [
+        ${pas_subnets}
+      ]
+    },
+    {
+      "name": "services-network",
+      "subnets": [
+        ${services_subnets}
+      ]
+    }
+  ]
+}

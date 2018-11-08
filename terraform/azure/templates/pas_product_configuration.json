@@ -1,0 +1,25 @@
+{
+    ".properties.system_blobstore": {
+        "value": "external_azure"
+    },
+    ".properties.system_blobstore.external_azure.account_name": {
+        "value": "${account_name}"
+    },
+    ".properties.system_blobstore.external_azure.access_key": {
+        "value": {
+            "secret": "${access_key}"
+        }
+    },
+    ".properties.system_blobstore.external_azure.buildpacks_container": {
+        "value": "${buildpacks_container}"
+    },
+    ".properties.system_blobstore.external_azure.droplets_container": {
+        "value": "${droplets_container}"
+    },
+    ".properties.system_blobstore.external_azure.packages_container": {
+        "value": "${packages_container}"
+    },
+    ".properties.system_blobstore.external_azure.resources_container": {
+        "value": "${resources_container}"
+    }
+}

@@ -1,23 +1,17 @@
 {
   ".properties.plan1_selector.active.az_multi_select": {
     "value": [
-      "${az1}",
-      "${az2}",
-      "${az3}"
+      ${az_string}
     ]
   },
   ".properties.plan2_selector.active.az_multi_select": {
     "value": [
-      "${az1}",
-      "${az2}",
-      "${az3}"
+      ${az_string}
     ]
   },
   ".properties.plan3_selector.active.az_multi_select": {
     "value": [
-      "${az1}",
-      "${az2}",
-      "${az3}"
+      ${az_string}
     ]
   },
   ".properties.syslog_migration_selector": {

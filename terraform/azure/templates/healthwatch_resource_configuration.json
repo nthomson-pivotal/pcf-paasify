@@ -1,0 +1,20 @@
+{
+  "mysql": {
+    "instances": 1,
+    "persistent_disk": {
+      "size_mb": "51200"
+    },
+    "instance_type": {
+      "id": "m4.xlarge"
+    }
+  },
+  "healthwatch-forwarder": {
+    "instances": 2,
+    "persistent_disk": {
+      "size_mb": "51200"
+    },
+    "instance_type": {
+      "id": "m4.large"
+    }
+  }
+}

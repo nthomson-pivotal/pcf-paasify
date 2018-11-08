@@ -1,0 +1,7 @@
+{
+  "prometheus": {
+    "instance_type": {
+      "id": "Standard_DS1_v2"
+    }
+  }
+}

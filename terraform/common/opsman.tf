@@ -67,6 +67,7 @@ resource "null_resource" "setup_opsman" {
       OM_AZ_CONFIG         = "${data.template_file.az_configuration.rendered}"
       OM_NETWORK_CONFIG    = "${var.opsman_network_configuration}"
       OM_NET_ASSIGN_CONFIG = "${data.template_file.network_assignment_configuration.rendered}"
+      IAAS                 = "${var.iaas}"
     }
   }
 

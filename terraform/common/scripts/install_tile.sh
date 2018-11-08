@@ -26,6 +26,8 @@ fi
 if [ -z "${check}" ]; then
   echo "Installing tile $product_slug v$version..."
 
+  filename=$(basename $(pivnet --format json product-files -p $product_slug -r $version | jq --arg v "$glob" -r '.[] | select(.aws_object_key | contains($v)) | .aws_object_key'))
+
   if [ ! -f "$filename" ]; then
     echo "Downloading product from PivNet..."
 
@@ -33,8 +35,6 @@ if [ -z "${check}" ]; then
   else
     echo "Using cached product file"
   fi
-
-  filename=$(basename $(pivnet --format json product-files -p $product_slug -r $version | jq --arg v "$glob" -r '.[] | select(.aws_object_key | contains($v)) | .aws_object_key'))
 
   echo "Uploading to OpsMan..."
 
