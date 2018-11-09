@@ -31,7 +31,7 @@
       "SourceTag":{
         "Description":"Use this tag in above repo",
         "Type":"String",
-        "Default": "2.1v0"
+        "Default": "2.3v0"
       },
       "Cloud" : {
         "Type" : "String",
