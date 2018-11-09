@@ -15,9 +15,9 @@ output "opsman_ssh_private_key" {
 }
 
 output "apps_domain" {
-  value = "${module.azure.apps_domain}"
+  value = "${module.gcp.apps_domain}"
 }
 
 output "sys_domain" {
-  value = "${module.azure.sys_domain}"
+  value = "${module.gcp.sys_domain}"
 }

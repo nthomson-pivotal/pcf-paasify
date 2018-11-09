@@ -15,21 +15,6 @@ variable "region" {
   default = "West US"
 }
 
-variable "opsman_version" {
-  type    = "string"
-  default = "2.1"
-}
-
-variable "opsman_build" {
-  type    = "string"
-  default = "377"
-}
-
-variable "opsman_image" {
-  type = "string"
-  default = "https://opsmanagerwestus.blob.core.windows.net/images/ops-manager-2.1-build.377.vhd"
-}
-
 variable "dns_suffix" {
   type = "string"
 }
