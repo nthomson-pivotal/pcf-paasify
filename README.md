@@ -80,7 +80,7 @@ Paasify can be run directly as a Terraform module. The pre-requisites for this a
 - Terraform must be installed locally
 - You must have authentication setup locally for the appropriate cloud that Terraform leverage (see Terraform provider docs)
 
-The following example Terraform configuration imports Paasify as a module targetting GCP:
+The following example Terraform configuration imports Paasify as a module targetting AWS:
 
 ```
 module "paasify" {
