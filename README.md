@@ -21,7 +21,7 @@ module "paasify" {
 This will:
 - Install PAS 2.3 Small Footprint
 - Add MySQL, RabbitMQ and Spring Cloud Services tiles
-- Wire up DNS so that its accessible at paasify-test.aws.paasify.org
+- Wire up DNS so that its accessible at `paasify-test.aws.paasify.org`
 - Provision valid SSL certificates via Lets Encrypt for every common HTTPS endpoint
 - Allow you to cleanly tear down all infrastructure via `terraform destroy`
 
