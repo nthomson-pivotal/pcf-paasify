@@ -14,7 +14,7 @@ module "gcp" {
   env_name            = "${var.env_name}"
   region              = "${var.region}"
   dns_suffix          = "${var.dns_suffix}"
-  opsman_image_url    = "${var.opsman_image_url}"
+  opsman_image_url    = "https://storage.googleapis.com/ops-manager-us/pcf-gcp-${var.opsman_version}-build.${var.opsman_build}.tar.gz"
   zones               = ["${lookup(var.az1, var.region)}", "${lookup(var.az2, var.region)}", "${lookup(var.az3, var.region)}"]
   ssl_cert            = "${local.cert_full_chain}"
   ssl_private_key     = "${local.cert_key}"
@@ -25,21 +25,6 @@ module "gcp" {
 
 resource "null_resource" "dependency_blocker" {
   depends_on = ["module.gcp", "module.nat", "google_dns_record_set.ns"]
-}
-
-locals {
-  base_domain = "${var.env_name}.${var.dns_suffix}"
-}
-
-resource "google_dns_record_set" "ns" {
-  managed_zone = "${var.dns_zone_name}"
-  name         = "${local.base_domain}."
-  type         = "NS"
-  ttl          = "300"
-
-  rrdatas = [
-    "${module.gcp.env_dns_zone_name_servers[0]}",
-  ]
 }
 
 # Use intermediate local to hold JSON encoded SSH key

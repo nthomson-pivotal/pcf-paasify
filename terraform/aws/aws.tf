@@ -4,6 +4,15 @@ provider "aws" {
   version = "~> 1.33"
 }
 
+data "aws_ami" "om_ami" {
+  most_recent      = true
+
+  filter {
+    name   = "name"
+    values = ["pivotal-ops-manager-v${var.opsman_version}-build.${var.opsman_build}"]
+  }
+}
+
 module "aws" {
   source = "github.com/pivotal-cf/terraforming-aws?ref=08e56ea"
 
@@ -12,7 +21,7 @@ module "aws" {
   env_name           = "${var.env_name}"
   region             = "${var.region}"
   dns_suffix         = "${var.dns_suffix}"
-  ops_manager_ami    = "${lookup(var.opsman_ami, var.region)}"
+  ops_manager_ami    = "${data.aws_ami.om_ami.image_id}"
   availability_zones = ["${lookup(var.az1, var.region)}", "${lookup(var.az2, var.region)}", "${lookup(var.az3, var.region)}"]
   ssl_cert           = "${local.cert_full_chain}"
   ssl_private_key    = "${local.cert_key}"
@@ -21,25 +30,6 @@ module "aws" {
 
 resource "null_resource" "dependency_blocker" {
   depends_on = ["module.aws", "aws_route53_record.ns"]
-}
-
-locals {
-  base_domain = "${var.env_name}.${var.dns_suffix}"
-}
-
-data "aws_route53_zone" "selected" {
-  name = "${var.dns_suffix}."
-}
-
-resource "aws_route53_record" "ns" {
-  zone_id = "${data.aws_route53_zone.selected.zone_id}"
-  name    = "${local.base_domain}"
-  type    = "NS"
-  ttl     = "30"
-
-  records = [
-    "${module.aws.env_dns_zone_name_servers}",
-  ]
 }
 
 # Use intermediate local to hold JSON encoded SSH key

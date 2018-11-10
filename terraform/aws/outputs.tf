@@ -10,6 +10,10 @@ output "opsman_password" {
   value = "${module.common.opsman_password}"
 }
 
+output "opsman_ssh_private_key" {
+  value = "${module.aws.ops_manager_ssh_private_key}"
+}
+
 output "vpc_id" {
   value = "${module.aws.vpc_id}"
 }

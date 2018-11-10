@@ -1,18 +1,4 @@
 {
-  "elasticsearch_master": {
-    "instance_type": {
-      "id": "large"
-    }
-  },
-  "elasticsearch_data": {
-    "instances": 2,
-    "persistent_disk": {
-      "size_mb": "51200"
-    },
-    "instance_type": {
-      "id": "large"
-    }
-  },
   "redis": {
     "persistent_disk": {
       "size_mb": "51200"

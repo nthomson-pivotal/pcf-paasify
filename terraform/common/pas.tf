@@ -26,20 +26,20 @@ resource "null_resource" "setup_pas" {
   depends_on = ["null_resource.setup_opsman"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} elastic-runtime 2.1.0 srt-2.1.0-build.59.pivotal ${var.iaas} cf"]
+    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} elastic-runtime ${var.pas_version} srt ${var.iaas} cf"]
   }
 
   provisioner "local-exec" {
     command = "${path.module}/scripts/setup_pas.sh"
 
     environment {
-      OM_DOMAIN      = "${var.opsman_host}"
-      OM_USERNAME    = "${var.opsman_user}"
-      OM_PASSWORD    = "${local.opsman_password}"
-      PAS_CONFIG     = "${data.template_file.pas_configuration.rendered}"
-      PAS_CUSTOM_CONFIG     = "${var.pas_product_configuration}"
-      PAS_AZ_CONFIG  = "${data.template_file.pas_az_configuration.rendered}"
-      PAS_RES_CONFIG = "${var.pas_resource_configuration}"
+      OM_DOMAIN         = "${var.opsman_host}"
+      OM_USERNAME       = "${var.opsman_user}"
+      OM_PASSWORD       = "${local.opsman_password}"
+      PAS_CONFIG        = "${data.template_file.pas_configuration.rendered}"
+      PAS_CUSTOM_CONFIG = "${var.pas_product_configuration}"
+      PAS_AZ_CONFIG     = "${data.template_file.pas_az_configuration.rendered}"
+      PAS_RES_CONFIG    = "${var.pas_resource_configuration}"
     }
   }
 

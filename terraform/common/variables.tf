@@ -80,9 +80,29 @@ variable "sys_domain" {
   type = "string"
 }
 
+variable "pas_version" {
+  type = "string"
+  default = "2.3.3"
+}
+
 variable "tiles" {
   type    = "list"
   default = ["mysql", "rabbit", "scs", "metrics", "healthwatch"]
+}
+
+variable "tile_versions" {
+  type = "map"
+
+  default = {
+    "mysql" = "2.3.1 "
+    "redis" = "1.14.3"
+    "rabbit" = "1.13.8"
+    "scs" = "2.0.2"
+    "metrics" = "1.5.0"
+    "metrics-forwarder" = "1.11.3"
+    "healthwatch" = "1.3.2"
+    "wavefront" = "0.9.3"
+  }
 }
 
 variable "mysql_backup_configuration" {

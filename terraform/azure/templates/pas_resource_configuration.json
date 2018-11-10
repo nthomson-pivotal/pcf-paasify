@@ -1,0 +1,15 @@
+{
+  "control": {
+    "elb_names": [
+      "${ssh_lb_name}"
+    ]
+  },
+  "router": {
+    "elb_names": [
+      "${web_lb_name}"
+    ]
+  },
+  "blobstore": {
+    "instances": 0
+  }
+}

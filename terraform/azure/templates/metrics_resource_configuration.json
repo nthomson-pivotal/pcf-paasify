@@ -9,7 +9,7 @@
       "size_mb": "51200"
     },
     "instance_type": {
-      "id": "m4.large"
+      "id": "Standard_DS2_v2"
     }
   }
 }

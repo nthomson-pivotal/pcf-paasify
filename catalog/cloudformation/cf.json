@@ -17,13 +17,21 @@
       "Tiles": {
         "Description": "Comma-delimited list of tiles that should be pre-installed",
         "Type": "CommaDelimitedList",
-        "Default": "mysql, rabbitmq, scs, metrics, healthwatch, prometheus"
-      }
-      ,
+        "Default": "mysql, rabbit, scs, redis, metrics, healthwatch, prometheus"
+      },
       "SourceRepo": {
         "Description": "Paasify source repository",
         "Type":"String",
         "Default": "https://github.com/nthomson-pivotal/pcf-paasify"
+      },
+      "SourceBranch":{
+        "Description":"Use this branch in above repo (overrides tag)",
+        "Type":"String"
+      },
+      "SourceTag":{
+        "Description":"Use this tag in above repo",
+        "Type":"String",
+        "Default": "2.3v0"
       },
       "Cloud" : {
         "Type" : "String",
@@ -180,6 +188,18 @@
                  {
                     "Name":"auto_apply",
                     "Value": "1"
+                 },
+                 {
+                    "Name":"branch",
+                    "Value":{
+                       "Ref":"SourceBranch"
+                    }
+                 },
+                 {
+                    "Name": "tag",
+                    "Value":{
+                       "Ref":"SourceTag"
+                    }
                  }
                ]
             },
@@ -249,6 +269,18 @@
                      "Name":"cloud",
                      "Value":{
                         "Ref":"Cloud"
+                     }
+                  },
+                  {
+                     "Name":"branch",
+                     "Value":{
+                        "Ref":"SourceBranch"
+                     }
+                  },
+                  {
+                     "Name": "tag",
+                     "Value":{
+                        "Ref":"SourceTag"
                      }
                   }
                ]

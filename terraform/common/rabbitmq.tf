@@ -12,9 +12,7 @@ data "template_file" "rabbitmq_product_configuration" {
   template = "${chomp(file("${path.module}/templates/rabbitmq_config.json"))}"
 
   vars {
-    az1 = "${var.az1}"
-    az2 = "${var.az2}"
-    az3 = "${var.az3}"
+    az_string = "${var.iaas == "azure" ? "\"null\"" : "\"${var.az1}\",\"${var.az2}\",\"${var.az3}\""}"
   }
 }
 
@@ -22,19 +20,20 @@ resource "null_resource" "setup_rabbitmq" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} p-rabbitmq 1.11.12 p-rabbitmq-1.11.12-build.1.pivotal ${var.iaas}"]
+    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} p-rabbitmq ${lookup(var.tile_versions, "rabbit")} pivotal ${var.iaas}"]
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/setup_rabbitmq.sh"
+    command = "${path.module}/scripts/setup_tile.sh"
 
     environment {
       OM_DOMAIN           = "${var.opsman_host}"
       OM_USERNAME         = "${var.opsman_user}"
       OM_PASSWORD         = "${local.opsman_password}"
+      PRODUCT_NAME        = "p-rabbitmq"
       PRODUCT_CONFIG      = "${data.template_file.rabbitmq_product_configuration.rendered}"
-      AZ_CONFIG           = "${data.template_file.rabbitmq_az_configuration.rendered}"
-      RABBITMQ_RES_CONFIG = "${var.rabbitmq_resource_configuration}"
+      AZ_CONFIG      = "${data.template_file.rabbitmq_az_configuration.rendered}"
+      RESOURCE_CONFIG     = "${var.rabbitmq_resource_configuration}"
     }
   }
 

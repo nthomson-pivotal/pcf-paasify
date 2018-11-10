@@ -2,46 +2,17 @@ variable "env_name" {
   type = "string"
 }
 
+variable "subscription_id" {}
+
+variable "tenant_id" {}
+
+variable "client_id" {}
+
+variable "client_secret" {}
+
 variable "region" {
   type    = "string"
-  default = "us-west-2"
-}
-
-variable "az1" {
-  type = "map"
-
-  default = {
-    "us-west-2" = "us-west-2a"
-    "us-east-1" = "us-east-1a"
-  }
-}
-
-variable "az2" {
-  type = "map"
-
-  default = {
-    "us-west-2" = "us-west-2b"
-    "us-east-1" = "us-east-1b"
-  }
-}
-
-variable "az3" {
-  type = "map"
-
-  default = {
-    "us-west-2" = "us-west-2c"
-    "us-east-1" = "us-east-1c"
-  }
-}
-
-variable "opsman_version" {
-  type    = "string"
-  default = "2.3"
-}
-
-variable "opsman_build" {
-  type    = "string"
-  default = "194"
+  default = "West US"
 }
 
 variable "dns_suffix" {

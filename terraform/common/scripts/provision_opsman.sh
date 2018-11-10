@@ -13,9 +13,8 @@ OM_VERSION=0.34.0
 
 pivnet_api_token=$1
 
-# Install and configure dnsmasq so our fake domains work
 sudo apt-get -qq update
-sudo apt-get -qq install -y jq
+sudo apt-get -qq install -y jq nano
 
 # Install pivnet CLI
 echo 'Downloading pivnet CLI...'
@@ -63,3 +62,7 @@ fi
 
 # TODO: Replace with reliable wait, not even sure what could fail. DNS? OpsMan restart?
 sleep 30
+
+# Fix issue with Azure SSH connections getting closed until I figure out what
+sudo sed -i 's/ClientAliveInterval.*/ClientAliveInterval 3000/' /etc/ssh/sshd_config
+sudo service ssh restart

@@ -2,8 +2,6 @@
 
 set -e
 
-om -k -t https://$OM_DOMAIN stage-product -p cf -v 2.1.0
-
 echo 'Configuring PAS...'
 om -t https://$OM_DOMAIN configure-product --product-name cf -p "$PAS_CONFIG" -pn "$PAS_AZ_CONFIG" -pr "$PAS_RES_CONFIG"
 
