@@ -17,7 +17,7 @@ if [ -z "$om_product" ]; then
   om_product=$product_slug
 fi
 
-check_payload=$(om -k -t https://localhost -f json available-products)
+check_payload=$(om -k -t https://localhost available-products -f json)
 
 if [ "$check_payload" != "no available products found" ]; then
   check=$(echo $check_payload | jq ".[] | select(.name==\"$om_product\" and .version==\"$version\") | .name")
@@ -46,7 +46,7 @@ else
   echo "Tile $product_slug v$version is already installed"
 fi
 
-om_version=$(om --format json -k -t https://localhost available-products  | jq -r ".[] | select(.name==\"$om_product\") | .version")
+om_version=$(om -k -t https://localhost available-products -f json | jq -r ".[] | select(.name==\"$om_product\") | .version")
 
 if [ -z "$om_version" ]; then
   echo "Error: Failed to find available product in OM named $om_product"
