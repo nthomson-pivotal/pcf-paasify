@@ -1,13 +1,3 @@
-data "template_file" "prometheus_az_configuration" {
-  template = "${chomp(file("${path.module}/templates/pas_az.json"))}"
-
-  vars {
-    az1 = "${var.az1}"
-    az2 = "${var.az2}"
-    az3 = "${var.az3}"
-  }
-}
-
 data "template_file" "prometheus_product_configuration" {
   template = "${chomp(file("${path.module}/templates/prometheus_config.json"))}"
 }
@@ -34,7 +24,7 @@ resource "null_resource" "setup_prometheus" {
 
       PRODUCT_NAME    = "prometheus-dev"
       PRODUCT_CONFIG  = "${data.template_file.prometheus_product_configuration.rendered}"
-      AZ_CONFIG       = "${data.template_file.prometheus_az_configuration.rendered}"
+      AZ_CONFIG       = "${data.template_file.tile_az_configuration.rendered}"
       RESOURCE_CONFIG = "${var.prometheus_resource_configuration}"
     }
   }

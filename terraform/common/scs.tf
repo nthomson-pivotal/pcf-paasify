@@ -2,16 +2,6 @@ data "template_file" "scs_product_configuration" {
   template = "${chomp(file("${path.module}/templates/scs_config.json"))}"
 }
 
-data "template_file" "scs_az_configuration" {
-  template = "${chomp(file("${path.module}/templates/pas_az.json"))}"
-
-  vars {
-    az1 = "${var.az1}"
-    az2 = "${var.az2}"
-    az3 = "${var.az3}"
-  }
-}
-
 resource "null_resource" "setup_scs" {
   depends_on = ["null_resource.setup_pas", "null_resource.setup_mysql", "null_resource.setup_rabbitmq"]
 
@@ -28,7 +18,7 @@ resource "null_resource" "setup_scs" {
       OM_PASSWORD        = "${local.opsman_password}"
       PRODUCT_NAME       = "p-spring-cloud-services"
       PRODUCT_CONFIG     = "${data.template_file.scs_product_configuration.rendered}"
-      AZ_CONFIG          = "${data.template_file.scs_az_configuration.rendered}"
+      AZ_CONFIG          = "${data.template_file.tile_az_configuration.rendered}"
     }
   }
 

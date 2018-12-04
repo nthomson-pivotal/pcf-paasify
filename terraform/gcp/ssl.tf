@@ -24,7 +24,7 @@ resource "acme_certificate" "certificate" {
     provider = "gcloud"
 
     config = {
-      GCE_PROJECT = "fe-nthomson"
+      GCE_PROJECT = "${var.project}"
     }
   }
 }

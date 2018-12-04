@@ -2,19 +2,9 @@ data "template_file" "mysql_product_configuration" {
   template = "${chomp(file("${path.module}/templates/mysql_config.json"))}"
 
   vars {
-    az_string = "${var.iaas == "azure" ? "\"null\"" : "\"${var.az1}\",\"${var.az2}\",\"${var.az3}\""}"
+    az_string = "${var.iaas == "azure" ? "\"null\"" : join(",", formatlist("{\"%s\"}", var.azs))}"
 
     backup_config = "${var.mysql_backup_configuration}"
-  }
-}
-
-data "template_file" "mysql_az_configuration" {
-  template = "${chomp(file("${path.module}/templates/services_az.json"))}"
-
-  vars {
-    az1 = "${var.az1}"
-    az2 = "${var.az2}"
-    az3 = "${var.az3}"
   }
 }
 
@@ -34,7 +24,7 @@ resource "null_resource" "setup_mysql" {
       OM_PASSWORD    = "${local.opsman_password}"
       PRODUCT_NAME   = "pivotal-mysql"
       PRODUCT_CONFIG = "${data.template_file.mysql_product_configuration.rendered}"
-      AZ_CONFIG      = "${data.template_file.mysql_az_configuration.rendered}"
+      AZ_CONFIG      = "${data.template_file.tile_az_services_configuration.rendered}"
     }
   }
 

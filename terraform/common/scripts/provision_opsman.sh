@@ -61,7 +61,7 @@ if [ -f /tmp/tempest.key ]; then
 fi
 
 # TODO: Replace with reliable wait, not even sure what could fail. DNS? OpsMan restart?
-sleep 30
+sleep 60
 
 # Fix issue with Azure SSH connections getting closed until I figure out what
 sudo sed -i 's/ClientAliveInterval.*/ClientAliveInterval 3000/' /etc/ssh/sshd_config

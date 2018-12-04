@@ -57,9 +57,7 @@ module "common" {
   env_name = "${var.env_name}"
   iaas     = "aws"
   region   = "${var.region}"
-  az1      = "${lookup(var.az1, var.region)}"
-  az2      = "${lookup(var.az2, var.region)}"
-  az3      = "${lookup(var.az3, var.region)}"
+  azs      = ["${lookup(var.az1, var.region)}", "${lookup(var.az2, var.region)}", "${lookup(var.az3, var.region)}"]
 
   ssl_cert                     = "${local.cert_full_chain}"
   ssl_private_key              = "${local.cert_key}"

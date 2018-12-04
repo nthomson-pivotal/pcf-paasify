@@ -3,17 +3,7 @@ data "template_file" "healthwatch_product_configuration" {
 
   vars {
     om_domain = "${var.opsman_host}"
-    bosh_az   = "${var.az1}"
-  }
-}
-
-data "template_file" "healthwatch_az_configuration" {
-  template = "${chomp(file("${path.module}/templates/services_az.json"))}"
-
-  vars {
-    az1 = "${var.az1}"
-    az2 = "${var.az2}"
-    az3 = "${var.az3}"
+    bosh_az   = "${var.azs[0]}"
   }
 }
 
@@ -34,7 +24,7 @@ resource "null_resource" "setup_healthwatch" {
 
       PRODUCT_NAME   = "p-healthwatch"
       PRODUCT_CONFIG = "${data.template_file.healthwatch_product_configuration.rendered}"
-      AZ_CONFIG      = "${data.template_file.healthwatch_az_configuration.rendered}"
+      AZ_CONFIG      = "${data.template_file.tile_az_services_configuration.rendered}"
       RESOURCE_CONFIG = "${var.healthwatch_resource_configuration}"
     }
   }

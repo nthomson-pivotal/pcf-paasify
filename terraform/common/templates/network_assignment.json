@@ -1,4 +1,8 @@
 {
-  "singleton_availability_zone": "${az}",
-  "network": "management"
+  "singleton_availability_zone": {
+    "name": "${az}"
+  },
+  "network": {
+    "name": "management"
+  }
 }

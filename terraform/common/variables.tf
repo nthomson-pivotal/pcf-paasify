@@ -10,16 +10,8 @@ variable "region" {
   type = "string"
 }
 
-variable "az1" {
-  type = "string"
-}
-
-variable "az2" {
-  type = "string"
-}
-
-variable "az3" {
-  type = "string"
+variable "azs" {
+  type = "list"
 }
 
 variable "ssl_cert" {
@@ -58,6 +50,11 @@ variable "opsman_iaas_configuration" {
 
 variable "opsman_network_configuration" {
   type = "string"
+}
+
+variable "opsman_az_configuration" {
+  type = "string"
+  default = ""
 }
 
 variable "pivnet_token" {

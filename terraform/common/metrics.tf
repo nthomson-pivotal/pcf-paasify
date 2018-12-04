@@ -1,13 +1,3 @@
-data "template_file" "metrics_az_configuration" {
-  template = "${chomp(file("${path.module}/templates/services_az.json"))}"
-
-  vars {
-    az1 = "${var.az1}"
-    az2 = "${var.az2}"
-    az3 = "${var.az3}"
-  }
-}
-
 resource "null_resource" "setup_metrics" {
   depends_on = ["null_resource.setup_pas"]
 
@@ -24,7 +14,7 @@ resource "null_resource" "setup_metrics" {
       OM_DOMAIN                    = "${var.opsman_host}"
       OM_USERNAME                  = "${var.opsman_user}"
       OM_PASSWORD                  = "${local.opsman_password}"
-      METRICS_AZ_CONFIG            = "${data.template_file.metrics_az_configuration.rendered}"
+      METRICS_AZ_CONFIG            = "${data.template_file.tile_az_services_configuration.rendered}"
       METRICS_RES_CONFIG           = "${var.metrics_resource_configuration}"
       METRICS_FORWARDER_RES_CONFIG = "${var.metrics_forwarder_resource_configuration}"
     }

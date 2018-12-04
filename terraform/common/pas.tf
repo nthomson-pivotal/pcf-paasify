@@ -12,16 +12,6 @@ data "template_file" "pas_configuration" {
   }
 }
 
-data "template_file" "pas_az_configuration" {
-  template = "${chomp(file("${path.module}/templates/pas_az.json"))}"
-
-  vars {
-    az1 = "${var.az1}"
-    az2 = "${var.az2}"
-    az3 = "${var.az3}"
-  }
-}
-
 resource "null_resource" "setup_pas" {
   depends_on = ["null_resource.setup_opsman"]
 
@@ -38,7 +28,7 @@ resource "null_resource" "setup_pas" {
       OM_PASSWORD       = "${local.opsman_password}"
       PAS_CONFIG        = "${data.template_file.pas_configuration.rendered}"
       PAS_CUSTOM_CONFIG = "${var.pas_product_configuration}"
-      PAS_AZ_CONFIG     = "${data.template_file.pas_az_configuration.rendered}"
+      PAS_AZ_CONFIG     = "${data.template_file.tile_az_configuration.rendered}"
       PAS_RES_CONFIG    = "${var.pas_resource_configuration}"
     }
   }

@@ -11,9 +11,7 @@ data "template_file" "az_configuration" {
   template = "${chomp(file("${path.module}/templates/az.json"))}"
 
   vars {
-    az1 = "${var.az1}"
-    az2 = "${var.az2}"
-    az3 = "${var.az3}"
+    az_string = "${join(",", formatlist("{\"name\":\"%s\"}", var.azs))}"
   }
 }
 
@@ -21,11 +19,16 @@ data "template_file" "network_assignment_configuration" {
   template = "${chomp(file("${path.module}/templates/network_assignment.json"))}"
 
   vars {
-    az = "${var.az1}"
+    az = "${var.azs[0]}"
   }
 }
 
 resource "null_resource" "setup_opsman" {
+
+  provisioner "local-exec" {
+    command = "sleep 60"
+  }
+
   provisioner "file" {
     content     = "${var.ssl_cert}"
     destination = "/tmp/tempest.crt"
@@ -64,7 +67,7 @@ resource "null_resource" "setup_opsman" {
       OM_USERNAME          = "${var.opsman_user}"
       OM_PASSWORD          = "${local.opsman_password}"
       OM_IAAS_CONFIG       = "${var.opsman_iaas_configuration}"
-      OM_AZ_CONFIG         = "${data.template_file.az_configuration.rendered}"
+      OM_AZ_CONFIG         = "${var.opsman_az_configuration == "" ? data.template_file.az_configuration.rendered : var.opsman_az_configuration}"
       OM_NETWORK_CONFIG    = "${var.opsman_network_configuration}"
       OM_NET_ASSIGN_CONFIG = "${data.template_file.network_assignment_configuration.rendered}"
       IAAS                 = "${var.iaas}"

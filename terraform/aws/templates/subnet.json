@@ -4,7 +4,7 @@
   "reserved_ip_ranges": "${reserved}",
   "dns": "${dns}",
   "gateway": "${gateway}",
-  "availability_zones": [
+  "availability_zone_names": [
     ${azs}
   ]
 }

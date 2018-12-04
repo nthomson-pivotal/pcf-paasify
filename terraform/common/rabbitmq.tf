@@ -1,18 +1,8 @@
-data "template_file" "rabbitmq_az_configuration" {
-  template = "${chomp(file("${path.module}/templates/services_az.json"))}"
-
-  vars {
-    az1 = "${var.az1}"
-    az2 = "${var.az2}"
-    az3 = "${var.az3}"
-  }
-}
-
 data "template_file" "rabbitmq_product_configuration" {
   template = "${chomp(file("${path.module}/templates/rabbitmq_config.json"))}"
 
   vars {
-    az_string = "${var.iaas == "azure" ? "\"null\"" : "\"${var.az1}\",\"${var.az2}\",\"${var.az3}\""}"
+    az_string = "${var.iaas == "azure" ? "\"null\"" : join(",", formatlist("{\"%s\"}", var.azs))}"
   }
 }
 
@@ -32,7 +22,7 @@ resource "null_resource" "setup_rabbitmq" {
       OM_PASSWORD         = "${local.opsman_password}"
       PRODUCT_NAME        = "p-rabbitmq"
       PRODUCT_CONFIG      = "${data.template_file.rabbitmq_product_configuration.rendered}"
-      AZ_CONFIG      = "${data.template_file.rabbitmq_az_configuration.rendered}"
+      AZ_CONFIG           = "${data.template_file.tile_az_services_configuration.rendered}"
       RESOURCE_CONFIG     = "${var.rabbitmq_resource_configuration}"
     }
   }

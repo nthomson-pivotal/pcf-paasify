@@ -1,3 +1,4 @@
 {
-  "project": "${project}"
+  "project": "${project}",
+  "associated_service_account": "${service_account}"
 }
