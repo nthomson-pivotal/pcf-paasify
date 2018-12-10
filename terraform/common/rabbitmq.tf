@@ -2,7 +2,7 @@ data "template_file" "rabbitmq_product_configuration" {
   template = "${chomp(file("${path.module}/templates/rabbitmq_config.json"))}"
 
   vars {
-    az_string = "${var.iaas == "azure" ? "\"null\"" : join(",", formatlist("{\"%s\"}", var.azs))}"
+    az_string = "${var.iaas == "azure" ? "\"null\"" : join(",", formatlist("\"%s\"", var.azs))}"
   }
 }
 
