@@ -58,9 +58,7 @@ module "common" {
   env_name = "${var.env_name}"
   iaas     = "azure"
   region   = "${var.region}"
-  az1      = "null"
-  az2      = "null"
-  az3      = "null"
+  azs = ["null"]
 
   ssl_cert                     = "${local.cert_full_chain}"
   ssl_private_key              = "${local.cert_key}"
@@ -97,4 +95,20 @@ module "common" {
   wavefront_token = "${var.wavefront_token}"
 
   dependency_blocker = "${null_resource.dependency_blocker.id}"
+}
+
+resource "null_resource" "apply_common" {
+  depends_on = ["module.common"]
+
+  provisioner "local-exec" {
+    command = "om -t https://${module.azure.ops_manager_dns} -u ${var.opsman_user} -p ${module.common.opsman_password} apply-changes"
+  }
+
+  count = "${var.auto_apply == "1" ? 1 : 0}"
+
+  connection {
+    host        = "${module.azure.ops_manager_dns}"
+    user        = "ubuntu"
+    private_key = "${module.azure.ops_manager_ssh_private_key}"
+  }
 }
