@@ -3,8 +3,6 @@ data "template_file" "mysql_product_configuration" {
 
   vars {
     az_string = "${var.iaas == "azure" ? "\"null\"" : join(",", formatlist("\"%s\"", var.azs))}"
-
-    backup_config = "${var.mysql_backup_configuration}"
   }
 }
 

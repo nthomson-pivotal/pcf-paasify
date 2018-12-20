@@ -70,8 +70,6 @@ module "common" {
 
   tiles = "${var.tiles}"
 
-  mysql_backup_configuration = "${data.template_file.mysql_backup_configuration.rendered}"
-
   rabbitmq_resource_configuration = "${data.template_file.rabbitmq_resource_configuration.rendered}"
 
   healthwatch_resource_configuration = "${data.template_file.healthwatch_resource_configuration.rendered}"

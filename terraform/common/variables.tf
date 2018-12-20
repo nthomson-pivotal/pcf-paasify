@@ -102,10 +102,6 @@ variable "tile_versions" {
   }
 }
 
-variable "mysql_backup_configuration" {
-  type = "string"
-}
-
 variable "rabbitmq_resource_configuration" {
   type = "string"
 }

@@ -1,13 +1,4 @@
 {
-  ".rabbitmq-server.server_admin_credentials": {
-    "value": {
-      "identity": "admin",
-      "password": "password"
-    }
-  },
-  ".properties.disk_alarm_threshold": {
-    "value": "mem_relative_1_0"
-  },
   ".properties.syslog_selector": {
     "value": "disabled"
   },
@@ -24,11 +15,5 @@
   },
   ".properties.on_demand_broker_plan_1_instance_quota": {
     "value": "5"
-  },
-  ".properties.multitenant_pre_upgrade_acknowledgement": {
-    "value": ["acknowledge"]
-  },
-  ".properties.on_demand_broker_pre_upgrade_acknowledgement": {
-    "value": ["acknowledge"]
   }
 }
