@@ -82,8 +82,6 @@ module "common" {
 
   tiles = "${var.tiles}"
 
-  rabbitmq_resource_configuration = "${data.template_file.rabbitmq_resource_configuration.rendered}"
-
   healthwatch_resource_configuration = "${data.template_file.healthwatch_resource_configuration.rendered}"
 
   metrics_resource_configuration           = "${data.template_file.metrics_resource_configuration.rendered}"

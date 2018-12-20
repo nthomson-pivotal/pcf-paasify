@@ -23,6 +23,11 @@
   ".properties.backups_selector.scp.user": {
     "value": "null"
   },
+  ".properties.backups_selector.scp.key": {
+    "value": {
+      "secret": "null"
+    }
+  },
   ".properties.backups_selector.scp.server": {
     "value": "null"
   },

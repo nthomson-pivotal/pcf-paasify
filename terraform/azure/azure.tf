@@ -78,9 +78,7 @@ module "common" {
   opsman_id = "12345"
 
   tiles = "${var.tiles}"
-
-  rabbitmq_resource_configuration = "${data.template_file.rabbitmq_resource_configuration.rendered}"
-
+  
   healthwatch_resource_configuration = "{}"
 
   metrics_resource_configuration           = "{}"
