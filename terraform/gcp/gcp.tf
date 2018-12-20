@@ -6,7 +6,7 @@ provider "google" {
 }
 
 module "gcp" {
-  source = "github.com/nthomson-pivotal/terraforming-gcp"
+  source = "github.com/pivotal-cf/terraforming-gcp?ref=e5ad3e70"
 
   project = "${var.project}"
 
@@ -66,7 +66,7 @@ module "common" {
   apps_domain = "${module.gcp.apps_domain}"
   sys_domain  = "${module.gcp.sys_domain}"
 
-  opsman_id = "${module.gcp.ops_manager_instance_id}"
+  opsman_id = "1234"
 
   tiles = "${var.tiles}"
 
