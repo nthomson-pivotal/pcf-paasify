@@ -23,7 +23,6 @@ resource "null_resource" "setup_rabbitmq" {
       PRODUCT_NAME        = "p-rabbitmq"
       PRODUCT_CONFIG      = "${data.template_file.rabbitmq_product_configuration.rendered}"
       AZ_CONFIG           = "${data.template_file.tile_az_services_configuration.rendered}"
-      RESOURCE_CONFIG     = "${var.rabbitmq_resource_configuration}"
     }
   }
 
