@@ -102,10 +102,6 @@ variable "tile_versions" {
   }
 }
 
-variable "rabbitmq_resource_configuration" {
-  type = "string"
-}
-
 variable "healthwatch_resource_configuration" {
   type = "string"
 }
