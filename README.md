@@ -1,6 +1,6 @@
 # PCF Paasify
 
-This project provides a mechanism to provision an entire Pivotal Cloud Foundry installation via Terraform with minimal effort, and is essentially 'PCF-as-a-Terraform-module'.
+Installing Pivotal Cloud Foundry for quick setups can take longer than it should. The goal of this project is to allow you to complete an install of PCF, with optional tiles, with nothing more than Terraform installed locally (not quite there yet). This is being essentially being exposed as 'PCF-as-a-Terraform-module' that is compatible across all supported public clouds.
 
 If you need fire-and-forget mechanism that gives you predictable, stable PCF environments (including many popular tiles) then this is for you.
 
