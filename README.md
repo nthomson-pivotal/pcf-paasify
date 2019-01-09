@@ -25,7 +25,7 @@ This will:
 - Provision valid SSL certificates via Lets Encrypt for every common HTTPS endpoint
 - Allow you to cleanly tear down all infrastructure via `terraform destroy`
 
-When the Terraform run completes, there will be a fully working PCF PAS installation.
+When the Terraform run completes there will be a fully working PCF PAS installation, with endpoint information available from Terraform outputs.
 
 ## What?
 
