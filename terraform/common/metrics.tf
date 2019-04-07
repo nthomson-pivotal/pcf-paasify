@@ -2,8 +2,8 @@ resource "null_resource" "setup_metrics" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} p-metrics-forwarder ${lookup(var.tile_versions, "metrics-forwarder")} pivotal ${var.iaas}",
-      "install_tile ${var.opsman_user} ${local.opsman_password} apm ${lookup(var.tile_versions, "metrics")} pivotal ${var.iaas} apmPostgres",
+    inline = ["install_tile p-metrics-forwarder ${lookup(var.tile_versions, "metrics-forwarder")} pivotal ${var.iaas}",
+      "install_tile apm ${lookup(var.tile_versions, "metrics")} pivotal ${var.iaas} apmPostgres",
     ]
   }
 

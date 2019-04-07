@@ -10,7 +10,7 @@ resource "null_resource" "setup_rabbitmq" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} p-rabbitmq ${lookup(var.tile_versions, "rabbit")} pivotal ${var.iaas}"]
+    inline = ["install_tile p-rabbitmq ${lookup(var.tile_versions, "rabbit")} pivotal ${var.iaas}"]
   }
 
   provisioner "local-exec" {

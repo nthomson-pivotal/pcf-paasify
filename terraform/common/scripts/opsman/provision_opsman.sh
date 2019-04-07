@@ -12,6 +12,8 @@ PIVNET_CLI_VERSION=0.0.52
 OM_VERSION=0.44.0
 
 pivnet_api_token=$1
+om_domain=$2
+om_password=$3
 
 sudo apt-get -qq update
 sudo apt-get -qq install -y jq nano
@@ -66,3 +68,13 @@ sleep 60
 # Fix issue with Azure SSH connections getting closed until I figure out what
 sudo sed -i 's/ClientAliveInterval.*/ClientAliveInterval 3000/' /etc/ssh/sshd_config
 sudo service ssh restart
+
+cat << EOF > ~/.om_profile
+export OM_TARGET=https://$om_domain
+export OM_USERNAME=admin
+export OM_PASSWORD=$om_password
+EOF
+
+cat << EOF >> ~/.bash_profile
+source ~/.om_profile
+EOF

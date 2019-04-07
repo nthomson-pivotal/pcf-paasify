@@ -40,22 +40,12 @@ resource "null_resource" "setup_opsman" {
   }
 
   provisioner "file" {
-    source      = "${path.module}/scripts/install_tile.sh"
-    destination = "/tmp/install_tile.sh"
-  }
-
-  provisioner "file" {
-    source      = "${path.module}/scripts/install_stemcell.sh"
-    destination = "/tmp/install_stemcell.sh"
-  }
-
-  provisioner "file" {
-    source      = "${path.module}/scripts/provision_opsman.sh"
-    destination = "/tmp/provision_opsman.sh"
+    source      = "${path.module}/scripts/opsman/"
+    destination = "/tmp"
   }
 
   provisioner "remote-exec" {
-    inline = ["chmod +x /tmp/provision_opsman.sh && /tmp/provision_opsman.sh ${var.pivnet_token}"]
+    inline = ["chmod +x /tmp/provision_opsman.sh && /tmp/provision_opsman.sh ${var.pivnet_token} ${var.opsman_host} ${local.opsman_password}"]
   }
 
   provisioner "local-exec" {
@@ -72,6 +62,10 @@ resource "null_resource" "setup_opsman" {
       OM_NET_ASSIGN_CONFIG = "${data.template_file.network_assignment_configuration.rendered}"
       IAAS                 = "${var.iaas}"
     }
+  }
+
+  provisioner "remote-exec" {
+    inline = ["chmod +x /tmp/post_install_opsman.sh && /tmp/post_install_opsman.sh ${var.bosh_director_ip}"]
   }
 
   connection {

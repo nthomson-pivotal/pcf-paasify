@@ -6,15 +6,11 @@ data "template_file" "redis_product_configuration" {
   }
 }
 
-data "template_file" "redis_resource_configuration" {
-  template = "${chomp(file("${path.module}/templates/redis_resource_configuration.json"))}"
-}
-
 resource "null_resource" "setup_redis" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} p-redis ${lookup(var.tile_versions, "redis")} pivotal ${var.iaas}"]
+    inline = ["install_tile p-redis ${lookup(var.tile_versions, "redis")} pivotal ${var.iaas}"]
   }
 
   provisioner "local-exec" {
@@ -27,7 +23,6 @@ resource "null_resource" "setup_redis" {
       PRODUCT_NAME        = "p-redis"
       PRODUCT_CONFIG      = "${data.template_file.redis_product_configuration.rendered}"
       AZ_CONFIG           = "${data.template_file.tile_az_services_configuration.rendered}"
-      RESOURCE_CONFIG     = "${data.template_file.redis_resource_configuration.rendered}"
     }
   }
 

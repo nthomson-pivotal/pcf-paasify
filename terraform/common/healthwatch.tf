@@ -11,7 +11,7 @@ resource "null_resource" "setup_healthwatch" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} p-healthwatch ${lookup(var.tile_versions, "healthwatch")} pivotal ${var.iaas}"]
+    inline = ["install_tile p-healthwatch ${lookup(var.tile_versions, "healthwatch")} pivotal ${var.iaas}"]
   }
 
   provisioner "local-exec" {

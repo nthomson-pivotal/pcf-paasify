@@ -57,6 +57,10 @@ variable "opsman_az_configuration" {
   default = ""
 }
 
+variable "bosh_director_ip" {
+  type = "string"
+}
+
 variable "pivnet_token" {
   type = "string"
 }
@@ -79,7 +83,7 @@ variable "sys_domain" {
 
 variable "pas_version" {
   type = "string"
-  default = "2.4.0"
+  default = "2.4.3"
 }
 
 variable "tiles" {
@@ -91,13 +95,13 @@ variable "tile_versions" {
   type = "map"
 
   default = {
-    "mysql" = "2.4.2"
-    "redis" = "1.14.4"
+    "mysql" = "2.4.4"
+    "redis" = "2.0.1"
     "rabbit" = "1.14.4"
     "scs" = "2.0.4"
-    "metrics" = "1.5.2"
+    "metrics" = "1.6.0"
     "metrics-forwarder" = "1.11.4"
-    "healthwatch" = "1.4.4"
+    "healthwatch" = "1.4.5"
     "wavefront" = "0.9.3"
   }
 }

@@ -58,6 +58,8 @@ module "common" {
   opsman_iaas_configuration    = "${data.template_file.iaas_configuration.rendered}"
   opsman_network_configuration = "${data.template_file.network_configuration.rendered}"
 
+  bosh_director_ip             = "${cidrhost(module.gcp.management_subnet_cidrs[0], 10)}"
+
   pivnet_token = "${var.pivnet_token}"
 
   pas_product_configuration = "${data.template_file.pas_product_configuration.rendered}"

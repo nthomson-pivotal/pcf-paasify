@@ -19,4 +19,9 @@ if [ -z "$RESOURCE_CONFIG" ]; then
   RESOURCE_CONFIG="{}"
 fi
 
-om -t https://$OM_DOMAIN configure-product --product-name "$PRODUCT_NAME" -p "$PRODUCT_CONFIG" -pn "$AZ_CONFIG" -pr "$RESOURCE_CONFIG"
+# Temporary until proper fix for race condition
+sleep 30
+
+om -t https://$OM_DOMAIN configure-product --product-name "$PRODUCT_NAME" -pn "$AZ_CONFIG"
+
+om -t https://$OM_DOMAIN configure-product --product-name "$PRODUCT_NAME" -p "$PRODUCT_CONFIG" -pr "$RESOURCE_CONFIG"

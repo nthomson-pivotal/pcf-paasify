@@ -16,7 +16,7 @@ resource "null_resource" "setup_pas" {
   depends_on = ["null_resource.setup_opsman"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile ${var.opsman_user} ${local.opsman_password} elastic-runtime ${var.pas_version} srt ${var.iaas} cf"]
+    inline = ["install_tile elastic-runtime ${var.pas_version} srt ${var.iaas} cf"]
   }
 
   provisioner "local-exec" {
