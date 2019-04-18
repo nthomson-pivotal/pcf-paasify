@@ -16,7 +16,7 @@ resource "acme_registration" "reg" {
 resource "acme_certificate" "certificate" {
   account_key_pem           = "${acme_registration.reg.account_key_pem}"
   common_name               = "pcf.${local.base_domain}"
-  subject_alternative_names = ["*.apps.${local.base_domain}", "*.sys.${local.base_domain}", "*.uaa.sys.${local.base_domain}"]
+  subject_alternative_names = ["*.apps.${local.base_domain}", "*.sys.${local.base_domain}", "*.uaa.sys.${local.base_domain}", "*.login.sys.${local.base_domain}"]
 
   dns_challenge {
     provider = "azure"
