@@ -50,6 +50,9 @@ if [ -z "$om_version" ]; then
   exit 1
 fi
 
+# Temp fix for race condition
+sleep 10
+
 echo "Staging product version $om_version for $om_product in OM available products..."
 
 om stage-product -p $om_product -v $om_version

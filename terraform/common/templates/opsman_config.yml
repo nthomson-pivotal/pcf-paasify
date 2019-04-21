@@ -1,0 +1,9 @@
+network-assignment:
+  network:
+    name: management
+  other_availability_zones: []
+  singleton_availability_zone:
+    name: ${az}
+director-configuration:
+  ntp_servers_string: time.google.com
+${provided_configuration}

@@ -21,7 +21,7 @@ uaac target $bosh_director_ip:8443 --skip-ssl-validation
 uaac token owner get login admin -s $uaa_login_creds -p $uaa_admin_creds
 uaac client add bosh-login --scope uaa.none --authorized_grant_types client_credentials --authorities bosh.admin -s $bosh_password
 
-cat << EOF >> ~/.bosh_profile
+cat << EOF > ~/.bosh_profile
 export BOSH_CLIENT=bosh-login
 export BOSH_CLIENT_SECRET=$bosh_password
 export BOSH_ENVIRONMENT=$bosh_env

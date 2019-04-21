@@ -1,34 +1,32 @@
-{
-    ".properties.system_blobstore": {
-        "value": "external"
-    },
-    ".properties.system_blobstore.external.buildpacks_bucket": {
-        "value": "${buildpacks_bucket}"
-    },
-    ".properties.system_blobstore.external.droplets_bucket": {
-        "value": "${droplets_bucket}"
-    },
-    ".properties.system_blobstore.external.packages_bucket": {
-        "value": "${packages_bucket}"
-    },
-    ".properties.system_blobstore.external.resources_bucket": {
-        "value": "${resources_bucket}"
-    },
-    ".properties.system_blobstore.external.access_key": {
-        "value": "${access_key}"
-    },
-    ".properties.system_blobstore.external.secret_key": {
-        "value": {
-            "secret": "${secret_key}"
-        }
-    },
-    ".properties.system_blobstore.external.signature_version": {
-        "value": "4"
-    },
-    ".properties.system_blobstore.external.region": {
-        "value": "${region}"
-    },
-    ".properties.system_blobstore.external.endpoint": {
-        "value": "https://s3.${region}.amazonaws.com"
+".properties.system_blobstore": {
+    "value": "external"
+},
+".properties.system_blobstore.external.buildpacks_bucket": {
+    "value": "${buildpacks_bucket}"
+},
+".properties.system_blobstore.external.droplets_bucket": {
+    "value": "${droplets_bucket}"
+},
+".properties.system_blobstore.external.packages_bucket": {
+    "value": "${packages_bucket}"
+},
+".properties.system_blobstore.external.resources_bucket": {
+    "value": "${resources_bucket}"
+},
+".properties.system_blobstore.external.access_key": {
+    "value": "${access_key}"
+},
+".properties.system_blobstore.external.secret_key": {
+    "value": {
+        "secret": "${secret_key}"
     }
+},
+".properties.system_blobstore.external.signature_version": {
+    "value": "4"
+},
+".properties.system_blobstore.external.region": {
+    "value": "${region}"
+},
+".properties.system_blobstore.external.endpoint": {
+    "value": "https://s3.${region}.amazonaws.com"
 }

@@ -26,8 +26,6 @@ wget -q https://github.com/pivotal-cf/pivnet-cli/releases/download/v$PIVNET_CLI_
 sudo mv pivnet /usr/bin
 sudo chmod +x /usr/bin/pivnet
 
-echo 'Installed pivnet CLI'
-
 # Install om CLI
 echo 'Downloading om CLI...'
 
@@ -36,13 +34,14 @@ wget -q https://github.com/pivotal-cf/om/releases/download/$OM_VERSION/om-linux 
 sudo mv om /usr/bin
 sudo chmod +x /usr/bin/om
 
-echo 'Installed om CLI'
-
 # Login to pivnet
 echo 'Logging in to pivnet...'
 pivnet login --api-token $pivnet_api_token
 
 # Convenience scripts
+
+echo 'Installing convenience scripts...'
+
 if [ ! -f /usr/bin/install_tile ]; then
   sudo mv /tmp/install_tile.sh /usr/bin/install_tile
 fi
@@ -55,7 +54,27 @@ fi
 
 sudo chmod +x /usr/bin/install_stemcell
 
+if [ ! -f /usr/bin/apply_changes ]; then
+  sudo mv /tmp/apply_changes.sh /usr/bin/apply_changes
+fi
+
+sudo chmod +x /usr/bin/apply_changes
+
+if [ ! -f /usr/bin/configure_tile ]; then
+  sudo mv /tmp/configure_tile.sh /usr/bin/configure_tile
+fi
+
+sudo chmod +x /usr/bin/configure_tile
+
+if [ ! -f /usr/bin/configure_opsman ]; then
+  sudo mv /tmp/configure_opsman.sh /usr/bin/configure_opsman
+fi
+
+sudo chmod +x /usr/bin/configure_opsman
+
 # Update HTTPS certificate
+echo 'Installing HTTPS certificate...'
+
 if [ -f /tmp/tempest.key ]; then
   sudo cp /tmp/tempest.* /var/tempest/cert
 
@@ -66,8 +85,12 @@ fi
 sleep 60
 
 # Fix issue with Azure SSH connections getting closed until I figure out what
+echo 'Reconfiguring SSHD...'
+
 sudo sed -i 's/ClientAliveInterval.*/ClientAliveInterval 3000/' /etc/ssh/sshd_config
 sudo service ssh restart
+
+echo 'Setting up profile scripts...'
 
 cat << EOF > ~/.om_profile
 export OM_TARGET=https://$om_domain
@@ -78,3 +101,6 @@ EOF
 cat << EOF >> ~/.bash_profile
 source ~/.om_profile
 EOF
+
+# Setup config dir
+mkdir -p ~/config

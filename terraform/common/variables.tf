@@ -44,17 +44,9 @@ variable "opsman_user" {
   type = "string"
 }
 
-variable "opsman_iaas_configuration" {
+variable "opsman_configuration" {
   type = "string"
-}
-
-variable "opsman_network_configuration" {
-  type = "string"
-}
-
-variable "opsman_az_configuration" {
-  type = "string"
-  default = ""
+  description = "YAML formatted string that contains OpsMan configuration for the director"
 }
 
 variable "bosh_director_ip" {
@@ -83,7 +75,7 @@ variable "sys_domain" {
 
 variable "pas_version" {
   type = "string"
-  default = "2.4.3"
+  default = "2.4.6"
 }
 
 variable "tiles" {

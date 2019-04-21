@@ -14,19 +14,18 @@ resource "null_resource" "setup_healthwatch" {
     inline = ["install_tile p-healthwatch ${lookup(var.tile_versions, "healthwatch")} pivotal ${var.iaas}"]
   }
 
-  provisioner "local-exec" {
-    command = "${path.module}/scripts/setup_tile.sh "
+  provisioner "file" {
+    content     = "${data.template_file.healthwatch_product_configuration.rendered}"
+    destination = "~/config/p-healthwatch-config.json"
+  }
 
-    environment {
-      OM_DOMAIN      = "${var.opsman_host}"
-      OM_USERNAME    = "${var.opsman_user}"
-      OM_PASSWORD    = "${local.opsman_password}"
+  provisioner "file" {
+    content     = "${var.healthwatch_resource_configuration}"
+    destination = "~/config/p-healthwatch-resources.json"
+  }
 
-      PRODUCT_NAME   = "p-healthwatch"
-      PRODUCT_CONFIG = "${data.template_file.healthwatch_product_configuration.rendered}"
-      AZ_CONFIG      = "${data.template_file.tile_az_services_configuration.rendered}"
-      RESOURCE_CONFIG = "${var.healthwatch_resource_configuration}"
-    }
+  provisioner "remote-exec" {
+    inline = ["configure_tile p-healthwatch services"]
   }
 
   connection {

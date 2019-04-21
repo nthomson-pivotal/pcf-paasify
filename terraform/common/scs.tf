@@ -9,17 +9,13 @@ resource "null_resource" "setup_scs" {
     inline = ["install_tile p-spring-cloud-services ${lookup(var.tile_versions, "scs")} pivotal ${var.iaas}"]
   }
 
-  provisioner "local-exec" {
-    command = "${path.module}/scripts/setup_tile.sh"
+  provisioner "file" {
+    content     = "${data.template_file.scs_product_configuration.rendered}"
+    destination = "~/config/p-spring-cloud-services-config.json"
+  }
 
-    environment {
-      OM_DOMAIN          = "${var.opsman_host}"
-      OM_USERNAME        = "${var.opsman_user}"
-      OM_PASSWORD        = "${local.opsman_password}"
-      PRODUCT_NAME       = "p-spring-cloud-services"
-      PRODUCT_CONFIG     = "${data.template_file.scs_product_configuration.rendered}"
-      AZ_CONFIG          = "${data.template_file.tile_az_configuration.rendered}"
-    }
+  provisioner "remote-exec" {
+    inline = ["configure_tile p-spring-cloud-services noservices"]
   }
 
   count = "${contains(var.tiles, "scs") ? 1 : 0}"

@@ -13,17 +13,13 @@ resource "null_resource" "setup_redis" {
     inline = ["install_tile p-redis ${lookup(var.tile_versions, "redis")} pivotal ${var.iaas}"]
   }
 
-  provisioner "local-exec" {
-    command = "${path.module}/scripts/setup_tile.sh"
+  provisioner "file" {
+    content     = "${data.template_file.redis_product_configuration.rendered}"
+    destination = "~/config/p-redis-config.json"
+  }
 
-    environment {
-      OM_DOMAIN           = "${var.opsman_host}"
-      OM_USERNAME         = "${var.opsman_user}"
-      OM_PASSWORD         = "${local.opsman_password}"
-      PRODUCT_NAME        = "p-redis"
-      PRODUCT_CONFIG      = "${data.template_file.redis_product_configuration.rendered}"
-      AZ_CONFIG           = "${data.template_file.tile_az_services_configuration.rendered}"
-    }
+  provisioner "remote-exec" {
+    inline = ["configure_tile p-redis services"]
   }
 
   count = "${contains(var.tiles, "redis") ? 1 : 0}"
