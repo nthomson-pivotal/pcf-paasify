@@ -37,20 +37,6 @@ locals {
   ssh_private_key_encoded = "${jsonencode(module.aws.ops_manager_ssh_private_key)}"
 }
 
-data "template_file" "iaas_configuration" {
-  template = "${chomp(file("${path.module}/templates/iaas_configuration.json"))}"
-
-  vars {
-    access_key_id     = "${aws_iam_access_key.key.id}"
-    secret_access_key = "${aws_iam_access_key.key.secret}"
-    vpc_id            = "${module.aws.vpc_id}"
-    security_group    = "${module.aws.vms_security_group_id}"
-    key_pair_name     = "${module.aws.ops_manager_ssh_public_key_name}"
-    ssh_private_key   = "${substr(local.ssh_private_key_encoded, 1, length(local.ssh_private_key_encoded)-2)}"
-    region            = "${var.region}"
-  }
-}
-
 module "common" {
   source = "../common"
 
@@ -65,8 +51,9 @@ module "common" {
   opsman_ip                    = "${module.aws.ops_manager_ip}"
   opsman_host                  = "${module.aws.ops_manager_dns}"
   opsman_ssh_key               = "${module.aws.ops_manager_ssh_private_key}"
-  opsman_iaas_configuration    = "${data.template_file.iaas_configuration.rendered}"
-  opsman_network_configuration = "${data.template_file.network_configuration.rendered}"
+  opsman_configuration         = "${data.template_file.om_configuration.rendered}"
+
+  bosh_director_ip             = "${cidrhost(module.aws.management_subnet_cidrs[0], 10)}"
 
   pivnet_token = "${var.pivnet_token}"
 
@@ -81,10 +68,6 @@ module "common" {
   opsman_id = "12345"
 
   tiles = "${var.tiles}"
-
-  mysql_backup_configuration = "${data.template_file.mysql_backup_configuration.rendered}"
-
-  rabbitmq_resource_configuration = "${data.template_file.rabbitmq_resource_configuration.rendered}"
 
   healthwatch_resource_configuration = "${data.template_file.healthwatch_resource_configuration.rendered}"
 
@@ -101,8 +84,8 @@ module "common" {
 resource "null_resource" "apply_common" {
   depends_on = ["module.common"]
 
-  provisioner "local-exec" {
-    command = "om -t https://${module.aws.ops_manager_dns} -u ${var.opsman_user} -p ${module.common.opsman_password} apply-changes"
+  provisioner "remote-exec" {
+    inline = ["apply_changes"]
   }
 
   count = "${var.auto_apply == "1" ? 1 : 0}"

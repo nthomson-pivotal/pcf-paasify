@@ -41,7 +41,7 @@ variable "opsman_version" {
 
 variable "opsman_build" {
   type    = "string"
-  default = "117"
+  default = "177"
 }
 
 variable "dns_suffix" {

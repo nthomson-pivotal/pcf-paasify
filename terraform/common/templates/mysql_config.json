@@ -17,5 +17,27 @@
   ".properties.syslog_migration_selector": {
     "value": "disabled"
   },
-  ${backup_config}
+  ".properties.backups_selector": {
+    "value": "SCP Backups"
+  },
+  ".properties.backups_selector.scp.user": {
+    "value": "null"
+  },
+  ".properties.backups_selector.scp.key": {
+    "value": {
+      "secret": "null"
+    }
+  },
+  ".properties.backups_selector.scp.server": {
+    "value": "null"
+  },
+  ".properties.backups_selector.scp.destination": {
+    "value": "null"
+  },
+  ".properties.backups_selector.scp.port": {
+    "value": "1234"
+  },
+  ".properties.backups_selector.scp.cron_schedule": {
+    "value": "0 0 5 31 2 ?"
+  }
 }

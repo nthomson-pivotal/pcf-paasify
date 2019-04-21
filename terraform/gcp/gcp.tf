@@ -32,22 +32,13 @@ locals {
   ssh_private_key_encoded = "${jsonencode(module.gcp.ops_manager_ssh_private_key)}"
 }
 
-data "template_file" "iaas_configuration" {
-  template = "${chomp(file("${path.module}/templates/iaas_configuration.json"))}"
-
-  vars {
-    project = "${var.project}"
-    service_account = "${module.gcp.service_account_email}"
-  }
-}
-
 module "common" {
   source = "../common"
 
   env_name                     = "${var.env_name}"
   iaas                         = "google"
   region                       = "${var.region}"
-  azs      = ["${lookup(var.az1, var.region)}", "${lookup(var.az2, var.region)}", "${lookup(var.az3, var.region)}"]
+  azs                          = ["${lookup(var.az1, var.region)}", "${lookup(var.az2, var.region)}", "${lookup(var.az3, var.region)}"]
 
   ssl_cert                     = "${local.cert_full_chain}"
   ssl_private_key              = "${local.cert_key}"
@@ -55,8 +46,9 @@ module "common" {
   opsman_ip                    = "${module.gcp.ops_manager_ip}"
   opsman_host                  = "${module.gcp.ops_manager_dns}"
   opsman_ssh_key               = "${module.gcp.ops_manager_ssh_private_key}"
-  opsman_iaas_configuration    = "${data.template_file.iaas_configuration.rendered}"
-  opsman_network_configuration = "${data.template_file.network_configuration.rendered}"
+  opsman_configuration         = "${data.template_file.om_configuration.rendered}"
+
+  bosh_director_ip             = "${cidrhost(module.gcp.management_subnet_cidrs[0], 10)}"
 
   pivnet_token = "${var.pivnet_token}"
 
@@ -69,10 +61,6 @@ module "common" {
   opsman_id = "1234"
 
   tiles = "${var.tiles}"
-
-  mysql_backup_configuration = "${data.template_file.mysql_backup_configuration.rendered}"
-
-  rabbitmq_resource_configuration = "${data.template_file.rabbitmq_resource_configuration.rendered}"
 
   healthwatch_resource_configuration = "${data.template_file.healthwatch_resource_configuration.rendered}"
 
@@ -89,8 +77,8 @@ module "common" {
 resource "null_resource" "apply_common" {
   depends_on = ["module.common"]
 
-  provisioner "local-exec" {
-    command = "om -t https://${module.gcp.ops_manager_dns} -u ${var.opsman_user} -p ${module.common.opsman_password} apply-changes"
+  provisioner "remote-exec" {
+    inline = ["apply_changes"]
   }
 
   count = "${var.auto_apply == "1" ? 1 : 0}"

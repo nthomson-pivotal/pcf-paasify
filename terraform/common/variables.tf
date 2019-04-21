@@ -44,17 +44,13 @@ variable "opsman_user" {
   type = "string"
 }
 
-variable "opsman_iaas_configuration" {
+variable "opsman_configuration" {
   type = "string"
+  description = "YAML formatted string that contains OpsMan configuration for the director"
 }
 
-variable "opsman_network_configuration" {
+variable "bosh_director_ip" {
   type = "string"
-}
-
-variable "opsman_az_configuration" {
-  type = "string"
-  default = ""
 }
 
 variable "pivnet_token" {
@@ -79,7 +75,7 @@ variable "sys_domain" {
 
 variable "pas_version" {
   type = "string"
-  default = "2.4.0"
+  default = "2.4.6"
 }
 
 variable "tiles" {
@@ -91,23 +87,15 @@ variable "tile_versions" {
   type = "map"
 
   default = {
-    "mysql" = "2.4.2"
-    "redis" = "1.14.4"
+    "mysql" = "2.4.4"
+    "redis" = "2.0.1"
     "rabbit" = "1.14.4"
     "scs" = "2.0.4"
-    "metrics" = "1.5.2"
+    "metrics" = "1.6.0"
     "metrics-forwarder" = "1.11.4"
-    "healthwatch" = "1.4.4"
+    "healthwatch" = "1.4.5"
     "wavefront" = "0.9.3"
   }
-}
-
-variable "mysql_backup_configuration" {
-  type = "string"
-}
-
-variable "rabbitmq_resource_configuration" {
-  type = "string"
 }
 
 variable "healthwatch_resource_configuration" {

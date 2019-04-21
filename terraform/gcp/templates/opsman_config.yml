@@ -1,0 +1,19 @@
+az-configuration:
+- name: ${az1}
+- name: ${az2}
+- name: ${az3}
+iaas-configuration:
+  project: ${project}
+  associated_service_account: ${service_account}
+networks-configuration:
+  icmp_checks_enabled: false
+  networks:
+  - name: management
+    subnets:
+${management_subnets}
+  - name: pas
+    subnets:
+${pas_subnets}
+  - name: services
+    subnets:
+${services_subnets}

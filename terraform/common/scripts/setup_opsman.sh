@@ -23,4 +23,4 @@ om -k -t https://$OM_DOMAIN configure-director --networks-configuration "$OM_NET
 
 om -k -t https://$OM_DOMAIN configure-director --network-assignment "$OM_NET_ASSIGN_CONFIG"
 
-om -k -t https://$OM_DOMAIN apply-changes
+#om -k -t https://$OM_DOMAIN apply-changes

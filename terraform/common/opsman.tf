@@ -23,6 +23,15 @@ data "template_file" "network_assignment_configuration" {
   }
 }
 
+data "template_file" "om_configuration" {
+  template = "${chomp(file("${path.module}/templates/opsman_config.yml"))}"
+
+  vars {
+    az = "${var.azs[0]}"
+    provided_configuration = "${var.opsman_configuration}"
+  }
+}
+
 resource "null_resource" "setup_opsman" {
 
   provisioner "local-exec" {
@@ -40,38 +49,35 @@ resource "null_resource" "setup_opsman" {
   }
 
   provisioner "file" {
-    source      = "${path.module}/scripts/install_tile.sh"
-    destination = "/tmp/install_tile.sh"
-  }
-
-  provisioner "file" {
-    source      = "${path.module}/scripts/install_stemcell.sh"
-    destination = "/tmp/install_stemcell.sh"
-  }
-
-  provisioner "file" {
-    source      = "${path.module}/scripts/provision_opsman.sh"
-    destination = "/tmp/provision_opsman.sh"
+    source      = "${path.module}/scripts/opsman/"
+    destination = "/tmp"
   }
 
   provisioner "remote-exec" {
-    inline = ["chmod +x /tmp/provision_opsman.sh && /tmp/provision_opsman.sh ${var.pivnet_token}"]
+    inline = ["chmod +x /tmp/provision_opsman.sh && /tmp/provision_opsman.sh ${var.pivnet_token} ${var.opsman_host} ${local.opsman_password}"]
   }
 
-  provisioner "local-exec" {
-    command = "${path.module}/scripts/setup_opsman.sh ${var.dependency_blocker}"
+  provisioner "file" {
+    content     = "${data.template_file.tile_az_configuration.rendered}"
+    destination = "~/config/az-noservices-config.json"
+  }
 
-    environment {
-      PIVNET_TOKEN         = "${var.pivnet_token}"
-      OM_DOMAIN            = "${var.opsman_host}"
-      OM_USERNAME          = "${var.opsman_user}"
-      OM_PASSWORD          = "${local.opsman_password}"
-      OM_IAAS_CONFIG       = "${var.opsman_iaas_configuration}"
-      OM_AZ_CONFIG         = "${var.opsman_az_configuration == "" ? data.template_file.az_configuration.rendered : var.opsman_az_configuration}"
-      OM_NETWORK_CONFIG    = "${var.opsman_network_configuration}"
-      OM_NET_ASSIGN_CONFIG = "${data.template_file.network_assignment_configuration.rendered}"
-      IAAS                 = "${var.iaas}"
-    }
+  provisioner "file" {
+    content     = "${data.template_file.tile_az_services_configuration.rendered}"
+    destination = "~/config/az-services-config.json"
+  }
+
+  provisioner "file" {
+    content     = "${data.template_file.om_configuration.rendered}"
+    destination = "~/config/opsman-config.yml"
+  }
+
+  provisioner "remote-exec" {
+    inline = ["configure_opsman"]
+  }
+
+  provisioner "remote-exec" {
+    inline = ["chmod +x /tmp/post_install_opsman.sh && /tmp/post_install_opsman.sh ${var.bosh_director_ip}"]
   }
 
   connection {

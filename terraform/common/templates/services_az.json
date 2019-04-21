@@ -9,6 +9,6 @@
     "name": "pas"
   },
   "service_network": {
-    "name": "services-network"
+    "name": "services"
   }
 }

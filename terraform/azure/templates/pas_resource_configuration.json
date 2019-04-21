@@ -11,5 +11,8 @@
   },
   "blobstore": {
     "instances": 0
+  },
+  "mysql_monitor": {
+    "instances": 0
   }
 }

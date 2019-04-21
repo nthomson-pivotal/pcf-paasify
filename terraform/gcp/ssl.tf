@@ -18,7 +18,7 @@ resource "acme_certificate" "certificate" {
 
   account_key_pem           = "${acme_registration.reg.account_key_pem}"
   common_name               = "${module.gcp.ops_manager_dns}"
-  subject_alternative_names = ["*.${module.gcp.apps_domain}", "*.${module.gcp.sys_domain}", "*.uaa.${module.gcp.sys_domain}"]
+  subject_alternative_names = ["*.${module.gcp.apps_domain}", "*.${module.gcp.sys_domain}", "*.uaa.${module.gcp.sys_domain}", "*.login.sys.${local.base_domain}"]
 
   dns_challenge {
     provider = "gcloud"

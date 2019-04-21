@@ -1,8 +1,0 @@
-{
-  "rabbitmq-server": {
-    "instances": 3,
-    "instance_type": {
-      "id": "Standard_F4s"
-    }
-  }
-}

@@ -2,22 +2,19 @@
 
 set -e
 
-om_username=$1
-om_password=$2
-product_slug=$3
-version=$4
-glob=$5
-iaas=$6
-om_product=$7
+source ~/.om_profile
 
-export OM_USERNAME=$om_username
-export OM_PASSWORD=$om_password
+product_slug=$1
+version=$2
+glob=$3
+iaas=$4
+om_product=$5
 
 if [ -z "$om_product" ]; then
   om_product=$product_slug
 fi
 
-check_payload=$(om -k -t https://localhost available-products -f json)
+check_payload=$(om available-products -f json)
 
 if [ "$check_payload" != "no available products found" ]; then
   check=$(echo $check_payload | jq ".[] | select(.name==\"$om_product\" and .version==\"$version\") | .name")
@@ -38,7 +35,7 @@ if [ -z "${check}" ]; then
 
   echo "Uploading to OpsMan..."
 
-  om -k -t https://localhost upload-product -p $filename
+  om upload-product -p $filename
 
   echo "Installed tile $product_slug v$version"
   
@@ -46,16 +43,19 @@ else
   echo "Tile $product_slug v$version is already installed"
 fi
 
-om_version=$(om -k -t https://localhost available-products -f json | jq -r ".[] | select(.name==\"$om_product\") | .version")
+om_version=$(om available-products -f json | jq -r ".[] | select(.name==\"$om_product\") | .version")
 
 if [ -z "$om_version" ]; then
   echo "Error: Failed to find available product in OM named $om_product"
   exit 1
 fi
 
+# Temp fix for race condition
+sleep 10
+
 echo "Staging product version $om_version for $om_product in OM available products..."
 
-om -k -t https://localhost stage-product -p $om_product -v $om_version
+om stage-product -p $om_product -v $om_version
 
 echo 'Looking up stemcell dependency...'
 
@@ -70,5 +70,5 @@ else
   stemcell_version=$(echo $stemcell_json | jq -r ".release.version")
 
   echo "Installing $stemcell_slug v$stemcell_version for $iaas..."
-  install_stemcell $om_username $om_password $stemcell_slug $stemcell_version $iaas
+  install_stemcell $stemcell_slug $stemcell_version $iaas
 fi
