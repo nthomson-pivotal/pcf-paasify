@@ -6,7 +6,8 @@ resource "null_resource" "setup_prometheus" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_raw_tile prometheus-dev 0.0.1 ${var.iaas} https://storage.googleapis.com/prometheus-tile-dev/prometheus-0.0.1.pivotal"]
+    inline = ["install_raw_tile prometheus-dev ${lookup(var.tile_versions, "prometheus")} ${var.iaas} https://storage.googleapis.com/prometheus-tile-dev/prometheus-${lookup(var.tile_versions, "prometheus")}.pivotal",
+    "install_stemcell stemcells 3541.98 ${var.iaas}"]
   }
 
   provisioner "file" {

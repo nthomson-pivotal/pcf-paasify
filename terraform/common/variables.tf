@@ -95,6 +95,7 @@ variable "tile_versions" {
     "metrics-forwarder" = "1.11.4"
     "healthwatch" = "1.4.5"
     "wavefront" = "0.9.3"
+    "prometheus" = "0.1.0"
   }
 }
 
