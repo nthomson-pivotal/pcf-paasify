@@ -2,7 +2,7 @@ data "template_file" "mysql_product_configuration" {
   template = "${chomp(file("${path.module}/templates/mysql_config.json"))}"
 
   vars {
-    az_string = "${var.iaas == "azure" ? "\"null\"" : join(",", formatlist("\"%s\"", var.azs))}"
+    az_string = "${join(",", formatlist("\"%s\"", var.azs))}"
   }
 }
 

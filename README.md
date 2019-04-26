@@ -8,7 +8,7 @@ Take this example:
 
 ```
 module "paasify" {
-  source = "github.com/nthomson-pivotal/pcf-paasify/terraform/aws?ref=2.4"
+  source = "github.com/nthomson-pivotal/pcf-paasify/terraform/aws?ref=2.5"
 
   env_name     = "paasify-test"
   dns_suffix   = "aws.paasify.org"
@@ -19,7 +19,7 @@ module "paasify" {
 ```
 
 This will:
-- Install PAS 2.4 Small Footprint
+- Install PAS 2.5 Small Footprint
 - Download, stage and configure the MySQL, RabbitMQ and Spring Cloud Services tiles
 - Wire up DNS so that its accessible at `paasify-test.aws.paasify.org`
 - Provision valid SSL certificates via Lets Encrypt for every common HTTPS endpoint

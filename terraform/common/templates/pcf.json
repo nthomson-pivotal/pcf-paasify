@@ -43,6 +43,9 @@
       }
     ]
   },
+  ".properties.stack_migration_acknowledgement": {
+    "value": "X"
+  },
   ".uaa.service_provider_key_credentials": {
     "value": {
       "private_key_pem": ${uaa_private_key},

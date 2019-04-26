@@ -19,7 +19,7 @@ module "azure" {
   env_short_name        = "${var.env_name}"
   location              = "${var.region}"
   dns_suffix            = "${var.dns_suffix}"
-  ops_manager_image_uri = "https://opsmanagerwestus.blob.core.windows.net/images/ops-manager-2.4-build.117.vhd"
+  ops_manager_image_uri = "https://opsmanagerwestus.blob.core.windows.net/images/ops-manager-2.5.2-build.172.vhd"
 
   ssl_cert        = "${local.cert_full_chain}"
   ssl_private_key = "${local.cert_key}"
@@ -41,7 +41,7 @@ module "common" {
   env_name = "${var.env_name}"
   iaas     = "azure"
   region   = "${var.region}"
-  azs      = ["null"]
+  azs      = ["zone-1", "zone-2", "zone-3"]
 
   ssl_cert                     = "${local.cert_full_chain}"
   ssl_private_key              = "${local.cert_key}"

@@ -12,7 +12,7 @@ variable "client_secret" {}
 
 variable "region" {
   type    = "string"
-  default = "West US"
+  default = "West US 2"
 }
 
 variable "dns_suffix" {

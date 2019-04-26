@@ -1,15 +1,15 @@
 {
-  ".properties.plan1_selector.active.az_multi_select": {
+  ".properties.plan1_selector.single_node.az_multi_select": {
     "value": [
       ${az_string}
     ]
   },
-  ".properties.plan2_selector.active.az_multi_select": {
+  ".properties.plan2_selector.single_node.az_multi_select": {
     "value": [
       ${az_string}
     ]
   },
-  ".properties.plan3_selector.active.az_multi_select": {
+  ".properties.plan3_selector.single_node.az_multi_select": {
     "value": [
       ${az_string}
     ]
@@ -39,5 +39,11 @@
   },
   ".properties.backups_selector.scp.cron_schedule": {
     "value": "0 0 5 31 2 ?"
+  },
+  ".properties.global_recipient_email": {
+    "value": "none@localhost"
+  },
+  ".properties.deprecated_bindings_string": {
+    "value": "X"
   }
 }

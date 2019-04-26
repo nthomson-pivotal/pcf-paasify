@@ -36,12 +36,12 @@ variable "az3" {
 
 variable "opsman_version" {
   type    = "string"
-  default = "2.4"
+  default = "2.5.2"
 }
 
 variable "opsman_build" {
   type    = "string"
-  default = "177"
+  default = "172"
 }
 
 variable "dns_suffix" {
