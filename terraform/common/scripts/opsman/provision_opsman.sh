@@ -48,6 +48,12 @@ fi
 
 sudo chmod +x /usr/bin/install_tile
 
+if [ ! -f /usr/bin/install_raw_tile ]; then
+  sudo mv /tmp/install_raw_tile.sh /usr/bin/install_raw_tile
+fi
+
+sudo chmod +x /usr/bin/install_raw_tile
+
 if [ ! -f /usr/bin/install_stemcell ]; then
   sudo mv /tmp/install_stemcell.sh /usr/bin/install_stemcell
 fi

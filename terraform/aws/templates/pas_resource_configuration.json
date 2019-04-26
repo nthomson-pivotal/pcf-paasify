@@ -9,6 +9,9 @@
       "${web_elb_name}"
     ]
   },
+  "compute": {
+    "instances": ${compute_instances}
+  },
   "blobstore": {
     "instances": 0
   },

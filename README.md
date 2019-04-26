@@ -1,14 +1,14 @@
 # PCF Paasify
 
-Installing Pivotal Cloud Foundry for quick setups can take longer than it should. The goal of this project is to allow you to complete an install of PCF, with optional tiles, with nothing more than Terraform installed locally (not quite there yet). This is being essentially being exposed as 'PCF-as-a-Terraform-module' that is compatible across all supported public clouds.
+Installing Pivotal Application Service for quick setups can be more complicated than it should. The goal of this project is to allow you to complete an install of PAS, with optional tiles, with nothing more than Terraform installed locally. This is being essentially being exposed as 'PCF-as-a-Terraform-module' that is compatible across all supported public clouds. It is designed for short-term, non-production setups, and is not intended to provide a PAS setup that can be upgraded over long periods of time.
 
-If you need fire-and-forget mechanism that gives you predictable, stable PCF environments (including many popular tiles) then this is for you.
+If you need fire-and-forget mechanism that gives you predictable, disposable PCF environments (including many popular tiles) then this is for you.
 
 Take this example:
 
 ```
 module "paasify" {
-  source = "github.com/nthomson-pivotal/pcf-paasify/terraform/aws?ref=2.4v0"
+  source = "github.com/nthomson-pivotal/pcf-paasify/terraform/aws?ref=2.4"
 
   env_name     = "paasify-test"
   dns_suffix   = "aws.paasify.org"
@@ -20,21 +20,22 @@ module "paasify" {
 
 This will:
 - Install PAS 2.4 Small Footprint
-- Add MySQL, RabbitMQ and Spring Cloud Services tiles
+- Download, stage and configure the MySQL, RabbitMQ and Spring Cloud Services tiles
 - Wire up DNS so that its accessible at `paasify-test.aws.paasify.org`
 - Provision valid SSL certificates via Lets Encrypt for every common HTTPS endpoint
 - Allow you to cleanly tear down all infrastructure via `terraform destroy`
+- Perform all PivNet product downloads/uploads on the OpsMan VM for speed
 
 When the Terraform run completes there will be a fully working PCF PAS installation, with endpoint information available from Terraform outputs.
 
 ## What?
 
-Paasify is a set of super-opinionated Terraform scripts and supporting utilities for creating Pivotal CloudFoundry foundations in the various supported IaaS providers. Where this utility excels in the ability to quickly setup PCF foundations for experiments or testing, and is powerful in scenarios that involve multiple foundations (multi-region or multi-cloud) as it is capable of creating these in a single command due to its composability. Other scenarios where it becomes useful are demos or proof-of-concept exercises where the focus is not on the installation procedure itself, nor is the target a "production-grade" setup.
+Paasify is a set of super-opinionated Terraform scripts and supporting utilities for creating Pivotal Application Service foundations in the various supported IaaS providers. Where this utility excels in the ability to quickly setup PCF foundations for experiments or testing, and is great for scenarios that involve multiple foundations (multi-region or multi-cloud) as it is capable of creating these in a single command due to its composability. Other scenarios where it becomes useful are demos or proof-of-concept exercises where the focus is not on the installation procedure itself.
 
 The main features provided by the install are:
 
 - Small Footprint PAS
-- Ability to install specific tiles (supporting stemcells automatically installed)
+- Install (incrementally if needed) specific tiles, automatically adding their supported stemcells
 - DNS that is configured without intervention
 - Valid SSL certificates for both OpsManager and PAS via Lets Encrypt
 - All default passwords are randomly generated
@@ -47,7 +48,7 @@ Some of the opinions of this project are:
 - A very specific DNS naming convention and control structure (see below for more details)
 - SSL certificates generated through LetsEncrypt via DNS verification
 - Default to absolute minimal resource configurations
-- As much as possible inherited from core PCF Terraforming projects for each IaaS
+- As much as possible inherited from core PCF terraforming-* projects for each IaaS
 - Pin to known working versions of anything everywhere possible at the expense of the latest version
 
 Pending work includes:
@@ -59,13 +60,13 @@ Pending work includes:
 - Ability to specify syslog output for log aggregation (Papertrail etc)
 - Support optionally hard-coded OpsManager password instead of always randomly generating
 
-## Why Not Concourse/PCF-Pipelines?
+## Why Not Concourse/PCF-Pipelines/PCF-Automation?
 
 This project is *NOT* intended to illustrate best practices with regards to installing PCF as advocated by Pivotal, but rather to support a very specific set of use-cases:
 
 - I often require PCF installations on my own cloud infrastructure on short notice (demo, experiments)
 - I neither want to build/maintain/pay for a Concourse setup nor start/stop one whenever I need it to reduce costs
-- PCF Pipelines are architected for larger-scale, long-lived systems, whereas I have optimized for a one-click setup with less regard for upgradability
+- PCF Pipelines and Automation are architected for larger-scale, long-lived systems, whereas I have optimized for a "one-click" setup with less regard for upgradability
 
 Leveraging AWS CodeBuild provides a serverless solution that allows aggressive cost control with a fire-and-forget interface.
 
@@ -80,7 +81,7 @@ Paasify can be run directly as a Terraform module. The pre-requisites for this a
 - Terraform must be installed locally
 - You must have authentication setup locally for the appropriate cloud that Terraform leverage (see Terraform provider docs)
 
-The following example Terraform configuration imports Paasify as a module targetting AWS:
+The following example Terraform configuration imports Paasify as a module targeting AWS:
 
 ```
 module "paasify" {
@@ -118,7 +119,7 @@ The following sections provide more detailed information regarding the system wh
 
 ### Tiles
 
-These tiles are supported (`*` = not installed by default):
+These tiles are supported:
 
 - MySQL v2
 - RabbitMQ

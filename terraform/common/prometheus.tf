@@ -5,28 +5,23 @@ data "template_file" "prometheus_product_configuration" {
 resource "null_resource" "setup_prometheus" {
   depends_on = ["null_resource.setup_pas"]
 
+  provisioner "remote-exec" {
+    inline = ["install_raw_tile prometheus-dev ${lookup(var.tile_versions, "prometheus")} ${var.iaas} https://storage.googleapis.com/prometheus-tile-dev/prometheus-${lookup(var.tile_versions, "prometheus")}.pivotal",
+    "install_stemcell stemcells 3541.98 ${var.iaas}"]
+  }
+
   provisioner "file" {
-    source      = "${path.module}/scripts/install_prometheus_dev.sh"
-    destination = "/home/ubuntu/install_prometheus_dev.sh"
+    content     = "${data.template_file.prometheus_product_configuration.rendered}"
+    destination = "~/config/prometheus-dev-config.json"
+  }
+
+  provisioner "file" {
+    content     = "${var.prometheus_resource_configuration}"
+    destination = "~/config/prometheus-dev-resources.json"
   }
 
   provisioner "remote-exec" {
-    inline = ["chmod +x /home/ubuntu/install_prometheus_dev.sh && /home/ubuntu/install_prometheus_dev.sh ${var.opsman_user} ${local.opsman_password}"]
-  }
-
-  provisioner "local-exec" {
-    command = "${path.module}/scripts/setup_tile.sh"
-
-    environment {
-      OM_DOMAIN       = "${var.opsman_host}"
-      OM_USERNAME     = "${var.opsman_user}"
-      OM_PASSWORD     = "${local.opsman_password}"
-
-      PRODUCT_NAME    = "prometheus-dev"
-      PRODUCT_CONFIG  = "${data.template_file.prometheus_product_configuration.rendered}"
-      AZ_CONFIG       = "${data.template_file.tile_az_configuration.rendered}"
-      RESOURCE_CONFIG = "${var.prometheus_resource_configuration}"
-    }
+    inline = ["configure_tile prometheus-dev noservices"]
   }
 
   count = "${contains(var.tiles, "prometheus") ? 1 : 0}"
