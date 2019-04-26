@@ -9,6 +9,9 @@
       "${web_lb_name}"
     ]
   },
+  "compute": {
+    "instances": ${compute_instances}
+  },
   "blobstore": {
     "instances": 0
   },
