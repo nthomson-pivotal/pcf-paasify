@@ -109,4 +109,6 @@ source ~/.om_profile
 EOF
 
 # Setup config dir
-mkdir -p ~/config
+if [ ! -d ~/config ]; then
+  mkdir -p ~/config
+fi
