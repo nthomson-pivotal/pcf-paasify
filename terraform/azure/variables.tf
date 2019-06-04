@@ -2,14 +2,6 @@ variable "env_name" {
   type = "string"
 }
 
-variable "subscription_id" {}
-
-variable "tenant_id" {}
-
-variable "client_id" {}
-
-variable "client_secret" {}
-
 variable "region" {
   type    = "string"
   default = "West US 2"
