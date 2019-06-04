@@ -7,11 +7,10 @@ phases:
   install:
     commands:
       - . $CODEBUILD_SRC_DIR/bin/switch.sh
-      - . $CODEBUILD_SRC_DIR/bin/install.sh
+      - . $CODEBUILD_SRC_DIR/codebuild/bin/install.sh
   build:
     commands:
-      - . $CODEBUILD_SRC_DIR/bin/destroy.sh
-      - aws s3 rm s3://$state_bucket --recursive
+      - . $CODEBUILD_SRC_DIR/codebuild/bin/build.sh
   post_build:
     commands:
-      - echo 'None'
+      - aws s3 cp $HOME/state s3://$state_bucket --recursive
