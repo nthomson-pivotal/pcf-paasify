@@ -2,7 +2,7 @@
 
 set -e
 
-. $CODEBUILD_SRC_DIR/bin/cloud.sh
+. $CODEBUILD_SRC_DIR/codebuild/bin/cloud.sh
 
 tf_state=$HOME/state/terraform.tfstate
 
