@@ -1,19 +1,17 @@
 provider "azurerm" {
-  version = "~> 1.18.0"
-
-  subscription_id = "${var.subscription_id}"
-  tenant_id       = "${var.tenant_id}"
-  client_id       = "${var.client_id}"
-  client_secret   = "${var.client_secret}"
+  version = "~> 1.22.0"
+  skip_provider_registration = true
 }
+
+data "azurerm_client_config" "current" {}
 
 module "azure" {
   source = "github.com/pivotal-cf/terraforming-azure?ref=95d011a"
 
-  subscription_id = "${var.subscription_id}"
-  tenant_id       = "${var.tenant_id}"
-  client_id       = "${var.client_id}"
-  client_secret   = "${var.client_secret}"
+  subscription_id = "${data.azurerm_client_config.current.subscription_id}"
+  tenant_id       = "${data.azurerm_client_config.current.tenant_id}"
+  client_id       = "${azurerm_azuread_application.paasify.application_id}"
+  client_secret   = "${azurerm_azuread_service_principal_password.paasify.value}"
 
   env_name              = "${var.env_name}"
   env_short_name        = "${var.env_name}"
@@ -32,8 +30,11 @@ locals {
 
 resource "null_resource" "dependency_blocker" {
   depends_on = ["module.azure", "azurerm_dns_ns_record.test"]
-}
 
+  provisioner "local-exec" {
+    command = "sleep 30"
+  }
+}
 
 module "common" {
   source = "../common"

@@ -42,10 +42,11 @@ data "template_file" "om_configuration" {
     pas_subnets        = "${join("\n", data.template_file.om_pas_subnets.*.rendered)}"
     services_subnets   = "${join("\n", data.template_file.om_services_subnets.*.rendered)}"
 
-    subscription_id           = "${var.subscription_id}"
-    tenant_id                 = "${var.tenant_id}"
-    client_id                 = "${var.client_id}"
-    client_secret             = "${var.client_secret}"
+    subscription_id = "${data.azurerm_client_config.current.subscription_id}"
+    tenant_id       = "${data.azurerm_client_config.current.tenant_id}"
+    client_id       = "${azurerm_azuread_application.paasify.application_id}"
+    client_secret   = "${random_string.client_secret.result}"
+
     resource_group_name       = "${module.azure.pcf_resource_group_name}"
     bosh_storage_account_name = "${module.azure.bosh_root_storage_account}"
     ssh_public_key            = "${substr(local.ssh_public_key_encoded, 1, length(local.ssh_public_key_encoded)-2)}"
