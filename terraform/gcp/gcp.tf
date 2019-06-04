@@ -2,7 +2,7 @@ provider "google" {
   region  = "${var.region}"
   project = "${var.project}"
 
-  version = "~> 1.7.0"
+  version = "~> 1.18.0"
 }
 
 module "gcp" {
