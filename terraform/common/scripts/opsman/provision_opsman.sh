@@ -78,6 +78,12 @@ fi
 
 sudo chmod +x /usr/bin/configure_opsman
 
+if [ ! -f /usr/bin/destroy_opsman ]; then
+  sudo mv /tmp/destroy_opsman.sh /usr/bin/destroy_opsman
+fi
+
+sudo chmod +x /usr/bin/destroy_opsman
+
 # Update HTTPS certificate
 echo 'Installing HTTPS certificate...'
 

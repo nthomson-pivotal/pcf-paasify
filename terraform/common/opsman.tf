@@ -54,7 +54,7 @@ resource "null_resource" "setup_opsman" {
   }
 
   provisioner "remote-exec" {
-    inline = ["chmod +x /tmp/provision_opsman.sh && /tmp/provision_opsman.sh ${var.pivnet_token} ${var.opsman_host} ${local.opsman_password}"]
+    inline = ["chmod +x /tmp/provision_opsman.sh && /tmp/provision_opsman.sh ${var.pivnet_token} ${var.opsman_host} ${local.opsman_password} ${var.dependency_blocker}"]
   }
 
   provisioner "file" {
@@ -89,20 +89,17 @@ resource "null_resource" "setup_opsman" {
 
 
 resource "null_resource" "cleanup_opsman" {
-  provisioner "local-exec" {
-    command = "${path.module}/scripts/destroy_opsman.sh ${var.dependency_blocker}"
 
+  provisioner "remote-exec" {
     when = "destroy"
 
-    environment {
-      OM_ID       = "${var.opsman_id}"
-      OM_IP       = "${var.opsman_ip}"
-      OM_DOMAIN   = "${var.opsman_host}"
-      OM_USERNAME = "${var.opsman_user}"
-      OM_PASSWORD = "${local.opsman_password}"
-      APPS_DOMAIN = "${var.apps_domain}"
-      SYS_DOMAIN  = "${var.apps_domain}"
-    }
+    inline = ["destroy_opsman ${var.opsman_id} ${var.apps_domain} ${var.sys_domain}"]
+  }
+
+  connection {
+    host        = "${var.opsman_host}"
+    user        = "ubuntu"
+    private_key = "${var.opsman_ssh_key}"
   }
 
   depends_on = ["null_resource.setup_opsman"]
