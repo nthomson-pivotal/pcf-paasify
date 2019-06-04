@@ -80,7 +80,7 @@ variable "pas_version" {
 
 variable "tiles" {
   type    = "list"
-  default = ["mysql", "rabbit", "scs", "metrics", "healthwatch"]
+  default = []
 }
 
 variable "tile_versions" {
