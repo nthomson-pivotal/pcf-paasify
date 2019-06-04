@@ -5,6 +5,11 @@
 
 set -e
 
+if [ ! -d "$CODEBUILD_SRC_DIR/.git" ]; then
+  echo "No .git, skipping branch switch"
+  exit
+fi
+
 if [ ! -z "$branch" ]; then
   echo "Checking out Git branch $branch"
 
