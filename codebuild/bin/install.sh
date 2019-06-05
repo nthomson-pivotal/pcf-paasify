@@ -2,7 +2,7 @@
 
 set -e
 
-TERRAFORM_VERSION=0.11.7
+TERRAFORM_VERSION=0.11.13
 
 # Dependencies
 wget -q -O terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
@@ -13,7 +13,9 @@ apt-get install -qq -y curl jq
 
 # Setup state directory
 mkdir $HOME/state
-aws s3 cp s3://$state_bucket $HOME/state --recursive
+
+echo "Pulling TF state from 3://$state_bucket/$state_key"
+aws s3 cp s3://$state_bucket/$state_key $HOME/state --recursive
 
 . $CODEBUILD_SRC_DIR/codebuild/bin/cloud.sh
 

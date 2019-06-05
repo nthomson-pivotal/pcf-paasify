@@ -17,7 +17,7 @@
       "Tiles": {
         "Description": "Comma-delimited list of tiles that should be pre-installed",
         "Type": "CommaDelimitedList",
-        "Default": "mysql, rabbit, scs, redis, metrics, healthwatch, prometheus"
+        "Default": ""
       },
       "SourceRepo": {
         "Description": "Paasify source repository",
@@ -26,11 +26,13 @@
       },
       "SourceBranch":{
         "Description":"Use this branch in above repo (overrides tag)",
-        "Type":"String"
+        "Type":"String",
+        "Default": ""
       },
       "SourceTag":{
         "Description":"Use this tag in above repo",
-        "Type":"String"
+        "Type":"String",
+        "Default": ""
       },
       "Cloud" : {
         "Type" : "String",
@@ -51,9 +53,6 @@
                         "Ref":"EnvName"
                      },
                      {
-                        "Ref":"AWS::Region"
-                     },
-                     {
                         "Ref":"AWS::AccountId"
                      },
                      "paasify-state"
@@ -62,7 +61,7 @@
             }
          }
       },
-      "Adminrole":{
+      "CodeBuildRole":{
          "Type":"AWS::IAM::Role",
          "Properties":{
             "RoleName":{
@@ -71,9 +70,6 @@
                   [
                      {
                         "Ref":"AWS::StackName"
-                     },
-                     {
-                        "Ref":"AWS::Region"
                      },
                      "paasify-codebuild"
                   ]
@@ -106,6 +102,70 @@
                            "Action":"*",
                            "Effect":"Allow",
                            "Resource":"*"
+                        },
+                        {
+                           "Effect": "Allow",
+                           "Resource": [
+                              {
+                                 "Fn::Join":[
+                                    ":",
+                                    [
+                                       "arn:aws:logs",
+                                       {
+                                          "Ref":"AWS::Region"
+                                       },
+                                       {
+                                          "Ref":"AWS::AccountId"
+                                       },
+                                       "log-group:/aws/codebuild/*"
+                                    ]
+                                 ]
+                              },
+                              {
+                                 "Fn::Join":[
+                                    ":",
+                                    [
+                                       "arn:aws:logs",
+                                       {
+                                          "Ref":"AWS::Region"
+                                       },
+                                       {
+                                          "Ref":"AWS::AccountId"
+                                       },
+                                       "log-group:/aws/codebuild/*:*"
+                                    ]
+                                 ]
+                              }
+                           ],
+                           "Action": [
+                               "logs:CreateLogGroup",
+                               "logs:CreateLogStream",
+                               "logs:PutLogEvents"
+                           ]
+                        },
+                        {
+                           "Effect": "Allow",
+                           "Resource": [
+                              {
+                                 "Fn::Join":[
+                                    "-",
+                                    [
+                                       "arn:aws:s3:::codepipeline",
+                                       {
+                                          "Ref":"AWS::Region"
+                                       },
+                                       "*"
+                                    ]
+                                 ]
+                              }
+                           ],
+                           "Action": [
+                              "s3:PutObject",
+                              "s3:GetObject",
+                              "s3:GetObjectVersion",
+                              "s3:GetBucketAcl",
+                              "s3:GetBucketLocation"
+                           ]
                         }
                      ]
                   }
@@ -124,19 +184,16 @@
                      {
                         "Ref":"EnvName"
                      },
-                     {
-                        "Ref":"AWS::Region"
-                     },
                      "build"
                   ]
                ]
             },
             "Description":"Deploy PAS",
             "ServiceRole":{
-               "Ref":"Adminrole"
+               "Ref":"CodeBuildRole"
             },
             "Artifacts":{
-               "Type":"no_artifacts"
+               "Type":"NO_ARTIFACTS"
             },
             "TimeoutInMinutes": 360,
             "Environment":{
@@ -199,6 +256,10 @@
                     "Value":{
                        "Ref":"SourceTag"
                     }
+                 },
+                 {
+                    "Name": "state_key",
+                    "Value": "default"
                  }
                ]
             },
@@ -220,19 +281,16 @@
                      {
                         "Ref":"EnvName"
                      },
-                     {
-                        "Ref":"AWS::Region"
-                     },
                      "destroy"
                   ]
                ]
             },
-            "Description":"Destroy PCF",
+            "Description":"Destroy PAS",
             "ServiceRole":{
-               "Ref":"Adminrole"
+               "Ref":"CodeBuildRole"
             },
             "Artifacts":{
-               "Type":"no_artifacts"
+               "Type":"NO_ARTIFACTS"
             },
             "TimeoutInMinutes": 60,
             "Environment":{
@@ -281,6 +339,10 @@
                      "Value":{
                         "Ref":"SourceTag"
                      }
+                  },
+                  {
+                     "Name": "state_key",
+                     "Value": "default"
                   }
                ]
             },

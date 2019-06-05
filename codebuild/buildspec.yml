@@ -13,4 +13,4 @@ phases:
       - . $CODEBUILD_SRC_DIR/codebuild/bin/build.sh
   post_build:
     commands:
-      - aws s3 cp $HOME/state s3://$state_bucket --recursive
+      - aws s3 cp $HOME/state s3://$state_bucket/$state_key --recursive
