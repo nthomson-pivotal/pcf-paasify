@@ -7,3 +7,5 @@ network-assignment:
 director-configuration:
   ntp_servers_string: time.google.com
 ${provided_configuration}
+  retry_bosh_deploys: true
+  resurrector_enabled: true
