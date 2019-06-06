@@ -14,7 +14,7 @@ apt-get install -qq -y curl jq
 # Setup state directory
 mkdir $HOME/state
 
-echo "Pulling TF state from 3://$state_bucket/$state_key"
+echo "Pulling TF state from s3://$state_bucket/$state_key"
 aws s3 cp s3://$state_bucket/$state_key $HOME/state --recursive
 
 . $CODEBUILD_SRC_DIR/codebuild/bin/cloud.sh
