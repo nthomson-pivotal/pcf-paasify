@@ -47,10 +47,10 @@
          "Properties":{
             "BucketName":{
                "Fn::Join":[
-                  ".",
+                  "-",
                   [
                      {
-                        "Ref":"EnvName"
+                        "Ref":"AWS::StackName"
                      },
                      {
                         "Ref":"AWS::AccountId"
@@ -66,12 +66,12 @@
          "Properties":{
             "RoleName":{
                "Fn::Join":[
-                  ".",
+                  "-",
                   [
                      {
                         "Ref":"AWS::StackName"
                      },
-                     "paasify-codebuild"
+                     "codebuild"
                   ]
                ]
             },
@@ -178,11 +178,10 @@
          "Properties":{
             "Name":{
                "Fn::Join":[
-                  "_",
+                  "-",
                   [
-                     "paasify",
                      {
-                        "Ref":"EnvName"
+                        "Ref":"AWS::StackName"
                      },
                      "build"
                   ]
@@ -243,7 +242,7 @@
                  },
                  {
                     "Name":"auto_apply",
-                    "Value": "0"
+                    "Value": "1"
                  },
                  {
                     "Name":"branch",
@@ -275,11 +274,10 @@
          "Properties":{
             "Name":{
                "Fn::Join":[
-                  "_",
+                  "-",
                   [
-                     "paasify",
                      {
-                        "Ref":"EnvName"
+                        "Ref":"AWS::StackName"
                      },
                      "destroy"
                   ]
