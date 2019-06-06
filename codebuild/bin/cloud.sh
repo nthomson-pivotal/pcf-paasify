@@ -25,8 +25,8 @@ fi
 if [ "$cloud" = "azure" ]; then
     echo "Bootstrapping Azure..."
 
-    export ARM_CLIENT_ID=$(aws ssm get-parameter --name /paasify/azure/client_id | jq '.Parameter.Value' -r)
-    export ARM_CLIENT_SECRET=$(aws ssm get-parameter --name /paasify/azure/client_secret --with-decryption | jq '.Parameter.Value' -r)
-    export ARM_SUBSCRIPTION_ID=$(aws ssm get-parameter --name /paasify/azure/subscription_id | jq '.Parameter.Value' -r)
-    export ARM_TENANT_ID=$(aws ssm get-parameter --name /paasify/azure/tenant_id | jq '.Parameter.Value' -r)
+    export TF_VAR_client_id=$(aws ssm get-parameter --name /paasify/azure/client_id | jq '.Parameter.Value' -r)
+    export TF_VAR_client_secret=$(aws ssm get-parameter --name /paasify/azure/client_secret --with-decryption | jq '.Parameter.Value' -r)
+    export TF_VAR_subscription_id=$(aws ssm get-parameter --name /paasify/azure/subscription_id | jq '.Parameter.Value' -r)
+    export TF_VAR_tenant_id=$(aws ssm get-parameter --name /paasify/azure/tenant_id | jq '.Parameter.Value' -r)
 fi
