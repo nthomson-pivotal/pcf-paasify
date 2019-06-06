@@ -11,6 +11,8 @@ sudo unzip terraform.zip -d /bin && rm terraform.zip
 apt-get update
 apt-get install -qq -y curl jq
 
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
 # Setup state directory
 mkdir $HOME/state
 
