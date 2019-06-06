@@ -1,9 +1,5 @@
 # PCF Paasify
 
-| AWS | GCP | Azure |
-|---------|-----|-----|
-| ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiRjRSeFh3TDBiWlBoQ0NGNDA2NWc2KzdMa0JuNlpaRGJYRThHVUFib2FrV0pUM0tpN2R3YWFJNTgzZEtaRHJBMzd6TU9SaXM4b0xDa1dGdkNHcU1OQ2RBPSIsIml2UGFyYW1ldGVyU3BlYyI6IjNVbXVOR3JTMFB3VWZvem0iLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master) | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiYkJRYlpZcURSZUFYMlhKc1pkSUpXbnQzMXB4a1FXdm1jY1RsS3QyOUVncW1ZdUdjTDVkZVpxRDg4YkZ0R1FUcXlyNFdDZTZFbE5YSFYwUjdWbkxwSHRvPSIsIml2UGFyYW1ldGVyU3BlYyI6Ijc0K2M1LysvRTVIU0NmVU8iLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master) |    |
-
 Installing Pivotal Application Service for quick setups can be more complicated than it should. The goal of this project is to allow you to complete an install of PAS, with optional tiles, with nothing more than Terraform installed locally. This is being essentially being exposed as 'PCF-as-a-Terraform-module' that is compatible across all supported public clouds. It is designed for short-term, non-production setups, and is not intended to provide a PAS setup that can be upgraded over long periods of time.
 
 If you need fire-and-forget mechanism that gives you predictable, disposable PCF environments (including many popular tiles) then this is for you.
