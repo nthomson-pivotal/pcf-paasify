@@ -5,6 +5,11 @@ provider "azurerm" {
 
 data "azurerm_client_config" "current" {}
 
+resource "random_string" "short_name" {
+  length  = 8
+  special = false
+}
+
 module "azure" {
   source = "github.com/pivotal-cf/terraforming-azure?ref=95d011a"
 
@@ -14,7 +19,7 @@ module "azure" {
   client_secret   = "${azurerm_azuread_service_principal_password.paasify.value}"
 
   env_name              = "${var.env_name}"
-  env_short_name        = "${var.env_name}"
+  env_short_name        = "${random_string.short_name.result}"
   location              = "${var.region}"
   dns_suffix            = "${var.dns_suffix}"
   ops_manager_image_uri = "https://opsmanagerwestus.blob.core.windows.net/images/ops-manager-2.5.2-build.172.vhd"
