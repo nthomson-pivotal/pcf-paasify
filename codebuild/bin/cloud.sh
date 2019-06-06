@@ -29,4 +29,6 @@ if [ "$cloud" = "azure" ]; then
     export ARM_CLIENT_SECRET=$(aws ssm get-parameter --name /paasify/azure/client_secret --with-decryption | jq '.Parameter.Value' -r)
     export ARM_SUBSCRIPTION_ID=$(aws ssm get-parameter --name /paasify/azure/subscription_id | jq '.Parameter.Value' -r)
     export ARM_TENANT_ID=$(aws ssm get-parameter --name /paasify/azure/tenant_id | jq '.Parameter.Value' -r)
+
+    echo "Authenticating to subscription $ARM_SUBSCRIPTION_ID with client ID $ARM_CLIENT_ID"
 fi
