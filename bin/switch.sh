@@ -21,3 +21,5 @@ elif [ ! -z "$tag" ]; then
 else
   echo "No Git branch/tag specified, taking no action"
 fi
+
+echo "Working on commit $(git rev-parse HEAD)"
