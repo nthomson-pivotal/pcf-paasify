@@ -1,26 +1,27 @@
 provider "azurerm" {
   version = "~> 1.22.0"
-  
+
   subscription_id = "${var.subscription_id}"
+  tenant_id       = "${var.tenant_id}"
   client_id       = "${var.client_id}"
   client_secret   = "${var.client_secret}"
-  tenant_id       = "${var.tenant_id}"
 }
 
 data "azurerm_client_config" "current" {}
 
 resource "random_string" "short_name" {
-  length  = 8
+  length  = 4
   special = false
+  upper = false
 }
 
 module "azure" {
   source = "github.com/pivotal-cf/terraforming-azure?ref=95d011a"
 
-  subscription_id = "${data.azurerm_client_config.current.subscription_id}"
-  tenant_id       = "${data.azurerm_client_config.current.tenant_id}"
-  client_id       = "${azurerm_azuread_application.paasify.application_id}"
-  client_secret   = "${azurerm_azuread_service_principal_password.paasify.value}"
+  subscription_id = "${var.subscription_id}"
+  tenant_id       = "${var.tenant_id}"
+  client_id       = "${var.client_id}"
+  client_secret   = "${var.client_secret}"
 
   env_name              = "${var.env_name}"
   env_short_name        = "${random_string.short_name.result}"
@@ -66,21 +67,17 @@ module "common" {
   pivnet_token = "${var.pivnet_token}"
 
   pas_product_configuration  = "${data.template_file.pas_product_configuration.rendered}"
-  pas_resource_configuration = "${data.template_file.pas_resource_configuration.rendered}"
 
   apps_domain = "${module.azure.apps_domain}"
   sys_domain  = "${module.azure.sys_domain}"
 
+  ssh_elb_name       = "${module.azure.diego_ssh_lb_name}"
+  web_elb_names      = ["${module.azure.web_lb_name}"]
+  compute_instances  = "${var.compute_instance_count}"
+
   opsman_id = "12345"
 
   tiles = "${var.tiles}"
-  
-  healthwatch_resource_configuration = "{}"
-
-  metrics_resource_configuration           = "{}"
-  metrics_forwarder_resource_configuration = "{}"
-
-  prometheus_resource_configuration = "{}"
 
   wavefront_token = "${var.wavefront_token}"
 

@@ -1,0 +1,11 @@
+network-properties:
+  network:
+    name: pas
+  service_network:
+    name: services
+  other_availability_zones:
+  - name: ${az1}
+  - name: ${az2}
+  - name: ${az3}
+  singleton_availability_zone:
+    name: ${az1}

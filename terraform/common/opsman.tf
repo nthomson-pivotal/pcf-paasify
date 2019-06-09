@@ -7,28 +7,11 @@ resource "random_string" "opsman_password" {
   special = false
 }
 
-data "template_file" "az_configuration" {
-  template = "${chomp(file("${path.module}/templates/az.json"))}"
-
-  vars {
-    az_string = "${join(",", formatlist("{\"name\":\"%s\"}", var.azs))}"
-  }
-}
-
-data "template_file" "network_assignment_configuration" {
-  template = "${chomp(file("${path.module}/templates/network_assignment.json"))}"
-
-  vars {
-    az = "${var.azs[0]}"
-  }
-}
-
 data "template_file" "om_configuration" {
   template = "${chomp(file("${path.module}/templates/opsman_config.yml"))}"
 
   vars {
     az = "${var.azs[0]}"
-    provided_configuration = "${var.opsman_configuration}"
   }
 }
 
@@ -58,18 +41,13 @@ resource "null_resource" "setup_opsman" {
   }
 
   provisioner "file" {
-    content     = "${data.template_file.tile_az_configuration.rendered}"
-    destination = "~/config/az-noservices-config.json"
-  }
-
-  provisioner "file" {
-    content     = "${data.template_file.tile_az_services_configuration.rendered}"
-    destination = "~/config/az-services-config.json"
-  }
-
-  provisioner "file" {
     content     = "${data.template_file.om_configuration.rendered}"
     destination = "~/config/opsman-config.yml"
+  }
+
+  provisioner "file" {
+    content     = "${var.opsman_configuration}"
+    destination = "~/config/opsman-config-ops.yml"
   }
 
   provisioner "remote-exec" {

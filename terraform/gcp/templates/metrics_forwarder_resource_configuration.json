@@ -1,8 +1,0 @@
-{
-  "metrics-forwarder": {
-    "instances": 1,
-    "instance_type": {
-      "id": "medium"
-    }
-  }
-}

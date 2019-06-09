@@ -9,7 +9,7 @@
 set -e
 
 PIVNET_CLI_VERSION=0.0.52
-OM_VERSION=0.44.0
+OM_VERSION=0.55.0
 
 pivnet_api_token=$1
 om_domain=$2

@@ -58,23 +58,25 @@ module "common" {
   pivnet_token = "${var.pivnet_token}"
 
   pas_product_configuration  = "${data.template_file.pas_product_configuration.rendered}"
-  pas_resource_configuration = "${data.template_file.pas_resource_configuration.rendered}"
 
   logger_endpoint_port = "4443"
 
   apps_domain = "${module.aws.apps_domain}"
   sys_domain  = "${module.aws.sys_domain}"
 
+  ssh_elb_name      = "${module.aws.ssh_elb_name}"
+  web_elb_names     = ["${module.aws.web_elb_name}"]
+  compute_instances = "${var.compute_instance_count}"
+
   opsman_id = "12345"
 
   tiles = "${var.tiles}"
 
-  healthwatch_resource_configuration = "${data.template_file.healthwatch_resource_configuration.rendered}"
+  healthwatch_mysql_instance_type     = "m4.xlarge"
+  healthwatch_forwarder_instance_type = "m4.large"
 
-  metrics_resource_configuration           = "${data.template_file.metrics_resource_configuration.rendered}"
-  metrics_forwarder_resource_configuration = "${data.template_file.metrics_forwarder_resource_configuration.rendered}"
-
-  prometheus_resource_configuration = "${data.template_file.prometheus_resource_configuration.rendered}"
+  metrics_mysql_instance_type         = "m4.large"
+  metrics_postgres_instance_type      = "r4.large"
 
   wavefront_token = "${var.wavefront_token}"
 

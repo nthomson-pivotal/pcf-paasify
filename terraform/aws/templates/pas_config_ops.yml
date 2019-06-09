@@ -1,0 +1,41 @@
+- type: replace  
+  path: /product-properties/.properties.system_blobstore?
+  value:
+    value: external
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external.buildpacks_bucket?
+  value:
+    value: ${buildpacks_bucket}
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external.droplets_bucket?
+  value:
+    value: ${droplets_bucket}
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external.resources_bucket?
+  value:
+    value: ${resources_bucket}
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external.packages_bucket?
+  value:
+    value: ${packages_bucket}
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external.access_key?
+  value:
+    value: ${access_key}
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external.secret_key?
+  value:
+    value: 
+      secret: ${secret_key}
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external.signature_version?
+  value:
+    value: 4
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external.region?
+  value:
+    value: ${region}
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external.endpoint?
+  value:
+    value: https://s3.${region}.amazonaws.com

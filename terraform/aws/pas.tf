@@ -1,6 +1,6 @@
 # TODO: Enabled S3 encryption for filestore
 data "template_file" "pas_product_configuration" {
-  template = "${chomp(file("${path.module}/templates/pas_product_configuration.json"))}"
+  template = "${chomp(file("${path.module}/templates/pas_config_ops.yml"))}"
 
   vars {
     region            = "${var.region}"
@@ -10,15 +10,5 @@ data "template_file" "pas_product_configuration" {
     packages_bucket   = "${module.aws.pas_packages_bucket}"
     buildpacks_bucket = "${module.aws.pas_buildpacks_bucket}"
     resources_bucket  = "${module.aws.pas_resources_bucket}"
-  }
-}
-
-data "template_file" "pas_resource_configuration" {
-  template = "${chomp(file("${path.module}/templates/pas_resource_configuration.json"))}"
-
-  vars {
-    ssh_elb_name      = "${module.aws.ssh_elb_name}"
-    web_elb_name      = "${module.aws.web_elb_name}"
-    compute_instances = "${var.compute_instance_count}"
   }
 }

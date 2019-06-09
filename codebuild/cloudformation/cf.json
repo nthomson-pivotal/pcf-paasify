@@ -37,7 +37,7 @@
       "Cloud" : {
         "Type" : "String",
         "Default" : "aws",
-        "AllowedValues" : ["aws", "gcp"],
+        "AllowedValues" : ["aws", "gcp", "azure"],
         "Description" : "The cloud provider on which the environment will be provisioned"
       }
    },

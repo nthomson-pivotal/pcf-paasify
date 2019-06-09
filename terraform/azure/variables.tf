@@ -36,7 +36,7 @@ variable "compute_instance_count" {
 variable "tiles" {
   type = "list"
 
-  default = ["mysql", "rabbit", "scs", "metrics", "healthwatch"]
+  default = []
 }
 
 variable "wavefront_token" {

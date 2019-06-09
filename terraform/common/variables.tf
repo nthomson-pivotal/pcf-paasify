@@ -61,10 +61,6 @@ variable "pas_product_configuration" {
   type = "string"
 }
 
-variable "pas_resource_configuration" {
-  type = "string"
-}
-
 variable "apps_domain" {
   type = "string"
 }
@@ -99,20 +95,24 @@ variable "tile_versions" {
   }
 }
 
-variable "healthwatch_resource_configuration" {
+variable "healthwatch_mysql_instance_type" {
   type = "string"
+  default = "automatic"
 }
 
-variable "metrics_resource_configuration" {
+variable "healthwatch_forwarder_instance_type" {
   type = "string"
+  default = "automatic"
 }
 
-variable "metrics_forwarder_resource_configuration" {
+variable "metrics_mysql_instance_type" {
   type = "string"
+  default = "automatic"
 }
 
-variable "prometheus_resource_configuration" {
+variable "metrics_postgres_instance_type" {
   type = "string"
+  default = "automatic"
 }
 
 variable "logger_endpoint_port" {
@@ -127,4 +127,16 @@ variable "wavefront_token" {
 variable "dependency_blocker" {
   type = "string"
   description = "This is used to ensure various resources block appropriately"
+}
+
+variable "web_elb_names" {
+  type    = "list"
+}
+
+variable "ssh_elb_name" {
+  type    = "string"
+}
+
+variable "compute_instances" {
+  type    = "string"
 }

@@ -1,5 +1,11 @@
-data "template_file" "scs_product_configuration" {
-  template = "${chomp(file("${path.module}/templates/scs_config.json"))}"
+data "template_file" "scs_configuration" {
+  template = "${chomp(file("${path.module}/templates/tiles/scs_config.yml"))}"
+
+  vars {
+    az1 = "${var.azs[0]}"
+    az2 = "${var.azs[1]}"
+    az3 = "${var.azs[2]}"
+  }
 }
 
 resource "null_resource" "setup_scs" {
@@ -10,12 +16,12 @@ resource "null_resource" "setup_scs" {
   }
 
   provisioner "file" {
-    content     = "${data.template_file.scs_product_configuration.rendered}"
-    destination = "~/config/p-spring-cloud-services-config.json"
+    content     = "${data.template_file.scs_configuration.rendered}"
+    destination = "~/config/p-spring-cloud-services-config.yml"
   }
 
   provisioner "remote-exec" {
-    inline = ["configure_tile p-spring-cloud-services noservices"]
+    inline = ["configure_tile p-spring-cloud-services"]
   }
 
   count = "${contains(var.tiles, "scs") ? 1 : 0}"

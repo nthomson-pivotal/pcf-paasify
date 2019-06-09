@@ -1,7 +1,7 @@
 provider "acme" {
   server_url = "https://acme-v02.api.letsencrypt.org/directory"
 
-  version = "~> 1.0.1"
+  version = "~> 1.2.0"
 }
 
 resource "tls_private_key" "private_key" {
@@ -22,10 +22,10 @@ resource "acme_certificate" "certificate" {
     provider = "azure"
 
     config = {
-      AZURE_CLIENT_ID       = "${azurerm_azuread_application.paasify.application_id}"
-      AZURE_CLIENT_SECRET   = "${random_string.client_secret.result}"
-      AZURE_SUBSCRIPTION_ID = "${data.azurerm_client_config.current.subscription_id}"
-      AZURE_TENANT_ID       = "${data.azurerm_client_config.current.tenant_id}"
+      AZURE_CLIENT_ID       = "${var.client_id}"
+      AZURE_CLIENT_SECRET   = "${var.client_secret}"
+      AZURE_SUBSCRIPTION_ID = "${var.subscription_id}"
+      AZURE_TENANT_ID       = "${var.tenant_id}"
       AZURE_RESOURCE_GROUP  = "${module.azure.pcf_resource_group_name}"
     }
   }

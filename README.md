@@ -128,7 +128,6 @@ These tiles are supported:
 - PCF Metrics
 - Metrics Forwarder
 - Healthwatch
-- Prometheus
 
 The latest stemcell supported by each tile will automatically be uploaded to OpsManager.
 

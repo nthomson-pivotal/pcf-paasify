@@ -4,8 +4,9 @@ network-assignment:
   other_availability_zones: []
   singleton_availability_zone:
     name: ${az}
-director-configuration:
-  ntp_servers_string: time.google.com
-${provided_configuration}
-  retry_bosh_deploys: true
-  resurrector_enabled: true
+properties-configuration:
+  director_configuration:
+    ntp_servers_string: time.google.com
+    retry_bosh_deploys: true
+    resurrector_enabled: true
+    

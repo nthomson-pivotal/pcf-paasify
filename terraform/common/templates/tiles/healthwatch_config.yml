@@ -1,0 +1,32 @@
+product-name: p-healthwatch
+product-properties:
+  .properties.opsman.enable.url:
+    value: 'https://${om_domain}'
+  .healthwatch-forwarder.health_check_az:
+    value: ${bosh_az}
+  .properties.boshtasks:
+    value: disable
+network-properties:
+  network:
+    name: pas
+  service_network:
+    name: services
+  other_availability_zones:
+  - name: ${az1}
+  - name: ${az2}
+  - name: ${az3}
+  singleton_availability_zone:
+    name: ${az1}
+resource-config:
+  healthwatch-forwarder:
+    instances: 2
+    persistent_disk:
+      size_mb: '51200'
+    instance_type:
+      id: ${forwarder_instance_type}
+  mysql:
+    instances: 1
+    persistent_disk:
+      size_mb: '51200'
+    instance_type:
+      id: ${mysql_instance_type}

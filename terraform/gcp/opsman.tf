@@ -47,7 +47,7 @@ data "template_file" "om_services_subnets" {
 }
 
 data "template_file" "om_configuration" {
-  template = "${chomp(file("${path.module}/templates/opsman_config.yml"))}"
+  template = "${chomp(file("${path.module}/templates/opsman_config_ops.yml"))}"
 
   vars {
     az1 = "${module.gcp.azs[0]}"

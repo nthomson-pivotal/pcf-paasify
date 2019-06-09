@@ -1,7 +1,7 @@
 provider "acme" {
   server_url = "https://acme-v02.api.letsencrypt.org/directory"
 
-  version = "~> 1.0.1"
+  version = "~> 1.1.0"
 }
 
 resource "tls_private_key" "private_key" {
@@ -25,6 +25,7 @@ resource "acme_certificate" "certificate" {
 
     config = {
       GCE_PROJECT = "${var.project}"
+      GCE_PROPAGATION_TIMEOUT = "360"
     }
   }
 }
