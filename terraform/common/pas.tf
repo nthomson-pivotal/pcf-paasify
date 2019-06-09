@@ -1,7 +1,13 @@
 data "template_file" "pas_configuration" {
-  template = "${chomp(file("${path.module}/templates/pcf.json"))}"
+  template = "${file("${path.module}/templates/tiles/pas_config.yml")}"
 
   vars {
+    az1                  = "${var.azs[0]}"
+    az2                  = "${var.azs[1]}"
+    az3                  = "${var.azs[2]}"
+    ssh_elb_name         = "${var.ssh_elb_name}"
+    web_elb_names        = "${join(", ", var.web_elb_names)}"
+    compute_instances    = "${var.compute_instances}"
     apps_domain          = "${var.apps_domain}"
     sys_domain           = "${var.sys_domain}"
     poe_cert             = "${jsonencode(var.ssl_cert)}"
@@ -9,7 +15,6 @@ data "template_file" "pas_configuration" {
     uaa_cert             = "${jsonencode(var.ssl_cert)}"
     uaa_private_key      = "${jsonencode(var.ssl_private_key)}"
     logger_endpoint_port = "${var.logger_endpoint_port}"
-    additional_config    = "${var.pas_product_configuration}"
   }
 }
 
@@ -18,12 +23,12 @@ resource "null_resource" "setup_pas" {
 
   provisioner "file" {
     content     = "${data.template_file.pas_configuration.rendered}"
-    destination = "~/config/cf-config.json"
+    destination = "~/config/cf-config.yml"
   }
 
   provisioner "file" {
-    content     = "${var.pas_resource_configuration}"
-    destination = "~/config/cf-resources.json"
+    content     = "${var.pas_product_configuration}"
+    destination = "~/config/cf-config-ops.yml"
   }
 
   provisioner "remote-exec" {
@@ -31,7 +36,7 @@ resource "null_resource" "setup_pas" {
   }
 
   provisioner "remote-exec" {
-    inline = ["configure_tile cf noservices"]
+    inline = ["configure_tile cf"]
   }
 
   connection {

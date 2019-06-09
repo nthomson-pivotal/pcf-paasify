@@ -99,7 +99,7 @@ Currently the implementation only allows authentication already configured appro
 
 This repository contains a CloudFormation template for creating AWS CodeBuild projects to build and destroy a setup. In order to create a CloudFormation stack using this template execute a command like the following:
 
-```aws cloudformation create-stack --stack-name test-env --template-body file://catalog/cloudformation/cf.json --parameters ParameterKey=EnvName,ParameterValue=test-env ParameterKey=DnsSuffix,ParameterValue=aws.paasify.org ParameterKey=PivnetToken,ParameterValue=<pivnet token> ParameterKey=Cloud,ParameterValue=aws```
+```aws cloudformation create-stack --stack-name test-env --template-body file://codebuild/cloudformation/cf.json --parameters ParameterKey=EnvName,ParameterValue=test-env ParameterKey=DnsSuffix,ParameterValue=aws.paasify.org ParameterKey=PivnetToken,ParameterValue=<pivnet token> ParameterKey=Cloud,ParameterValue=aws```
 
 ### Cleaning Up
 
@@ -128,7 +128,6 @@ These tiles are supported:
 - PCF Metrics
 - Metrics Forwarder
 - Healthwatch
-- Prometheus
 
 The latest stemcell supported by each tile will automatically be uploaded to OpsManager.
 

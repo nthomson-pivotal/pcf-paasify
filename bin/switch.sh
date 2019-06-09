@@ -5,6 +5,11 @@
 
 set -e
 
+if [ ! -d "$CODEBUILD_SRC_DIR/.git" ]; then
+  echo "No .git, skipping branch switch"
+  exit
+fi
+
 if [ ! -z "$branch" ]; then
   echo "Checking out Git branch $branch"
 
@@ -16,3 +21,5 @@ elif [ ! -z "$tag" ]; then
 else
   echo "No Git branch/tag specified, taking no action"
 fi
+
+echo "Working on commit $(git rev-parse HEAD)"

@@ -1,0 +1,22 @@
+product-name: apmPostgres
+network-properties:
+  network:
+    name: pas
+  other_availability_zones:
+  - name: ${az1}
+  - name: ${az2}
+  - name: ${az3}
+  singleton_availability_zone:
+    name: ${az1}
+resource-config:
+  redis:
+    persistent_disk:
+      size_mb: '51200'
+  mysql:
+    persistent_disk:
+      size_mb: '51200'
+    instance_type:
+      id: ${mysql_instance_type}
+  postgres:
+    instance_type:
+      id: ${postgres_instance_type}

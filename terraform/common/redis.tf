@@ -1,8 +1,10 @@
-data "template_file" "redis_product_configuration" {
-  template = "${chomp(file("${path.module}/templates/redis_config.json"))}"
+data "template_file" "redis_configuration" {
+  template = "${chomp(file("${path.module}/templates/tiles/redis_config.yml"))}"
 
   vars {
     az1 = "${var.azs[0]}"
+    az2 = "${var.azs[1]}"
+    az3 = "${var.azs[2]}"
   }
 }
 
@@ -14,12 +16,12 @@ resource "null_resource" "setup_redis" {
   }
 
   provisioner "file" {
-    content     = "${data.template_file.redis_product_configuration.rendered}"
-    destination = "~/config/p-redis-config.json"
+    content     = "${data.template_file.redis_configuration.rendered}"
+    destination = "~/config/p-redis-config.yml"
   }
 
   provisioner "remote-exec" {
-    inline = ["configure_tile p-redis services"]
+    inline = ["configure_tile p-redis"]
   }
 
   count = "${contains(var.tiles, "redis") ? 1 : 0}"

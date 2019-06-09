@@ -50,7 +50,7 @@ variable "dns_suffix" {
 }
 
 variable "dns_zone_name" {
-  default = "paasify-zone"
+  description = "The name of the Cloud DNS zone that managed the domain specified for dns_suffix"
 }
 
 variable "opsman_user" {
@@ -70,7 +70,7 @@ variable "compute_instance_count" {
 variable "tiles" {
   type = "list"
 
-  default = ["mysql", "rabbit", "scs", "metrics", "healthwatch"]
+  default = []
 }
 
 variable "wavefront_token" {

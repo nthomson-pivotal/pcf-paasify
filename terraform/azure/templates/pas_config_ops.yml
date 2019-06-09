@@ -1,0 +1,29 @@
+- type: replace  
+  path: /product-properties/.properties.system_blobstore?
+  value:
+    value: external_azure
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external_azure.buildpacks_container?
+  value:
+    value: ${buildpacks_container}
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external_azure.droplets_container?
+  value:
+    value: ${droplets_container}
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external_azure.resources_container?
+  value:
+    value: ${resources_container}
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external_azure.packages_container?
+  value:
+    value: ${packages_container}
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external_azure.access_key?
+  value:
+    value: 
+      secret: ${access_key}
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external_azure.account_name?
+  value:
+    value: ${account_name}

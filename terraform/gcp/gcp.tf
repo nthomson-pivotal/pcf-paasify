@@ -53,21 +53,23 @@ module "common" {
   pivnet_token = "${var.pivnet_token}"
 
   pas_product_configuration = "${data.template_file.pas_product_configuration.rendered}"
-  pas_resource_configuration = "${data.template_file.pas_resource_configuration.rendered}"
 
   apps_domain = "${module.gcp.apps_domain}"
   sys_domain  = "${module.gcp.sys_domain}"
+
+  ssh_elb_name      = "\"tcp:${module.gcp.ssh_lb_name}\""
+  web_elb_names     = ["\"tcp:${module.gcp.ws_router_pool}\"", "\"http:${module.gcp.http_lb_backend_name}\""]
+  compute_instances = "${var.compute_instance_count}"
 
   opsman_id = "1234"
 
   tiles = "${var.tiles}"
 
-  healthwatch_resource_configuration = "${data.template_file.healthwatch_resource_configuration.rendered}"
+  healthwatch_mysql_instance_type     = "xlarge"
+  healthwatch_forwarder_instance_type = "large"
 
-  metrics_resource_configuration           = "${data.template_file.metrics_resource_configuration.rendered}"
-  metrics_forwarder_resource_configuration = "${data.template_file.metrics_forwarder_resource_configuration.rendered}"
-
-  prometheus_resource_configuration = "${data.template_file.prometheus_resource_configuration.rendered}"
+  metrics_mysql_instance_type         = "large"
+  metrics_postgres_instance_type      = "automatic"
 
   wavefront_token = "${var.wavefront_token}"
 

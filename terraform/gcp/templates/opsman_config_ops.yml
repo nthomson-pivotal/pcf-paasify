@@ -1,0 +1,30 @@
+- type: replace  
+  path: /az-configuration?
+  value:
+    - name: ${az1}
+    - name: ${az2}
+    - name: ${az3}
+
+- type: replace  
+  path: /networks-configuration?
+  value:
+    icmp_checks_enabled: false
+    networks:
+    - name: management
+      subnets:
+${management_subnets}
+    - name: pas
+      subnets:
+${pas_subnets}
+    - name: services
+      subnets:
+${services_subnets}
+
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/project?
+  value: ${project}
+
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/associated_service_account?
+  value: ${service_account}
+  

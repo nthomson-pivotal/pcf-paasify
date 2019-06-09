@@ -1,9 +1,14 @@
-data "template_file" "healthwatch_product_configuration" {
-  template = "${chomp(file("${path.module}/templates/healthwatch_config.json"))}"
+data "template_file" "healthwatch_configuration" {
+  template = "${chomp(file("${path.module}/templates/tiles/healthwatch_config.yml"))}"
 
   vars {
-    om_domain = "${var.opsman_host}"
-    bosh_az   = "${var.azs[0]}"
+    az1                     = "${var.azs[0]}"
+    az2                     = "${var.azs[1]}"
+    az3                     = "${var.azs[2]}"
+    mysql_instance_type     = "${var.healthwatch_mysql_instance_type}"
+    forwarder_instance_type = "${var.healthwatch_forwarder_instance_type}"
+    om_domain               = "${var.opsman_host}"
+    bosh_az                 = "${var.azs[0]}"
   }
 }
 
@@ -15,17 +20,12 @@ resource "null_resource" "setup_healthwatch" {
   }
 
   provisioner "file" {
-    content     = "${data.template_file.healthwatch_product_configuration.rendered}"
-    destination = "~/config/p-healthwatch-config.json"
-  }
-
-  provisioner "file" {
-    content     = "${var.healthwatch_resource_configuration}"
-    destination = "~/config/p-healthwatch-resources.json"
+    content     = "${data.template_file.healthwatch_configuration.rendered}"
+    destination = "~/config/p-healthwatch-config.yml"
   }
 
   provisioner "remote-exec" {
-    inline = ["configure_tile p-healthwatch services"]
+    inline = ["configure_tile p-healthwatch"]
   }
 
   connection {

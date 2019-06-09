@@ -1,8 +1,10 @@
-data "template_file" "mysql_product_configuration" {
-  template = "${chomp(file("${path.module}/templates/mysql_config.json"))}"
+data "template_file" "mysql_configuration" {
+  template = "${chomp(file("${path.module}/templates/tiles/mysql_config.yml"))}"
 
   vars {
-    az_string = "${join(",", formatlist("\"%s\"", var.azs))}"
+    az1 = "${var.azs[0]}"
+    az2 = "${var.azs[1]}"
+    az3 = "${var.azs[2]}"
   }
 }
 
@@ -14,12 +16,12 @@ resource "null_resource" "setup_mysql" {
   }
 
   provisioner "file" {
-    content     = "${data.template_file.mysql_product_configuration.rendered}"
-    destination = "~/config/pivotal-mysql-config.json"
+    content     = "${data.template_file.mysql_configuration.rendered}"
+    destination = "~/config/pivotal-mysql-config.yml"
   }
 
   provisioner "remote-exec" {
-    inline = ["configure_tile pivotal-mysql services"]
+    inline = ["configure_tile pivotal-mysql"]
   }
 
   count = "${contains(var.tiles, "mysql") || contains(var.tiles, "scs") ? 1 : 0}"

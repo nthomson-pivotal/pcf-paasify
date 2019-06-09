@@ -1,8 +1,10 @@
-data "template_file" "rabbitmq_product_configuration" {
-  template = "${chomp(file("${path.module}/templates/rabbitmq_config.json"))}"
+data "template_file" "rabbitmq_configuration" {
+  template = "${chomp(file("${path.module}/templates/tiles/rabbitmq_config.yml"))}"
 
   vars {
-    az_string = "${join(",", formatlist("\"%s\"", var.azs))}"
+    az1 = "${var.azs[0]}"
+    az2 = "${var.azs[1]}"
+    az3 = "${var.azs[2]}"
   }
 }
 
@@ -14,12 +16,12 @@ resource "null_resource" "setup_rabbitmq" {
   }
 
   provisioner "file" {
-    content     = "${data.template_file.rabbitmq_product_configuration.rendered}"
-    destination = "~/config/p-rabbitmq-config.json"
+    content     = "${data.template_file.rabbitmq_configuration.rendered}"
+    destination = "~/config/p-rabbitmq-config.yml"
   }
 
   provisioner "remote-exec" {
-    inline = ["configure_tile p-rabbitmq services"]
+    inline = ["configure_tile p-rabbitmq"]
   }
 
   count = "${contains(var.tiles, "rabbit") || contains(var.tiles, "scs") ? 1 : 0}"

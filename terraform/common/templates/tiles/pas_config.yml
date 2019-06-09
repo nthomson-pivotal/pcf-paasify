@@ -1,0 +1,56 @@
+product-name: cf
+product-properties:
+  .cloud_controller.system_domain:
+    value: ${sys_domain}
+  .cloud_controller.apps_domain:
+    value: ${apps_domain}
+  .ha_proxy.skip_cert_verify:
+    value: true
+  .properties.haproxy_forward_tls:
+    value: disable
+  .properties.logger_endpoint_port:
+    value: ${logger_endpoint_port}
+  .properties.security_acknowledgement:
+    value: X
+  .mysql_monitor.recipient_email:
+    value: nobody@localhost
+  .properties.credhub_key_encryption_passwords:
+    value:
+    - name: default
+      primary: true
+      provider: internal
+      key:
+        secret: askdnasoidansfiopanskflasf
+  .properties.networking_poe_ssl_certs:
+    value:
+    - certificate:
+        cert_pem: ${poe_cert}
+        private_key_pem: ${poe_private_key}
+      name: default
+  .uaa.service_provider_key_credentials:
+    value:
+      cert_pem: ${uaa_cert}
+      private_key_pem: ${uaa_private_key}
+  .properties.stack_migration_acknowledgement:
+    value: X
+network-properties:
+  network:
+    name: pas
+  other_availability_zones:
+  - name: ${az1}
+  - name: ${az2}
+  - name: ${az3}
+  singleton_availability_zone:
+    name: ${az1}
+resource-config:
+  control:
+    elb_names:
+    - ${ssh_elb_name}
+  router:
+    elb_names: [${web_elb_names}]
+  compute:
+    instances: ${compute_instances}
+  blobstore:
+    instances: 0
+  mysql_monitor:
+    instances: 0

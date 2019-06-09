@@ -1,0 +1,50 @@
+- type: replace  
+  path: /az-configuration?
+  value:
+    - name: ${az1}
+    - name: ${az2}
+    - name: ${az3}
+
+- type: replace  
+  path: /networks-configuration?
+  value:
+    icmp_checks_enabled: false
+    networks:
+    - name: management
+      subnets:
+${management_subnets}
+    - name: pas
+      subnets:
+${pas_subnets}
+    - name: services
+      subnets:
+${services_subnets}
+
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/access_key_id?
+  value: ${access_key_id}
+
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/secret_access_key?
+  value: ${secret_access_key}
+
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/vpc_id?
+  value: ${vpc_id}
+
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/security_group?
+  value: ${security_group}
+
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/key_pair_name?
+  value: ${key_pair_name}
+
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/ssh_private_key?
+  value: "${ssh_private_key}"
+  
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/region?
+  value: ${region}
+  

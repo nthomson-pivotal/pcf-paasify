@@ -1,0 +1,46 @@
+- type: replace  
+  path: /networks-configuration?
+  value:
+    icmp_checks_enabled: false
+    networks:
+    - name: management
+      subnets:
+${management_subnets}
+    - name: pas
+      subnets:
+${pas_subnets}
+    - name: services
+      subnets:
+${services_subnets}
+
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/subscription_id?
+  value: ${subscription_id}
+
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/tenant_id?
+  value: ${tenant_id}
+
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/client_id?
+  value: ${client_id}
+
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/client_secret?
+  value: ${client_secret}
+
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/resource_group_name?
+  value: ${resource_group_name}
+
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/bosh_storage_account_name?
+  value: ${bosh_storage_account_name}
+  
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/ssh_public_key?
+  value: "${ssh_public_key}"
+  
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/ssh_private_key?
+  value: "${ssh_private_key}"
