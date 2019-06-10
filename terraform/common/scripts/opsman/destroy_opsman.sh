@@ -4,4 +4,4 @@ set -e
 
 source ~/.om_profile
 
-om delete-installation
+om delete-installation -f

@@ -15,7 +15,7 @@ data "template_file" "om_configuration" {
   }
 }
 
-resource "null_resource" "setup_opsman" {
+resource "null_resource" "provision_opsman" {
 
   provisioner "local-exec" {
     command = "sleep 60"
@@ -39,6 +39,17 @@ resource "null_resource" "setup_opsman" {
   provisioner "remote-exec" {
     inline = ["chmod +x /tmp/provision_opsman.sh && /tmp/provision_opsman.sh ${var.pivnet_token} ${var.opsman_host} ${local.opsman_password} ${var.dependency_blocker}"]
   }
+
+  connection {
+    host        = "${var.opsman_host}"
+    user        = "ubuntu"
+    private_key = "${var.opsman_ssh_key}"
+  }
+}
+
+resource "null_resource" "setup_opsman" {
+
+  depends_on = ["null_resource.provision_opsman"]
 
   provisioner "file" {
     content     = "${data.template_file.om_configuration.rendered}"
@@ -64,7 +75,6 @@ resource "null_resource" "setup_opsman" {
     private_key = "${var.opsman_ssh_key}"
   }
 }
-
 
 resource "null_resource" "cleanup_opsman" {
 

@@ -9,7 +9,7 @@
 set -e
 
 PIVNET_CLI_VERSION=0.0.52
-OM_VERSION=0.55.0
+OM_VERSION=1.1.0
 
 pivnet_api_token=$1
 om_domain=$2
@@ -19,27 +19,34 @@ sudo apt-get -qq update
 sudo apt-get -qq install -y jq nano
 
 # Install pivnet CLI
-echo 'Downloading pivnet CLI...'
+if [ ! -f /usr/bin/pivnet ]; then
+  echo 'Downloading pivnet CLI...'
 
-wget -q https://github.com/pivotal-cf/pivnet-cli/releases/download/v$PIVNET_CLI_VERSION/pivnet-linux-amd64-$PIVNET_CLI_VERSION -O pivnet
+  wget -q https://github.com/pivotal-cf/pivnet-cli/releases/download/v$PIVNET_CLI_VERSION/pivnet-linux-amd64-$PIVNET_CLI_VERSION -O pivnet
 
-sudo mv pivnet /usr/bin
-sudo chmod +x /usr/bin/pivnet
+  sudo mv pivnet /usr/bin
+  sudo chmod +x /usr/bin/pivnet
+else
+  echo "Skipping pivnet CLI"
+fi
 
 # Install om CLI
-echo 'Downloading om CLI...'
+if [ ! -f /usr/bin/om ]; then
+  echo 'Downloading om CLI...'
 
-wget -q https://github.com/pivotal-cf/om/releases/download/$OM_VERSION/om-linux -O om
+  wget -q https://github.com/pivotal-cf/om/releases/download/$OM_VERSION/om-linux -O om
 
-sudo mv om /usr/bin
-sudo chmod +x /usr/bin/om
+  sudo mv om /usr/bin
+  sudo chmod +x /usr/bin/om
+else 
+  echo "Skipping om CLI"
+fi
 
 # Login to pivnet
 echo 'Logging in to pivnet...'
 pivnet login --api-token $pivnet_api_token
 
 # Convenience scripts
-
 echo 'Installing convenience scripts...'
 
 if [ ! -f /usr/bin/install_tile ]; then
@@ -53,12 +60,6 @@ if [ ! -f /usr/bin/install_raw_tile ]; then
 fi
 
 sudo chmod +x /usr/bin/install_raw_tile
-
-if [ ! -f /usr/bin/install_stemcell ]; then
-  sudo mv /tmp/install_stemcell.sh /usr/bin/install_stemcell
-fi
-
-sudo chmod +x /usr/bin/install_stemcell
 
 if [ ! -f /usr/bin/apply_changes ]; then
   sudo mv /tmp/apply_changes.sh /usr/bin/apply_changes
@@ -108,13 +109,22 @@ cat << EOF > ~/.om_profile
 export OM_TARGET=https://$om_domain
 export OM_USERNAME=admin
 export OM_PASSWORD=$om_password
+export PIVNET_TOKEN=$pivnet_api_token
 EOF
 
 cat << EOF >> ~/.bash_profile
 source ~/.om_profile
 EOF
 
+source ~/.om_profile
+
 # Setup config dir
 if [ ! -d ~/config ]; then
   mkdir -p ~/config
 fi
+
+sleep 20
+
+# Configure authentication in OpsMan
+echo 'Configuring OpsMan authentication...'
+om configure-authentication -u $OM_USERNAME -p $OM_PASSWORD -dp $OM_PASSWORD

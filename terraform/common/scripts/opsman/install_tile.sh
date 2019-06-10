@@ -14,61 +14,69 @@ if [ -z "$om_product" ]; then
   om_product=$product_slug
 fi
 
-check_payload=$(om available-products -f json)
+tile_files="files/${product_slug}/$version"
+metadata_filename="${tile_files}/download-file.json"
 
-if [ "$check_payload" != "no available products found" ]; then
-  check=$(echo $check_payload | jq ".[] | select(.name==\"$om_product\" and .version==\"$version\") | .name")
-fi
+check_staged_payload=$(om staged-products -f json | jq -r ".[] | select(.name==\"$om_product\") | .version")
 
-if [ -z "${check}" ]; then
-  echo "Installing tile $product_slug v$version..."
+if [ -z "$check_staged_payload" ]; then
+  check_available_payload=$(om available-products -f json)
 
-  filename=$(basename $(pivnet --format json product-files -p $product_slug -r $version | jq --arg v "$glob" -r '.[] | select(.aws_object_key | contains($v)) | .aws_object_key'))
-
-  if [ ! -f "$filename" ]; then
-    echo "Downloading product from PivNet..."
-
-    pivnet download-product-files --accept-eula -p $product_slug -r $version -g "*$glob*"
-  else
-    echo "Using cached product file"
+  if [ "$check_available_payload" != "no available products found" ]; then
+    check=$(echo $check_available_payload | jq ".[] | select(.name==\"$om_product\" and .version==\"$version\") | .name")
   fi
 
-  echo "Uploading to OpsMan..."
+  if [ -z "${check}" ]; then
+    echo "Installing tile $product_slug v$version..."
 
-  om upload-product -p $filename
+    if [ ! -f "$metadata_filename" ]; then
+      echo "Downloading product from PivNet..."
 
-  echo "Installed tile $product_slug v$version"
-  
+      if [ ! -d "$tile_files" ]; then
+        mkdir -p $tile_files
+      fi
+
+      pivnet accept-eula -p $product_slug -r $version
+
+      om download-product -p $product_slug -f "*$glob*" -r $version --stemcell-iaas $iaas --pivnet-api-token $PIVNET_TOKEN -o $tile_files
+
+      #pivnet download-product-files --accept-eula -p $product_slug -r $version -g "*$glob*"
+    else
+      echo "Using cached product file"
+    fi
+
+    echo "Uploading to OpsMan..."
+
+    filename=$(cat $metadata_filename | jq -r '.product_path')
+
+    om -t https://localhost -k upload-product -p $filename
+
+    echo "Installed tile $product_slug v$version"
+    
+  else
+    echo "Tile $product_slug v$version is already installed"
+  fi
+
+  om_version=$(om available-products -f json | jq -r ".[] | select(.name==\"$om_product\") | .version")
+
+  if [ -z "$om_version" ]; then
+    echo "Error: Failed to find available product in OM named $om_product"
+  fi
+
+  if [ -z "$NO_STAGE" ]; then
+    # Temp fix for race condition
+    sleep 10
+
+    echo "Staging product version $om_version for $om_product in OM available products..."
+
+    om stage-product -p $om_product -v $om_version
+  else
+    echo "Skipping staging $om_product"
+  fi
 else
-  echo "Tile $product_slug v$version is already installed"
+  echo "Product $om_product $om_version is already staged"
 fi
 
-om_version=$(om available-products -f json | jq -r ".[] | select(.name==\"$om_product\") | .version")
+stemcell_path=$(cat $metadata_filename | jq -r '.stemcell_path')
 
-if [ -z "$om_version" ]; then
-  echo "Error: Failed to find available product in OM named $om_product"
-  exit 1
-fi
-
-# Temp fix for race condition
-sleep 10
-
-echo "Staging product version $om_version for $om_product in OM available products..."
-
-om stage-product -p $om_product -v $om_version
-
-echo 'Looking up stemcell dependency...'
-
-stemcell_json=$(pivnet release-dependencies -p $product_slug -r $version --format json  | jq -r "[.[] | select(.release.product.slug | contains(\"stemcell\"))][0]")
-
-if [ -z "$stemcell_json" ]; then
-  echo "Couldn't find stemcell dependency"
-  exit 1
-else
-
-  stemcell_slug=$(echo $stemcell_json | jq -r ".release.product.slug")
-  stemcell_version=$(echo $stemcell_json | jq -r ".release.version")
-
-  echo "Installing $stemcell_slug v$stemcell_version for $iaas..."
-  install_stemcell $stemcell_slug $stemcell_version $iaas
-fi
+om -t https://localhost -k upload-stemcell -f -s $stemcell_path
