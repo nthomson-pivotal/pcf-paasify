@@ -27,7 +27,7 @@ module "azure" {
   env_short_name        = "${random_string.short_name.result}"
   location              = "${var.region}"
   dns_suffix            = "${var.dns_suffix}"
-  ops_manager_image_uri = "https://opsmanagerwestus.blob.core.windows.net/images/ops-manager-2.5.2-build.172.vhd"
+  ops_manager_image_uri = "https://opsmanagerwestus.blob.core.windows.net/images/ops-manager-2.6.0-build.138.vhd"
 
   ssl_cert        = "${local.cert_full_chain}"
   ssl_private_key = "${local.cert_key}"

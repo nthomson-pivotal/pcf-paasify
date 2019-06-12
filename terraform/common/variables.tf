@@ -76,7 +76,7 @@ variable "sys_domain" {
 
 variable "pas_version" {
   type = "string"
-  default = "2.5.2"
+  default = "2.6.0-build.214"
 }
 
 variable "tiles" {
@@ -89,14 +89,12 @@ variable "tile_versions" {
 
   default = {
     "mysql" = "2.5.4"
-    "redis" = "2.0.1"
-    "rabbit" = "1.15.7"
-    "scs" = "2.0.7"
-    "metrics" = "1.6.0"
-    "metrics-forwarder" = "1.11.4"
+    "redis" = "2.1.2"
+    "rabbit" = "1.16.3"
+    "scs" = "2.0.9"
+    "metrics" = "1.6.1"
     "healthwatch" = "1.5.2"
-    "wavefront" = "0.9.3"
-    "prometheus" = "0.1.0"
+    "wavefront" = "1.0.0"
   }
 }
 
