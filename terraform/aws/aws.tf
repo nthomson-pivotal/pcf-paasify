@@ -4,6 +4,8 @@ provider "aws" {
   version = "~> 1.33.0"
 }
 
+data "aws_caller_identity" "current" {}
+
 data "aws_ami" "om_ami" {
   most_recent      = true
 

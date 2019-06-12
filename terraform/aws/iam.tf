@@ -30,3 +30,18 @@ resource "aws_iam_user_policy" "policy" {
 }
 EOF
 }
+
+resource "aws_iam_user" "pas_buckets" {
+  name = "${var.env_name}_pas_buckets"
+}
+
+resource "aws_iam_access_key" "pas_buckets" {
+  user = "${aws_iam_user.pas_buckets.name}"
+}
+
+resource "aws_iam_user_policy_attachment" "pas_buckets" {
+  depends_on = ["module.common"]
+
+  user       = "${aws_iam_user.pas_buckets.name}"
+  policy_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/${var.env_name}_ert"
+}
