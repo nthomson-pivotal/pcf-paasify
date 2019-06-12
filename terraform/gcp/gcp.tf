@@ -2,7 +2,7 @@ provider "google" {
   region  = "${var.region}"
   project = "${var.project}"
 
-  version = "~> 1.18.0"
+  version = "~> 2.0.0"
 }
 
 module "gcp" {
@@ -13,6 +13,7 @@ module "gcp" {
   service_account_key = "${base64decode(google_service_account_key.key.private_key)}"
   env_name            = "${var.env_name}"
   region              = "${var.region}"
+  buckets_location    = "${var.buckets_location}"
   dns_suffix          = "${var.dns_suffix}"
   opsman_image_url    = "https://storage.googleapis.com/ops-manager-us/pcf-gcp-${var.opsman_version}-build.${var.opsman_build}.tar.gz"
   zones               = ["${lookup(var.az1, var.region)}", "${lookup(var.az2, var.region)}", "${lookup(var.az3, var.region)}"]
@@ -24,7 +25,7 @@ module "gcp" {
 }
 
 resource "null_resource" "dependency_blocker" {
-  depends_on = ["module.gcp", "module.nat", "google_dns_record_set.ns"]
+  depends_on = ["module.gcp", "google_compute_router_nat.nat", "google_dns_record_set.ns"]
 }
 
 # Use intermediate local to hold JSON encoded SSH key

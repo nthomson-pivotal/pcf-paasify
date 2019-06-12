@@ -31,8 +31,6 @@ product-properties:
     value:
       cert_pem: ${uaa_cert}
       private_key_pem: ${uaa_private_key}
-  .properties.stack_migration_acknowledgement:
-    value: X
 network-properties:
   network:
     name: pas

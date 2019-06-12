@@ -9,5 +9,6 @@ data "template_file" "pas_product_configuration" {
     packages_bucket       = "${module.gcp.packages_bucket}"
     buildpacks_bucket     = "${module.gcp.buildpacks_bucket}"
     resources_bucket      = "${module.gcp.resources_bucket}"
+    backup_bucket         = "${google_storage_bucket.backup.name}"
   }
 }
