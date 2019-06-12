@@ -45,3 +45,25 @@ resource "aws_iam_user_policy_attachment" "pas_buckets" {
   user       = "${aws_iam_user.pas_buckets.name}"
   policy_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/${var.env_name}_ert"
 }
+
+resource "aws_iam_role_policy" "opsman_patch" {
+  depends_on = ["module.aws"]
+
+  name = "${var.env_name}_om_patch"
+  role = "${var.env_name}_om_role"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "ec2:DeregisterImage"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}

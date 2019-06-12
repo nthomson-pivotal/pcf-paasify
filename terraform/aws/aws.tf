@@ -31,7 +31,7 @@ module "aws" {
 }
 
 resource "null_resource" "dependency_blocker" {
-  depends_on = ["module.aws", "aws_route53_record.ns"]
+  depends_on = ["module.aws", "aws_route53_record.ns", "aws_iam_role_policy.opsman_patch"]
 }
 
 # Use intermediate local to hold JSON encoded SSH key
