@@ -8,7 +8,7 @@ Take this example:
 
 ```
 module "paasify" {
-  source = "github.com/nthomson-pivotal/pcf-paasify/terraform/aws?ref=2.5"
+  source = "github.com/nthomson-pivotal/pcf-paasify/terraform/aws?ref=2.6"
 
   env_name     = "paasify-test"
   dns_suffix   = "aws.paasify.org"
@@ -19,7 +19,7 @@ module "paasify" {
 ```
 
 This will:
-- Install PAS 2.5 Small Footprint
+- Install PAS 2.6 Small Footprint
 - Download, stage and configure the MySQL, RabbitMQ and Spring Cloud Services tiles
 - Wire up DNS so that its accessible at `paasify-test.aws.paasify.org`
 - Provision valid SSL certificates via Lets Encrypt for every common HTTPS endpoint
@@ -126,7 +126,6 @@ These tiles are supported:
 - Spring Cloud Services
 - Redis
 - PCF Metrics
-- Metrics Forwarder
 - Healthwatch
 
 The latest stemcell supported by each tile will automatically be uploaded to OpsManager.
