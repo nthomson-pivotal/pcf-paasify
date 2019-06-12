@@ -4,6 +4,8 @@ provider "aws" {
   version = "~> 1.33.0"
 }
 
+data "aws_caller_identity" "current" {}
+
 data "aws_ami" "om_ami" {
   most_recent      = true
 
@@ -29,7 +31,7 @@ module "aws" {
 }
 
 resource "null_resource" "dependency_blocker" {
-  depends_on = ["module.aws", "aws_route53_record.ns"]
+  depends_on = ["module.aws", "aws_route53_record.ns", "aws_iam_role_policy.opsman_patch"]
 }
 
 # Use intermediate local to hold JSON encoded SSH key

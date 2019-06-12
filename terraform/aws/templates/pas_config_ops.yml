@@ -39,3 +39,11 @@
   path: /product-properties/.properties.system_blobstore.external.endpoint?
   value:
     value: https://s3.${region}.amazonaws.com
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external.encryption?
+  value:
+    value: "${bucket_encryption}"
+- type: replace  
+  path: /product-properties/.properties.system_blobstore.external.encryption_kms_key_id?
+  value:
+    value: "${kms_id}"

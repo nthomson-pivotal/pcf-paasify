@@ -21,12 +21,12 @@ ${pas_subnets}
 ${services_subnets}
 
 - type: replace  
-  path: /properties-configuration/iaas_configuration?/access_key_id?
-  value: ${access_key_id}
+  path: /properties-configuration/iaas_configuration?/access_type?
+  value: roles
 
 - type: replace  
-  path: /properties-configuration/iaas_configuration?/secret_access_key?
-  value: ${secret_access_key}
+  path: /properties-configuration/iaas_configuration?/iam_instance_profile?
+  value: ${iam_instance_profile}
 
 - type: replace  
   path: /properties-configuration/iaas_configuration?/vpc_id?
@@ -47,4 +47,35 @@ ${services_subnets}
 - type: replace  
   path: /properties-configuration/iaas_configuration?/region?
   value: ${region}
+
+- type: replace  
+  path: /properties-configuration/iaas_configuration?/encrypted?
+  value: "${ebs_encryption}"
   
+- type: replace  
+  path: /properties-configuration/director_configuration?/blobstore_type?
+  value: s3
+
+- type: replace  
+  path: /properties-configuration/director_configuration?/s3_blobstore_options?/endpoint?
+  value: https://s3.${region}.amazonaws.com
+
+- type: replace  
+  path: /properties-configuration/director_configuration?/s3_blobstore_options?/bucket_name?
+  value: ${bucket_name}
+  
+- type: replace  
+  path: /properties-configuration/director_configuration?/s3_blobstore_options?/signature_version?
+  value: "4"
+
+- type: replace  
+  path: /properties-configuration/director_configuration?/s3_blobstore_options?/region?
+  value: ${region}
+
+- type: replace  
+  path: /properties-configuration/director_configuration?/s3_blobstore_options?/access_key?
+  value: ${bucket_access_key_id}
+
+- type: replace  
+  path: /properties-configuration/director_configuration?/s3_blobstore_options?/secret_key?
+  value: ${bucket_secret_access_key}
