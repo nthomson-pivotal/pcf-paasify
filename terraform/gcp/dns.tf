@@ -10,5 +10,8 @@ resource "google_dns_record_set" "ns" {
 
   rrdatas = [
     "${module.gcp.env_dns_zone_name_servers[0]}",
+    "${module.gcp.env_dns_zone_name_servers[1]}",
+    "${module.gcp.env_dns_zone_name_servers[2]}",
+    "${module.gcp.env_dns_zone_name_servers[3]}"
   ]
 }
