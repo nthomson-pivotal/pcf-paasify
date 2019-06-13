@@ -31,3 +31,5 @@ if [ "$cloud" = "azure" ]; then
   export TF_VAR_subscription_id=$(aws ssm get-parameter --name /paasify/azure/subscription_id | jq '.Parameter.Value' -r)
   export TF_VAR_tenant_id=$(aws ssm get-parameter --name /paasify/azure/tenant_id | jq '.Parameter.Value' -r)
 fi
+
+export TF_VAR_pivnet_token=$(aws ssm get-parameter --name /paasify/pivnet_token --with-decryption | jq '.Parameter.Value' -r)
