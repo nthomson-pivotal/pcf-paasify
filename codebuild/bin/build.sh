@@ -8,7 +8,6 @@ tf_state=$HOME/state/terraform.tfstate
 
 export TF_VAR_env_name=$env 
 export TF_VAR_dns_suffix=$dns_suffix 
-export TF_VAR_pivnet_token=$pivnet_token
 
 if [ ! -z "$tiles" ]; then
   export TF_VAR_tiles="[$tiles]"
