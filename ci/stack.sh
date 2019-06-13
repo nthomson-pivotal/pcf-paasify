@@ -6,11 +6,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 cloud=$1
 
-if [ -z "$pivnet_token" ]; then
-  echo "Error: Missing Pivnet token"
-  exit 1
-fi
-
 if [ -z "$cloud" ]; then
   echo "Error: Missing cloud name"
   exit 1
