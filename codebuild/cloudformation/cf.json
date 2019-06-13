@@ -10,10 +10,6 @@
          "Description":"DNS suffix (ie. aws.paasify.org)",
          "Type":"String"
       },
-      "PivnetToken":{
-         "Description":"Pivnet Token to download tiles",
-         "Type":"String"
-      },
       "Tiles": {
         "Description": "Comma-delimited list of tiles that should be pre-installed",
         "Type": "CommaDelimitedList",
@@ -219,12 +215,6 @@
                      }
                   },
                   {
-                     "Name":"pivnet_token",
-                     "Value":{
-                        "Ref":"PivnetToken"
-                     }
-                  },
-                  {
                     "Name":"tiles",
                     "Value":{
                         "Fn::Sub": [ "\"${JoinedTiles}\"", { "JoinedTiles": {"Fn::Join" : [ "\",\"", { "Ref":"Tiles" } ] }} ]
@@ -312,12 +302,6 @@
                      "Name":"dns_suffix",
                      "Value":{
                         "Ref":"DnsSuffix"
-                     }
-                  },
-                  {
-                     "Name":"pivnet_token",
-                     "Value":{
-                        "Ref":"PivnetToken"
                      }
                   },
                   {
