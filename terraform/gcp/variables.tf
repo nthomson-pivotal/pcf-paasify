@@ -58,6 +58,11 @@ variable "opsman_user" {
   default = "admin"
 }
 
+variable "opsman_password" {
+  type = "string"
+  default = ""
+}
+
 variable "pivnet_token" {
   type = "string"
 }

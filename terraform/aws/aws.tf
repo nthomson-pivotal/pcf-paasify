@@ -50,6 +50,7 @@ module "common" {
   ssl_cert                     = "${local.cert_full_chain}"
   ssl_private_key              = "${local.cert_key}"
   opsman_user                  = "${var.opsman_user}"
+  opsman_password              = "${var.opsman_password}"
   opsman_ip                    = "${module.aws.ops_manager_ip}"
   opsman_host                  = "${module.aws.ops_manager_dns}"
   opsman_ssh_key               = "${module.aws.ops_manager_ssh_private_key}"

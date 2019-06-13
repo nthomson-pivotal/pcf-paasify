@@ -1,5 +1,5 @@
 locals {
-  opsman_password = "${random_string.opsman_password.result}"
+  opsman_password = "${var.opsman_password == "" ? random_string.opsman_password.result : var.opsman_password}"
 }
 
 resource "random_string" "opsman_password" {

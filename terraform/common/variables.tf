@@ -44,6 +44,11 @@ variable "opsman_user" {
   type = "string"
 }
 
+variable "opsman_password" {
+  type = "string"
+  default = ""
+}
+
 variable "opsman_configuration" {
   type = "string"
   description = "YAML formatted string that contains OpsMan configuration for the director"
