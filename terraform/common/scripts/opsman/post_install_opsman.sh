@@ -19,6 +19,8 @@ bosh_password=$(date +%s | sha256sum | base64 | head -c 16 ; echo)
 uaac target $bosh_director_ip:8443 --skip-ssl-validation
 
 uaac token owner get login admin -s $uaa_login_creds -p $uaa_admin_creds
+
+uaac client delete bosh-login || true
 uaac client add bosh-login --scope uaa.none --authorized_grant_types client_credentials --authorities bosh.admin -s $bosh_password
 
 cat << EOF > ~/.bosh_profile

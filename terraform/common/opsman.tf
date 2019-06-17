@@ -61,12 +61,17 @@ resource "null_resource" "setup_opsman" {
     destination = "~/config/opsman-config-ops.yml"
   }
 
+  provisioner "file" {
+    content     = "${length(var.vm_extensions) > 0 ? join("\n|\n", var.vm_extensions) : " "}"
+    destination = "~/vm_extensions.txt"
+  }
+
   provisioner "remote-exec" {
     inline = ["configure_opsman"]
   }
 
   provisioner "remote-exec" {
-    inline = ["chmod +x /tmp/post_install_opsman.sh && /tmp/post_install_opsman.sh ${var.bosh_director_ip}"]
+    inline = ["post_install_opsman ${var.bosh_director_ip}"]
   }
 
   connection {

@@ -47,3 +47,9 @@
   path: /product-properties/.properties.system_blobstore.external.encryption_kms_key_id?
   value:
     value: "${kms_id}"
+- type: replace
+  path: /resource-config/router?/additional_vm_extensions?
+  value: [${web_lb_extensions}]
+- type: replace
+  path: /resource-config/control?/additional_vm_extensions?
+  value: [${ssh_lb_extensions}]

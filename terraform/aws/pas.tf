@@ -13,5 +13,8 @@ data "template_file" "pas_product_configuration" {
     resources_bucket     = "${module.aws.pas_resources_bucket}"
     bucket_encryption    = "${var.encrypt_pas_buckets}"
     kms_id               = "${var.encrypt_pas_buckets == "1" ? module.aws.blobstore_kms_key_id : ""}"
+
+    web_lb_extensions    = "web_lb_security_groups"
+    ssh_lb_extensions    = "ssh_lb_security_groups"
   }
 }

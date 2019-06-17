@@ -1,7 +1,5 @@
 provider "aws" {
   region = "${var.region}"
-
-  version = "~> 1.33.0"
 }
 
 data "aws_caller_identity" "current" {}
@@ -16,7 +14,7 @@ data "aws_ami" "om_ami" {
 }
 
 module "aws" {
-  source = "github.com/pivotal-cf/terraforming-aws?ref=08e56ea"
+  source = "github.com/pivotal-cf/terraforming-aws?ref=3f77c15//terraforming-pas"
 
   access_key         = "${aws_iam_access_key.key.id}"
   secret_key         = "${aws_iam_access_key.key.secret}"
@@ -62,13 +60,11 @@ module "common" {
 
   pas_product_configuration  = "${data.template_file.pas_product_configuration.rendered}"
 
-  logger_endpoint_port = "4443"
-
   apps_domain = "${module.aws.apps_domain}"
   sys_domain  = "${module.aws.sys_domain}"
 
-  ssh_elb_name      = "${module.aws.ssh_elb_name}"
-  web_elb_names     = ["${module.aws.web_elb_name}"]
+  ssh_elb_name      = "${join(",", formatlist("alb:%s", module.aws.ssh_target_groups))}"
+  web_elb_names     = "${formatlist("alb:%s", module.aws.web_target_groups)}"
   compute_instances = "${var.compute_instance_count}"
 
   opsman_id = "12345"
@@ -82,6 +78,11 @@ module "common" {
   metrics_postgres_instance_type      = "r4.large"
 
   wavefront_token = "${var.wavefront_token}"
+
+  vm_extensions = [
+    "${data.template_file.om_vm_extension_web.rendered}",
+    "${data.template_file.om_vm_extension_ssh.rendered}"
+  ]
 
   dependency_blocker = "${null_resource.dependency_blocker.id}"
 }

@@ -62,6 +62,11 @@ variable "pivnet_token" {
   type = "string"
 }
 
+variable "vm_extensions" {
+  type = "list"
+  default = []
+}
+
 variable "pas_product_configuration" {
   type = "string"
 }
