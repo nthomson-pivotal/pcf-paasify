@@ -67,3 +67,23 @@ data "template_file" "om_configuration" {
     ebs_encryption              = "${var.encrypt_ebs}"
   }
 }
+
+data "template_file" "om_vm_extension_web" {
+  template = "${chomp(file("${path.module}/templates/vm_extension.yml"))}"
+
+  vars {
+    name          = "web_lb_security_groups"
+    target_groups = "${join(", ", module.aws.web_target_groups)}"
+    sg_name       = "web_lb_security_group"
+  }
+}
+
+data "template_file" "om_vm_extension_ssh" {
+  template = "${chomp(file("${path.module}/templates/vm_extension.yml"))}"
+
+  vars {
+    name          = "ssh_lb_security_groups"
+    target_groups = "${join(", ", module.aws.ssh_target_groups)}"
+    sg_name       = "ssh_lb_security_group"
+  }
+ }

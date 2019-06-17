@@ -1,0 +1,4 @@
+vm-extension-config:
+  name: ${name}
+  cloud_properties:
+    security_groups: [${sg_name}, vms_security_group]
