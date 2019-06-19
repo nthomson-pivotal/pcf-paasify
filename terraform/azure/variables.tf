@@ -7,6 +7,16 @@ variable "region" {
   default = "West US 2"
 }
 
+variable "opsman_version" {
+  type    = "string"
+  default = "2.5.2"
+}
+
+variable "opsman_build" {
+  type    = "string"
+  default = "172"
+}
+
 variable "client_id" {}
 
 variable "client_secret" {}
