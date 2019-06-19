@@ -9,14 +9,8 @@ provider "azurerm" {
 
 data "azurerm_client_config" "current" {}
 
-resource "random_string" "short_name" {
-  length  = 4
-  special = false
-  upper = false
-}
-
 module "azure" {
-  source = "github.com/pivotal-cf/terraforming-azure?ref=95d011a"
+  source = "github.com/pivotal-cf/terraforming-azure?ref=b224e8c//terraforming-pas"
 
   subscription_id = "${var.subscription_id}"
   tenant_id       = "${var.tenant_id}"
@@ -24,10 +18,9 @@ module "azure" {
   client_secret   = "${var.client_secret}"
 
   env_name              = "${var.env_name}"
-  env_short_name        = "${random_string.short_name.result}"
   location              = "${var.region}"
   dns_suffix            = "${var.dns_suffix}"
-  ops_manager_image_uri = "https://opsmanagerwestus.blob.core.windows.net/images/ops-manager-2.5.2-build.172.vhd"
+  ops_manager_image_uri = "https://opsmanagerwestus.blob.core.windows.net/images/ops-manager-${var.opsman_version}-build.${var.opsman_build}.vhd"
 
   ssl_cert        = "${local.cert_full_chain}"
   ssl_private_key = "${local.cert_key}"
