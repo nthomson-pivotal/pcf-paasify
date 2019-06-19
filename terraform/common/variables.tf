@@ -81,7 +81,7 @@ variable "sys_domain" {
 
 variable "pas_version" {
   type = "string"
-  default = "2.6.0-build.214"
+  default = "2.6.0"
 }
 
 variable "tiles" {
