@@ -93,7 +93,7 @@ variable "tile_versions" {
   type = "map"
 
   default = {
-    "mysql" = "2.5.4"
+    "mysql" = "2.6.0"
     "redis" = "2.1.2"
     "rabbit" = "1.16.3"
     "scs" = "2.0.9"
