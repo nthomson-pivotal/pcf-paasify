@@ -100,6 +100,7 @@ variable "tile_versions" {
     "metrics" = "1.6.1"
     "healthwatch" = "1.5.2"
     "wavefront" = "1.0.0"
+    "pcc" = "1.8.0"
   }
 }
 
