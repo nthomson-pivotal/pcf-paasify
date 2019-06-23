@@ -25,6 +25,7 @@ module "azure" {
   pcf_infrastructure_subnet         = "${module.cidr_calculator.infrastructure_cidr}"
   pcf_pas_subnet                    = "${module.cidr_calculator.pas_cidr}"
   pcf_services_subnet               = "${module.cidr_calculator.services_cidr}"
+  ops_manager_private_ip            = "${cidrhost(module.cidr_calculator.infrastructure_cidr, 4)}"
 
   ops_manager_image_uri = "https://opsmanagerwestus.blob.core.windows.net/images/ops-manager-${var.opsman_version}-build.${var.opsman_build}.vhd"
 
