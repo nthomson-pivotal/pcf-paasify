@@ -25,3 +25,7 @@ output "apps_domain" {
 output "sys_domain" {
   value = "${module.aws.sys_domain}"
 }
+
+output "cf_api_endpoint" {
+  value = "api.${module.aws.sys_domain}"
+}

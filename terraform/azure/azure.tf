@@ -21,6 +21,12 @@ module "azure" {
   location              = "${var.region}"
   dns_suffix            = "${var.dns_suffix}"
 
+  pcf_virtual_network_address_space = ["${var.vpc_cidr}"]
+  pcf_infrastructure_subnet         = "${module.cidr_calculator.infrastructure_cidr}"
+  pcf_pas_subnet                    = "${module.cidr_calculator.pas_cidr}"
+  pcf_services_subnet               = "${module.cidr_calculator.services_cidr}"
+  ops_manager_private_ip            = "${cidrhost(module.cidr_calculator.infrastructure_cidr, 4)}"
+
   ops_manager_image_uri = "https://opsmanagerwestus.blob.core.windows.net/images/ops-manager-${var.opsman_version}-build.${var.opsman_build}.vhd"
 
   ssl_cert        = "${local.cert_full_chain}"

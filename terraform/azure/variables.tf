@@ -7,6 +7,12 @@ variable "region" {
   default = "West US 2"
 }
 
+variable "vpc_cidr" {
+  type        = "string"
+  description = "Azure VNet CIDR (named to be consistent with other modules)"
+  default     = "10.0.0.0/16"
+}
+
 variable "opsman_version" {
   type    = "string"
   default = "2.6.0"
@@ -62,9 +68,4 @@ variable "wavefront_token" {
 variable "auto_apply" {
   type    = "string"
   default = "1"
-}
-
-variable "vpc_cidr" {
-  type    = "string"
-  default = "10.0.0.0/16"
 }

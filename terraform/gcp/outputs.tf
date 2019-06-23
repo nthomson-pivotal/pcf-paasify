@@ -21,3 +21,7 @@ output "apps_domain" {
 output "sys_domain" {
   value = "${module.gcp.sys_domain}"
 }
+
+output "cf_api_endpoint" {
+  value = "api.${module.gcp.sys_domain}"
+}

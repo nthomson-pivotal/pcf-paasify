@@ -21,3 +21,7 @@ output "apps_domain" {
 output "sys_domain" {
   value = "${module.azure.sys_domain}"
 }
+
+output "cf_api_endpoint" {
+  value = "api.${module.azure.sys_domain}"
+}
