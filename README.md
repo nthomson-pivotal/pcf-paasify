@@ -132,7 +132,16 @@ The latest stemcell supported by each tile will automatically be uploaded to Ops
 
 ### DNS
 
-TODO
+Paasify makes some basic assumptions about DNS that allow it to function:
+- The DNS entries for each public cloud are managed by their respective DNS services (AWS Route53, GCP Cloud DNS, Azure DNS)
+- You have already set up delegation from your root domain registrar to each public cloud you wish to use
+- Paasify is free to create DNS entries in whatever delegated domain it is to create environments in
+
+For example, this is the structure of the domains used to test Paasify:
+
+![architecture](docs/dns-structure.png)
+
+The DNS for `paasify.org` itself is managed in GoDaddy, with a sub-domain for each cloud delegated to that clouds DNS service.
 
 ### SSL Certificates
 
