@@ -100,6 +100,7 @@ variable "tile_versions" {
     "metrics" = "1.6.1"
     "healthwatch" = "1.5.2"
     "pcc" = "1.8.0"
+    "credhub" = "1.3.2"
   }
 }
 
