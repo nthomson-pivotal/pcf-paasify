@@ -98,10 +98,8 @@ variable "tile_versions" {
     "rabbit" = "1.15.7"
     "scs" = "2.0.7"
     "metrics" = "1.6.0"
-    "metrics-forwarder" = "1.11.4"
     "healthwatch" = "1.5.2"
-    "wavefront" = "0.9.3"
-    "prometheus" = "0.1.0"
+    "pcc" = "1.8.0"
   }
 }
 

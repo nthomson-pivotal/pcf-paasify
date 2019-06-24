@@ -1,0 +1,23 @@
+product-name: p-cloudcache
+product-properties:
+  .properties.errand_plan:
+    value: plan1
+  .properties.plan1_enable_service_plan.enable.service_instance_azs:
+    value:
+      - ${az1}
+      - ${az2}
+      - ${az3}
+  .properties.plan2_enable_service_plan:
+    value: disable
+  .properties.plan3_enable_service_plan:
+    value: disable
+  .properties.plan4_enable_service_plan:
+    value: disable
+  .properties.plan5_enable_service_plan:
+    value: disable
+  .properties.dev_plan_enable_service_plan:
+    value: disable
+  .properties.small_footprint_enable_service_plan:
+    value: disable
+  .properties.confirm_tls_setup:
+    value: X 
