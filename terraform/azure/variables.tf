@@ -15,12 +15,12 @@ variable "vpc_cidr" {
 
 variable "opsman_version" {
   type    = "string"
-  default = "2.6.0"
+  default = "2.7.0"
 }
 
 variable "opsman_build" {
   type    = "string"
-  default = "138"
+  default = "29"
 }
 
 variable "client_id" {}
