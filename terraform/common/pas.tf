@@ -47,11 +47,11 @@ resource "null_resource" "setup_pas" {
   }
 
   provisioner "remote-exec" {
-    inline = ["install_tile elastic-runtime ${var.pas_version} srt ${var.iaas} cf"]
+    inline = ["wrap install_tile elastic-runtime ${var.pas_version} srt ${var.iaas} cf"]
   }
 
   provisioner "remote-exec" {
-    inline = ["configure_tile cf"]
+    inline = ["wrap configure_tile cf"]
   }
 
   connection {

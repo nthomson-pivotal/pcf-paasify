@@ -16,7 +16,7 @@ resource "null_resource" "setup_healthwatch" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile p-healthwatch ${lookup(var.tile_versions, "healthwatch")} pivotal ${var.iaas}"]
+    inline = ["wrap install_tile p-healthwatch ${lookup(var.tile_versions, "healthwatch")} pivotal ${var.iaas}"]
   }
 
   provisioner "file" {
@@ -25,7 +25,7 @@ resource "null_resource" "setup_healthwatch" {
   }
 
   provisioner "remote-exec" {
-    inline = ["configure_tile p-healthwatch"]
+    inline = ["wrap configure_tile p-healthwatch"]
   }
 
   connection {

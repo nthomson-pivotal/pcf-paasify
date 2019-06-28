@@ -12,7 +12,7 @@ resource "null_resource" "setup_mysql" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile pivotal-mysql ${lookup(var.tile_versions, "mysql")} .pivotal ${var.iaas}"]
+    inline = ["wrap install_tile pivotal-mysql ${lookup(var.tile_versions, "mysql")} .pivotal ${var.iaas}"]
   }
 
   provisioner "file" {
@@ -21,7 +21,7 @@ resource "null_resource" "setup_mysql" {
   }
 
   provisioner "remote-exec" {
-    inline = ["configure_tile pivotal-mysql"]
+    inline = ["wrap configure_tile pivotal-mysql"]
   }
 
   count = "${contains(var.tiles, "mysql") || contains(var.tiles, "scs") ? 1 : 0}"

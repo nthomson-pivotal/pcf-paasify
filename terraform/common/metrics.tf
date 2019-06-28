@@ -14,8 +14,7 @@ resource "null_resource" "setup_metrics" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile apm ${lookup(var.tile_versions, "metrics")} pivotal ${var.iaas} apmPostgres",
-    ]
+    inline = ["wrap install_tile apm ${lookup(var.tile_versions, "metrics")} pivotal ${var.iaas} apmPostgres"]
   }
 
   provisioner "file" {
@@ -24,7 +23,7 @@ resource "null_resource" "setup_metrics" {
   }
 
   provisioner "remote-exec" {
-    inline = ["configure_tile apmPostgres"]
+    inline = ["wrap configure_tile apmPostgres"]
   }
 
   count = "${contains(var.tiles, "metrics") ? 1 : 0}"
