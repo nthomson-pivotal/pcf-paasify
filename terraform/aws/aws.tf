@@ -71,11 +71,11 @@ module "common" {
 
   tiles = "${var.tiles}"
 
-  healthwatch_mysql_instance_type     = "m4.xlarge"
-  healthwatch_forwarder_instance_type = "m4.large"
+  healthwatch_mysql_instance_type     = "m5.xlarge"
+  healthwatch_forwarder_instance_type = "m5.large"
 
-  metrics_mysql_instance_type         = "m4.large"
-  metrics_postgres_instance_type      = "r4.large"
+  metrics_mysql_instance_type         = "m5.large"
+  metrics_postgres_instance_type      = "r5.large"
 
   wavefront_token = "${var.wavefront_token}"
 

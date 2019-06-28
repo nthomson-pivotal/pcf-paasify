@@ -10,6 +10,8 @@ glob=$3
 iaas=$4
 om_product=$5
 
+lock_file=/var/run/paasify.lock
+
 if [ -z "$om_product" ]; then
   om_product=$product_slug
 fi
@@ -49,7 +51,7 @@ if [ -z "$check_staged_payload" ]; then
 
     filename=$(cat $metadata_filename | jq -r '.product_path')
 
-    om -t https://localhost -k upload-product -p $filename
+    flock $lock_file -c "om -t https://localhost -k upload-product -p $filename"
 
     echo "Installed tile $product_slug v$version"
     
@@ -79,4 +81,4 @@ fi
 
 stemcell_path=$(cat $metadata_filename | jq -r '.stemcell_path')
 
-om -t https://localhost -k upload-stemcell -f -s $stemcell_path
+flock $lock_file -c "om -t https://localhost -k upload-stemcell -f -s $stemcell_path"

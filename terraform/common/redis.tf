@@ -12,7 +12,7 @@ resource "null_resource" "setup_redis" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile p-redis ${lookup(var.tile_versions, "redis")} pivotal ${var.iaas}"]
+    inline = ["wrap install_tile p-redis ${lookup(var.tile_versions, "redis")} pivotal ${var.iaas}"]
   }
 
   provisioner "file" {
@@ -21,7 +21,7 @@ resource "null_resource" "setup_redis" {
   }
 
   provisioner "remote-exec" {
-    inline = ["configure_tile p-redis"]
+    inline = ["wrap configure_tile p-redis"]
   }
 
   count = "${contains(var.tiles, "redis") ? 1 : 0}"

@@ -49,6 +49,12 @@ pivnet login --api-token $pivnet_api_token
 # Convenience scripts
 echo 'Installing convenience scripts...'
 
+if [ ! -f /usr/bin/wrap ]; then
+  sudo mv /tmp/wrap.sh /usr/bin/wrap
+fi
+
+sudo chmod +x /usr/bin/wrap
+
 if [ ! -f /usr/bin/install_tile ]; then
   sudo mv /tmp/install_tile.sh /usr/bin/install_tile
 fi
@@ -134,3 +140,8 @@ sleep 20
 # Configure authentication in OpsMan
 echo 'Configuring OpsMan authentication...'
 om configure-authentication -u $OM_USERNAME -p $OM_PASSWORD -dp $OM_PASSWORD
+
+
+# Set up for file locks
+sudo touch /var/run/paasify.lock
+sudo chown ubuntu:ubuntu /var/run/paasify.lock
