@@ -97,7 +97,7 @@ variable "tile_versions" {
     "redis" = "2.1.2"
     "rabbit" = "1.16.3"
     "scs" = "2.0.9"
-    "metrics" = "1.6.1"
+    "metrics" = "1.6.0"
     "healthwatch" = "1.5.2"
     "pcc" = "1.8.0"
     "credhub" = "1.3.2"
