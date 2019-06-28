@@ -2,12 +2,15 @@ product-name: p-redis
 product-properties:
   .properties.syslog_selector:
     value: 'No'
-  .properties.small_plan_selector.active.az_single_select:
-    value: ${az1}
-  .properties.medium_plan_selector.active.az_single_select:
-    value: ${az1}
-  .properties.large_plan_selector.active.az_single_select:
-    value: ${az1}
+  .properties.small_plan_selector.active.az_multi_select:
+    value:
+    - ${az1}
+  .properties.medium_plan_selector.active.az_multi_select:
+    value:
+    - ${az1}
+  .properties.large_plan_selector.active.az_multi_select:
+    value:
+    - ${az1}
 network-properties:
   network:
     name: pas
