@@ -12,7 +12,7 @@ resource "null_resource" "setup_rabbitmq" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile p-rabbitmq ${lookup(var.tile_versions, "rabbit")} pivotal ${var.iaas}"]
+    inline = ["wrap install_tile p-rabbitmq ${lookup(var.tile_versions, "rabbit")} pivotal ${var.iaas}"]
   }
 
   provisioner "file" {
@@ -21,7 +21,7 @@ resource "null_resource" "setup_rabbitmq" {
   }
 
   provisioner "remote-exec" {
-    inline = ["configure_tile p-rabbitmq"]
+    inline = ["wrap configure_tile p-rabbitmq"]
   }
 
   count = "${contains(var.tiles, "rabbit") || contains(var.tiles, "scs") ? 1 : 0}"

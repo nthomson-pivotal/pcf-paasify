@@ -2,7 +2,7 @@ provider "google" {
   region  = "${var.region}"
   project = "${var.project}"
 
-  version = "~> 1.18.0"
+  version = "~> 2.0.0"
 }
 
 module "gcp" {
@@ -24,7 +24,7 @@ module "gcp" {
 }
 
 resource "null_resource" "dependency_blocker" {
-  depends_on = ["module.gcp", "module.nat", "google_dns_record_set.ns"]
+  depends_on = ["module.gcp", "google_compute_router_nat.nat", "google_dns_record_set.ns"]
 }
 
 # Use intermediate local to hold JSON encoded SSH key

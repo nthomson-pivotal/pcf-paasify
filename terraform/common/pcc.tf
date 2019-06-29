@@ -12,7 +12,7 @@ resource "null_resource" "setup_pcc" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile p-cloudcache ${lookup(var.tile_versions, "pcc")} pivotal ${var.iaas}"]
+    inline = ["wrap install_tile p-cloudcache ${lookup(var.tile_versions, "pcc")} pivotal ${var.iaas}"]
   }
 
   provisioner "file" {
@@ -21,7 +21,7 @@ resource "null_resource" "setup_pcc" {
   }
 
   provisioner "remote-exec" {
-    inline = ["configure_tile p-cloudcache"]
+    inline = ["wrap configure_tile p-cloudcache"]
   }
 
   count = "${contains(var.tiles, "pcc") ? 1 : 0}"

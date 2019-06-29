@@ -12,7 +12,7 @@ resource "null_resource" "setup_credhub" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile credhub-service-broker ${lookup(var.tile_versions, "credhub")} pivotal ${var.iaas}"]
+    inline = ["wrap install_tile credhub-service-broker ${lookup(var.tile_versions, "credhub")} pivotal ${var.iaas}"]
   }
 
   provisioner "file" {
@@ -21,7 +21,7 @@ resource "null_resource" "setup_credhub" {
   }
 
   provisioner "remote-exec" {
-    inline = ["configure_tile credhub-service-broker"]
+    inline = ["wrap configure_tile credhub-service-broker"]
   }
 
   count = "${contains(var.tiles, "credhub") ? 1 : 0}"

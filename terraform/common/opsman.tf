@@ -67,11 +67,11 @@ resource "null_resource" "setup_opsman" {
   }
 
   provisioner "remote-exec" {
-    inline = ["configure_opsman"]
+    inline = ["wrap configure_opsman"]
   }
 
   provisioner "remote-exec" {
-    inline = ["post_install_opsman ${var.bosh_director_ip}"]
+    inline = ["wrap post_install_opsman ${var.bosh_director_ip}"]
   }
 
   connection {

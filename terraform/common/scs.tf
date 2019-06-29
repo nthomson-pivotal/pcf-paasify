@@ -12,7 +12,7 @@ resource "null_resource" "setup_scs" {
   depends_on = ["null_resource.setup_pas", "null_resource.setup_mysql", "null_resource.setup_rabbitmq"]
 
   provisioner "remote-exec" {
-    inline = ["install_tile p-spring-cloud-services ${lookup(var.tile_versions, "scs")} pivotal ${var.iaas}"]
+    inline = ["wrap install_tile p-spring-cloud-services ${lookup(var.tile_versions, "scs")} pivotal ${var.iaas}"]
   }
 
   provisioner "file" {
@@ -21,7 +21,7 @@ resource "null_resource" "setup_scs" {
   }
 
   provisioner "remote-exec" {
-    inline = ["configure_tile p-spring-cloud-services"]
+    inline = ["wrap configure_tile p-spring-cloud-services"]
   }
 
   count = "${contains(var.tiles, "scs") ? 1 : 0}"
