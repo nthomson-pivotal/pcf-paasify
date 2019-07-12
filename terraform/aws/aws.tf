@@ -72,11 +72,6 @@ module "common" {
   healthwatch_resource_configuration = "${data.template_file.healthwatch_resource_configuration.rendered}"
 
   metrics_resource_configuration           = "${data.template_file.metrics_resource_configuration.rendered}"
-  metrics_forwarder_resource_configuration = "${data.template_file.metrics_forwarder_resource_configuration.rendered}"
-
-  prometheus_resource_configuration = "${data.template_file.prometheus_resource_configuration.rendered}"
-
-  wavefront_token = "${var.wavefront_token}"
 
   dependency_blocker = "${null_resource.dependency_blocker.id}"
 }

@@ -1,7 +1,0 @@
-{
-  "prometheus": {
-    "instance_type": {
-      "id": "t2.medium"
-    }
-  }
-}

@@ -68,11 +68,6 @@ module "common" {
   healthwatch_resource_configuration = "{}"
 
   metrics_resource_configuration           = "{}"
-  metrics_forwarder_resource_configuration = "{}"
-
-  prometheus_resource_configuration = "{}"
-
-  wavefront_token = "${var.wavefront_token}"
 
   dependency_blocker = "${null_resource.dependency_blocker.id}"
 }

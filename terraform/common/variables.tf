@@ -87,15 +87,12 @@ variable "tile_versions" {
   type = "map"
 
   default = {
-    "mysql" = "2.4.4"
-    "redis" = "2.0.1"
-    "rabbit" = "1.14.4"
-    "scs" = "2.0.4"
+    "mysql" = "2.4.6"
+    "redis" = "2.0.2"
+    "rabbit" = "1.15.11"
+    "scs" = "2.0.10"
     "metrics" = "1.6.0"
-    "metrics-forwarder" = "1.11.4"
-    "healthwatch" = "1.4.5"
-    "wavefront" = "0.9.3"
-    "prometheus" = "0.1.0"
+    "healthwatch" = "1.5.4"
   }
 }
 
@@ -107,21 +104,8 @@ variable "metrics_resource_configuration" {
   type = "string"
 }
 
-variable "metrics_forwarder_resource_configuration" {
-  type = "string"
-}
-
-variable "prometheus_resource_configuration" {
-  type = "string"
-}
-
 variable "logger_endpoint_port" {
   default = "443"
-}
-
-variable "wavefront_token" {
-  type    = "string"
-  default = ""
 }
 
 variable "dependency_blocker" {
