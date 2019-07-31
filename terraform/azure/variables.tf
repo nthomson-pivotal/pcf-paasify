@@ -13,16 +13,6 @@ variable "vpc_cidr" {
   default     = "10.0.0.0/16"
 }
 
-variable "opsman_version" {
-  type    = "string"
-  default = "2.6.0"
-}
-
-variable "opsman_build" {
-  type    = "string"
-  default = "138"
-}
-
 variable "client_id" {}
 
 variable "client_secret" {}

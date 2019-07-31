@@ -9,7 +9,7 @@ data "aws_ami" "om_ami" {
 
   filter {
     name   = "name"
-    values = ["pivotal-ops-manager-v${var.opsman_version}-build.${var.opsman_build}"]
+    values = ["pivotal-ops-manager-v${module.common.opsman_version}-build.${module.common.opsman_build}"]
   }
 }
 

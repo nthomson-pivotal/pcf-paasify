@@ -1,12 +1,10 @@
 provider "google" {
   region  = "${var.region}"
   project = "${var.project}"
-
-  version = "~> 2.0.0"
 }
 
 module "gcp" {
-  source = "github.com/pivotal-cf/terraforming-gcp?ref=e5ad3e70"
+  source = "github.com/nthomson-pivotal/terraforming-gcp?ref=fcc7c8//terraforming-pas"
 
   project = "${var.project}"
 
@@ -15,13 +13,14 @@ module "gcp" {
   region              = "${var.region}"
   buckets_location    = "${var.buckets_location}"
   dns_suffix          = "${var.dns_suffix}"
-  opsman_image_url    = "https://storage.googleapis.com/ops-manager-us/pcf-gcp-${var.opsman_version}-build.${var.opsman_build}.tar.gz"
+  opsman_image_url    = "https://storage.googleapis.com/ops-manager-us/pcf-gcp-${module.common.opsman_version}-build.${module.common.opsman_build}.tar.gz"
   zones               = ["${lookup(var.az1, var.region)}", "${lookup(var.az2, var.region)}", "${lookup(var.az3, var.region)}"]
   ssl_cert            = "${local.cert_full_chain}"
   ssl_private_key     = "${local.cert_key}"
 
-  # This is too small by default
-  management_cidr = "10.0.0.0/24"
+  # Breaks if you don't do this....
+  iso_seg_ssl_cert    = "${local.cert_full_chain}"
+  iso_seg_ssl_private_key    = "${local.cert_key}"
 }
 
 resource "null_resource" "dependency_blocker" {

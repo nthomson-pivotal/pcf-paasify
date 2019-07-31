@@ -34,16 +34,6 @@ variable "az3" {
   }
 }
 
-variable "opsman_version" {
-  type    = "string"
-  default = "2.6.0"
-}
-
-variable "opsman_build" {
-  type    = "string"
-  default = "138"
-}
-
 variable "dns_suffix" {
   type = "string"
 }
