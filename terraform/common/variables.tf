@@ -86,12 +86,12 @@ variable "opsman_version" {
 
 variable "opsman_build" {
   type    = "string"
-  default = "127"
+  default = "137"
 }
 
 variable "pas_version" {
   type = "string"
-  default = "2.7.0-beta.1"
+  default = "2.7.0-rc.1"
 }
 
 variable "tiles" {
