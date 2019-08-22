@@ -119,14 +119,18 @@ The following sections provide more detailed information regarding the system wh
 
 ### Tiles
 
-These tiles are supported:
+The following table lists all tiles that can be automatically installed, along with the name that should be put in the `tiles` parameter:
 
-- MySQL v2
-- RabbitMQ
-- Spring Cloud Services
-- Redis
-- PCF Metrics
-- Healthwatch
+| Tile | Version | Name |
+|------|-----|-----|
+| MySQL | 2.6.0 | `mysql` |
+| RabbitMQ | 1.16.3 | `rabbit` |
+| Redis | 2.1.2 | `redis` |
+| PCC | 1.8.0 | `pcc` |
+| SCS | 2.0.9 | `scs` |
+| Metrics | 1.6.0 | `metrics` |
+| Healthwatch | 1.5.2 | `healthwatch` |
+| Credhub Service Broker | 1.3.2 | `credhub` |
 
 The latest stemcell supported by each tile will automatically be uploaded to OpsManager.
 
