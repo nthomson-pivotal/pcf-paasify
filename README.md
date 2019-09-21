@@ -123,13 +123,14 @@ The following table lists all tiles that can be automatically installed, along w
 
 | Tile | Version | Name |
 |------|-----|-----|
-| MySQL | 2.6.0 | `mysql` |
-| RabbitMQ | 1.16.3 | `rabbit` |
-| Redis | 2.1.2 | `redis` |
+| MySQL | 2.7.0 | `mysql` |
+| RabbitMQ | 1.17.1 | `rabbit` |
+| Redis | 2.2.1 | `redis` |
 | PCC | 1.8.0 | `pcc` |
-| SCS | 2.0.9 | `scs` |
-| Metrics | 1.6.0 | `metrics` |
-| Healthwatch | 1.5.2 | `healthwatch` |
+| SCS | 2.0.11 | `scs` |
+| SCS 3 | 3.0.5 | `scs3` |
+| Metrics | 1.6.1 | `metrics` |
+| Healthwatch | 1.7.0 | `healthwatch` |
 | Credhub Service Broker | 1.3.2 | `credhub` |
 
 The latest stemcell supported by each tile will automatically be uploaded to OpsManager.
