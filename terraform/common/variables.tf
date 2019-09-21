@@ -103,12 +103,12 @@ variable "tile_versions" {
   type = "map"
 
   default = {
-    "mysql" = "2.6.3"
+    "mysql" = "2.7.0"
     "redis" = "2.2.1"
-    "rabbit" = "1.16.3"
-    "scs" = "2.0.9"
-    "metrics" = "1.6.0"
-    "healthwatch" = "1.5.2"
+    "rabbit" = "1.17.1"
+    "scs" = "2.0.11"
+    "metrics" = "1.6.1"
+    "healthwatch" = "1.7.0"
     "pcc" = "1.8.0"
     "credhub" = "1.3.2"
   }
