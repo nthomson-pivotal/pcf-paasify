@@ -91,7 +91,7 @@ variable "opsman_build" {
 
 variable "pas_version" {
   type = "string"
-  default = "2.7.0-rc.3"
+  default = "2.7.0"
 }
 
 variable "tiles" {
