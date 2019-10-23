@@ -8,7 +8,7 @@ Take this example:
 
 ```
 module "paasify" {
-  source = "github.com/nthomson-pivotal/pcf-paasify/terraform/aws?ref=2.7"
+  source = "github.com/nthomson-pivotal/pcf-paasify//terraform/aws?ref=2.7"
 
   env_name     = "paasify-test"
   dns_suffix   = "aws.paasify.org"
@@ -85,7 +85,7 @@ The following example Terraform configuration imports Paasify as a module target
 
 ```
 module "paasify" {
-  source = "github.com/nthomson-pivotal/pcf-paasify/terraform/aws"
+  source = "github.com/nthomson-pivotal/pcf-paasify//terraform/aws"
 
   env_name     = "test-env"
   dns_suffix   = "aws.paasify.org"
