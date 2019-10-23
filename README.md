@@ -10,7 +10,7 @@ Take this example:
 
 ```
 module "paasify" {
-  source = "github.com/nthomson-pivotal/pcf-paasify//terraform/aws?ref=2.7"
+  source = "github.com/nthomson-pivotal/pcf-paasify//terraform/aws?ref=2.8"
 
   env_name     = "paasify-test"
   dns_suffix   = "aws.paasify.org"
@@ -21,7 +21,7 @@ module "paasify" {
 ```
 
 This will:
-- Install PAS 2.7 Small Footprint
+- Install PAS 2.8 Small Footprint
 - Download, stage and configure the MySQL, RabbitMQ and Spring Cloud Services tiles
 - Wire up DNS so that its accessible at `paasify-test.aws.paasify.org`
 - Provision valid SSL certificates via Lets Encrypt for every common HTTPS endpoint
@@ -125,7 +125,7 @@ The following table lists all tiles that can be automatically installed, along w
 
 | Tile | Version | Name |
 |------|-----|-----|
-| MySQL | 2.7.0 | `mysql` |
+| MySQL | 2.7.2 | `mysql` |
 | RabbitMQ | 1.17.1 | `rabbit` |
 | Redis | 2.2.1 | `redis` |
 | PCC | 1.8.0 | `pcc` |
