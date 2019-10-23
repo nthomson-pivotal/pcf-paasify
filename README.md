@@ -2,6 +2,8 @@
 
 Installing Pivotal Application Service for quick setups can be more complicated than it should. The goal of this project is to allow you to complete an install of PAS, with optional tiles, with nothing more than Terraform installed locally. This is being essentially being exposed as 'PCF-as-a-Terraform-module' that is compatible across all supported public clouds. It is designed for short-term, non-production setups, and is not intended to provide a PAS setup that can be upgraded over long periods of time.
 
+Note: This project requires Terraform 0.11.
+
 If you need fire-and-forget mechanism that gives you predictable, disposable PCF environments (including many popular tiles) then this is for you.
 
 Take this example:
