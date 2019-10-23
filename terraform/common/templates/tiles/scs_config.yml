@@ -17,3 +17,7 @@ network-properties:
   - name: ${az3}
   singleton_availability_zone:
     name: ${az1}
+errand-config:
+  run-smoke-tests:
+    post-deploy-state: false
+    pre-delete-state: default
