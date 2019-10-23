@@ -1,3 +1,5 @@
+> WARNING: This branch is no longer active or maintained - do not expect it to function
+
 # PCF Paasify
 
 Installing Pivotal Application Service for quick setups can be more complicated than it should. The goal of this project is to allow you to complete an install of PAS, with optional tiles, with nothing more than Terraform installed locally. This is being essentially being exposed as 'PCF-as-a-Terraform-module' that is compatible across all supported public clouds. It is designed for short-term, non-production setups, and is not intended to provide a PAS setup that can be upgraded over long periods of time.
