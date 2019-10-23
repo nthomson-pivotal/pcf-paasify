@@ -14,11 +14,10 @@ product-properties:
     value: X
   .mysql_monitor.recipient_email:
     value: nobody@localhost
-  .properties.credhub_key_encryption_passwords:
+  .properties.credhub_internal_provider_keys:
     value:
     - name: default
       primary: true
-      provider: internal
       key:
         secret: askdnasoidansfiopanskflasf
   .properties.networking_poe_ssl_certs:

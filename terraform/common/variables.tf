@@ -81,17 +81,17 @@ variable "sys_domain" {
 
 variable "opsman_version" {
   type    = "string"
-  default = "2.6.5"
+  default = "2.7.0"
 }
 
 variable "opsman_build" {
   type    = "string"
-  default = "173"
+  default = "165"
 }
 
 variable "pas_version" {
   type = "string"
-  default = "2.6.2"
+  default = "2.7.0"
 }
 
 variable "tiles" {
