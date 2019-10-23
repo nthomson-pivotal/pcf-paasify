@@ -24,7 +24,7 @@ resource "null_resource" "setup_rabbitmq" {
     inline = ["wrap configure_tile p-rabbitmq"]
   }
 
-  count = "${contains(var.tiles, "rabbit") || contains(var.tiles, "scs") ? 1 : 0}"
+  count = "${contains(var.tiles, "rabbit") ? 1 : 0}"
 
   connection {
     host        = "${var.opsman_host}"

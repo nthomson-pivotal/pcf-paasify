@@ -12,7 +12,7 @@ resource "null_resource" "setup_scs3" {
   depends_on = ["null_resource.setup_pas"]
 
   provisioner "remote-exec" {
-    inline = ["wrap install_tile p-spring-cloud-services ${lookup(var.tile_versions, "scs3")} pivotal ${var.iaas} p_spring-cloud-services"]
+    inline = ["wrap install_tile p-spring-cloud-services ${lookup(var.tile_versions, "scs")} pivotal ${var.iaas} p_spring-cloud-services"]
   }
 
   provisioner "file" {
@@ -24,7 +24,7 @@ resource "null_resource" "setup_scs3" {
     inline = ["wrap configure_tile p_spring-cloud-services"]
   }
 
-  count = "${contains(var.tiles, "scs3") ? 1 : 0}"
+  count = "${contains(var.tiles, "scs3") || contains(var.tiles, "scs") ? 1 : 0}"
 
   connection {
     host        = "${var.opsman_host}"
