@@ -129,8 +129,7 @@ The following table lists all tiles that can be automatically installed, along w
 | RabbitMQ | 1.17.1 | `rabbit` |
 | Redis | 2.2.1 | `redis` |
 | PCC | 1.8.0 | `pcc` |
-| SCS | 2.0.11 | `scs` |
-| SCS 3 | 3.0.5 | `scs3` |
+| SCS 3 | 3.0.5 | `scs3` or `scs` |
 | Metrics | 1.6.1 | `metrics` |
 | Healthwatch | 1.7.0 | `healthwatch` |
 | Credhub Service Broker | 1.3.2 | `credhub` |
