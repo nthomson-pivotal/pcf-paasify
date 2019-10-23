@@ -18,23 +18,8 @@ data "template_file" "pas_configuration" {
   }
 }
 
-resource "null_resource" "stage_pas" {
-
-  depends_on = ["null_resource.provision_opsman"]
-
-  provisioner "remote-exec" {
-    inline = ["NO_STAGE=1 install_tile elastic-runtime ${var.pas_version} srt ${var.iaas} cf"]
-  }
-
-  connection {
-    host        = "${var.opsman_host}"
-    user        = "ubuntu"
-    private_key = "${var.opsman_ssh_key}"
-  }
-}
-
 resource "null_resource" "setup_pas" {
-  depends_on = ["null_resource.setup_opsman", "null_resource.stage_pas"]
+  depends_on = ["null_resource.setup_opsman"]
 
   provisioner "file" {
     content     = "${data.template_file.pas_configuration.rendered}"
