@@ -24,7 +24,7 @@ resource "null_resource" "setup_mysql" {
     inline = ["wrap configure_tile pivotal-mysql"]
   }
 
-  count = "${contains(var.tiles, "mysql") ? 1 : 0}"
+  count = "${contains(var.tiles, "mysql") || contains(var.tiles, "scdf") ? 1 : 0}"
 
   connection {
     host        = "${var.opsman_host}"

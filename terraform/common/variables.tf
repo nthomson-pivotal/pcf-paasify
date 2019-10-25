@@ -111,6 +111,7 @@ variable "tile_versions" {
     "healthwatch" = "1.7.0"
     "pcc" = "1.8.0"
     "credhub" = "1.3.2"
+    "scdf" = "1.6.1"
   }
 }
 

@@ -1,0 +1,17 @@
+product-name: p-dataflow
+network-properties:
+  network:
+    name: pas
+  service_network:
+    name: services
+  other_availability_zones:
+  - name: ${az1}
+  - name: ${az2}
+  - name: ${az3}
+  singleton_availability_zone:
+    name: ${az1}
+product-properties:
+  .properties.dataflow_messaging_service:
+    value: p.rabbitmq
+  .properties.dataflow_messaging_plan:
+    value: single-node-3.7
