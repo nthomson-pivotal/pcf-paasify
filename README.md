@@ -128,8 +128,8 @@ The following table lists all tiles that can be automatically installed, along w
 | MySQL | 2.7.0 | `mysql` |
 | RabbitMQ | 1.17.1 | `rabbit` |
 | Redis | 2.2.1 | `redis` |
-| PCC | 1.8.0 | `pcc` |
-| SCS 3 | 3.0.5 | `scs3` or `scs` |
+| Pivotal Cloud Cache | 1.8.0 | `pcc` |
+| Spring Cloud Services 3 | 3.0.5 | `scs3` or `scs` |
 | Spring Cloud Data Flow | 1.6.1 | `scdf` |
 | Metrics | 1.6.1 | `metrics` |
 | Healthwatch | 1.7.0 | `healthwatch` |
