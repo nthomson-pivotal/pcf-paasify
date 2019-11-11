@@ -86,7 +86,7 @@ variable "opsman_version" {
 
 variable "opsman_build" {
   type    = "string"
-  default = "135"
+  default = "142"
 }
 
 variable "pas_version" {
