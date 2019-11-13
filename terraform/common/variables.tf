@@ -112,6 +112,7 @@ variable "tile_versions" {
     "pcc" = "1.8.0"
     "credhub" = "1.3.2"
     "scdf" = "1.6.1"
+    "antivirus" = "2.1.6"
   }
 }
 

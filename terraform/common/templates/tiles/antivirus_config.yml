@@ -1,0 +1,4 @@
+product-name: p-antivirus
+product-properties:
+  .properties.database_mirrors:
+    value: official_mirror
