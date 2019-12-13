@@ -7,32 +7,6 @@ variable "region" {
   default = "us-west-2"
 }
 
-variable "az1" {
-  type = "map"
-
-  default = {
-    "us-west-2" = "us-west-2a"
-    "us-east-1" = "us-east-1a"
-  }
-}
-
-variable "az2" {
-  type = "map"
-
-  default = {
-    "us-west-2" = "us-west-2b"
-    "us-east-1" = "us-east-1b"
-  }
-}
-
-variable "az3" {
-  type = "map"
-
-  default = {
-    "us-west-2" = "us-west-2c"
-    "us-east-1" = "us-east-1c"
-  }
-}
 
 variable "dns_suffix" {
   type = "string"

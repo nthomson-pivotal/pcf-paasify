@@ -22,7 +22,7 @@ module "aws" {
   region             = "${var.region}"
   dns_suffix         = "${var.dns_suffix}"
   ops_manager_ami    = "${data.aws_ami.om_ami.image_id}"
-  availability_zones = ["${lookup(var.az1, var.region)}", "${lookup(var.az2, var.region)}", "${lookup(var.az3, var.region)}"]
+  availability_zones = "${local.availability_zones}"
   ssl_cert           = "${local.cert_full_chain}"
   ssl_private_key    = "${local.cert_key}"
   vpc_cidr           = "${var.vpc_cidr}"
@@ -35,6 +35,7 @@ resource "null_resource" "dependency_blocker" {
 # Use intermediate local to hold JSON encoded SSH key
 locals {
   ssh_private_key_encoded = "${jsonencode(module.aws.ops_manager_ssh_private_key)}"
+  availability_zones = ["${data.aws_availability_zones.available.names[0]}", "${data.aws_availability_zones.available.names[1]}", "${data.aws_availability_zones.available.names[2]}"]
 }
 
 module "common" {
@@ -43,7 +44,7 @@ module "common" {
   env_name = "${var.env_name}"
   iaas     = "aws"
   region   = "${var.region}"
-  azs      = ["${lookup(var.az1, var.region)}", "${lookup(var.az2, var.region)}", "${lookup(var.az3, var.region)}"]
+  azs      = "${local.availability_zones}"
 
   ssl_cert                     = "${local.cert_full_chain}"
   ssl_private_key              = "${local.cert_key}"
