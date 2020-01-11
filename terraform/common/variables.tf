@@ -114,6 +114,7 @@ variable "tile_versions" {
     "scdf" = "1.6.1"
     "antivirus" = "2.1.6"
     "gateway" = "1.0.0"
+    "fim" = "2.0.0"
   }
 }
 
