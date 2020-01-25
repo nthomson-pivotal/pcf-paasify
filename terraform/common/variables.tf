@@ -113,6 +113,8 @@ variable "tile_versions" {
     "credhub" = "1.3.2"
     "scdf" = "1.6.1"
     "antivirus" = "2.1.6"
+    "gateway" = "1.0.0"
+    "fim" = "2.0.0"
   }
 }
 
