@@ -14,7 +14,7 @@ module "gcp" {
   buckets_location    = "${var.buckets_location}"
   dns_suffix          = "${var.dns_suffix}"
   opsman_image_url    = "https://storage.googleapis.com/ops-manager-us/pcf-gcp-${module.common.opsman_version}-build.${module.common.opsman_build}.tar.gz"
-  zones               = ["${lookup(var.az1, var.region)}", "${lookup(var.az2, var.region)}", "${lookup(var.az3, var.region)}"]
+  zones               = "${local.zones}"
   ssl_cert            = "${local.cert_full_chain}"
   ssl_private_key     = "${local.cert_key}"
 
@@ -27,9 +27,16 @@ resource "null_resource" "dependency_blocker" {
   depends_on = ["module.gcp", "google_compute_router_nat.nat", "google_dns_record_set.ns"]
 }
 
+data "google_compute_zones" "available" {
+  project       = "${var.project}"
+  region        = "${var.region}"
+  status        = "UP"
+}
+
 # Use intermediate local to hold JSON encoded SSH key
 locals {
   ssh_private_key_encoded = "${jsonencode(module.gcp.ops_manager_ssh_private_key)}"
+  zones = ["${data.google_compute_zones.available.names[0]}", "${data.google_compute_zones.available.names[1]}", "${data.google_compute_zones.available.names[2]}"]
 }
 
 module "common" {
@@ -38,7 +45,7 @@ module "common" {
   env_name                     = "${var.env_name}"
   iaas                         = "google"
   region                       = "${var.region}"
-  azs                          = ["${lookup(var.az1, var.region)}", "${lookup(var.az2, var.region)}", "${lookup(var.az3, var.region)}"]
+  azs                          = "${local.zones}"
 
   ssl_cert                     = "${local.cert_full_chain}"
   ssl_private_key              = "${local.cert_key}"

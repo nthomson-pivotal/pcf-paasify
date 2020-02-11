@@ -16,30 +16,6 @@ variable "buckets_location" {
   default = "US"
 }
 
-variable "az1" {
-  type = "map"
-
-  default = {
-    "us-central1" = "us-central1-a"
-  }
-}
-
-variable "az2" {
-  type = "map"
-
-  default = {
-    "us-central1" = "us-central1-b"
-  }
-}
-
-variable "az3" {
-  type = "map"
-
-  default = {
-    "us-central1" = "us-central1-c"
-  }
-}
-
 variable "dns_suffix" {
   type = "string"
 }

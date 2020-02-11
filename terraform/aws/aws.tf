@@ -13,6 +13,10 @@ data "aws_ami" "om_ami" {
   }
 }
 
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
 module "aws" {
   source = "github.com/pivotal-cf/terraforming-aws?ref=3f77c15//terraforming-pas"
 
