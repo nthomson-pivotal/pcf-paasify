@@ -105,7 +105,7 @@ variable "tile_versions" {
   default = {
     "mysql" = "2.7.2"
     "redis" = "2.2.1"
-    "rabbit" = "1.17.1"
+    "rabbit" = "1.18.3"
     "scs" = "3.0.5"
     "metrics" = "1.6.1"
     "healthwatch" = "1.7.0"
