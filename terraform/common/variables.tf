@@ -115,6 +115,7 @@ variable "tile_versions" {
     "antivirus" = "2.1.6"
     "gateway" = "1.0.0"
     "fim" = "2.0.0"
+    "sso" = "1.11.0"
   }
 }
 
