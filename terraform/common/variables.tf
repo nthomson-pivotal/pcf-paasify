@@ -108,7 +108,7 @@ variable "tile_versions" {
     "rabbit" = "1.18.3"
     "scs" = "3.0.5"
     "metrics" = "1.6.1"
-    "healthwatch" = "1.7.0"
+    "healthwatch" = "1.8.0"
     "pcc" = "1.8.0"
     "credhub" = "1.3.2"
     "scdf" = "1.6.1"
