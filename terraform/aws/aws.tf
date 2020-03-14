@@ -41,7 +41,7 @@ module "common" {
   source = "../common"
 
   env_name = "${var.env_name}"
-  iaas     = "aws"
+  iaas     = "light*aws"
   region   = "${var.region}"
   azs      = ["${lookup(var.az1, var.region)}", "${lookup(var.az2, var.region)}", "${lookup(var.az3, var.region)}"]
 
