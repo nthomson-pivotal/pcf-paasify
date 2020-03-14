@@ -46,7 +46,7 @@ module "common" {
   source = "../common"
 
   env_name = "${var.env_name}"
-  iaas     = "aws"
+  iaas     = "light*aws"
   region   = "${var.region}"
   azs      = "${local.availability_zones}"
 
